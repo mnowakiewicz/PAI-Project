@@ -6,21 +6,21 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html">Login <b>LWeb</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-
         <form action="{{ path("fos_user_security_check") }}" method="post">
             {% if csrf_token %}
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             {% endif %}
             <div class="form-group has-feedback">
+                <label class="required">Username/Email</label>
                 <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" placeholder="username">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
+                <label class="required">Password</label>
                 <input type="password" class="form-control" id="password" name="_password" required="required" autocomplete="current-password" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
@@ -42,7 +42,7 @@
 
         <!-- /.social-auth-links -->
 
-        <a href="#">I forgot my password</a><br>
+        <a href={{ path('fos_user_resetting_request') }}>I forgot my password</a><br>
         <a href="{{ path('fos_user_registration_register') }}" class="text-center">Register a new membership</a>
 
     </div>

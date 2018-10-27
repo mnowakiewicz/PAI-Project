@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -74,6 +76,8 @@ sensio_framework_extra:
 
 fos_user:
     registration:
+        form:
+            type: OperatorBundle\Form\RegistrationType
         confirmation:
             enabled: false
             from_email:
