@@ -1,3 +1,8 @@
+common:
+    resource: "@CommonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 operator:
     resource: "@OperatorBundle/Controller/"
     type:     annotation

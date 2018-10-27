@@ -2,24 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: programista
- * Date: 21.10.18
- * Time: 20:03
+ * Date: 27.10.18
+ * Time: 12:53
  */
 
-namespace OperatorBundle\Entity;
+namespace CommonBundle\Entity;
 
-use CommonBundle\Entity\CommonEntityMethodsInterface;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 
 
 /**
- * Class Operator
- * @package OperatorBundle\Entity
- * @ORM\Entity(repositoryClass="OperatorBundle\Repository\OperatorRepository")
- * @ORM\Table(name="operator")
+ * Class CommonSuperClass
+ * @package CommonBundle\Entity
+ *
+ * @ORM\MappedSuperclass()
  */
-class Operator extends BaseUser implements CommonEntityMethodsInterface
+abstract class CommonSuperClass implements CommonEntityMethodsInterface
 {
     /**
      * @var integer
@@ -51,11 +49,9 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
      */
     public function __construct($isActive = true)
     {
-        parent::__construct();
         $this->creationDate = new \DateTime('now');
         $this->isActive = $isActive;
     }
-
 
     /**
      * @return int
@@ -73,17 +69,15 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         return $this->isActive;
     }
 
-
     /**
      * @param bool $isActive
-     * @return Operator
+     * @return CommonSuperClass
      */
     public function setIsActive(bool $isActive): CommonEntityMethodsInterface
     {
         $this->isActive = $isActive;
         return $this;
     }
-
 
     /**
      * @return \DateTime
@@ -93,17 +87,15 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         return $this->creationDate;
     }
 
-
     /**
      * @param \DateTime $creationDate
-     * @return Operator
+     * @return CommonSuperClass
      */
     public function setCreationDate(\DateTime $creationDate): CommonEntityMethodsInterface
     {
         $this->creationDate = $creationDate;
         return $this;
     }
-
 
     /**
      * @return \DateTime
@@ -113,17 +105,13 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         return $this->editDate;
     }
 
-
     /**
      * @param \DateTime $editDate
-     * @return Operator
+     * @return CommonEntityMethodsInterface
      */
     public function setEditDate(\DateTime $editDate): CommonEntityMethodsInterface
     {
         $this->editDate = $editDate;
         return $this;
     }
-
-
-
 }
