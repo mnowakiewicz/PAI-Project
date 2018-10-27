@@ -5,7 +5,8 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "OperatorBundle\\": "src/OperatorBundle"
+            "OperatorBundle\\": "src/OperatorBundle",
+            "CommonBundle\\": "src/CommonBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
@@ -15,6 +16,7 @@
     },
     "require": {
         "php": ">=7.2",
+        "almasaeed2010/adminlte": "~2.4",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/user-bundle": "^2.1",
@@ -27,6 +29,7 @@
         "symfony/symfony": "3.4.*",
         "symfony/templating": "^4.1",
         "symfony/translation": "^4.1",
+        "symfony/webpack-encore-pack": "^1.0",
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {

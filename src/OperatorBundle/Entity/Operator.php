@@ -8,6 +8,7 @@
 
 namespace OperatorBundle\Entity;
 
+use CommonBundle\Entity\CommonEntityMethodsInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -18,7 +19,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Entity(repositoryClass="OperatorBundle\Repository\OperatorRepository")
  * @ORM\Table(name="operator")
  */
-class Operator extends BaseUser
+class Operator extends BaseUser implements CommonEntityMethodsInterface
 {
     /**
      * @var integer
@@ -77,7 +78,7 @@ class Operator extends BaseUser
      * @param bool $isActive
      * @return Operator
      */
-    public function setIsActive(bool $isActive): Operator
+    public function setIsActive(bool $isActive): CommonEntityMethodsInterface
     {
         $this->isActive = $isActive;
         return $this;
@@ -97,7 +98,7 @@ class Operator extends BaseUser
      * @param \DateTime $creationDate
      * @return Operator
      */
-    public function setCreationDate(\DateTime $creationDate): Operator
+    public function setCreationDate(\DateTime $creationDate): CommonEntityMethodsInterface
     {
         $this->creationDate = $creationDate;
         return $this;
@@ -117,7 +118,7 @@ class Operator extends BaseUser
      * @param \DateTime $editDate
      * @return Operator
      */
-    public function setEditDate(\DateTime $editDate): Operator
+    public function setEditDate(\DateTime $editDate): CommonEntityMethodsInterface
     {
         $this->editDate = $editDate;
         return $this;
