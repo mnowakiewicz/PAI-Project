@@ -29,6 +29,7 @@
         "symfony/symfony": "3.4.*",
         "symfony/templating": "^4.1",
         "symfony/translation": "^4.1",
+        "symfony/webpack-encore-pack": "^1.0",
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {

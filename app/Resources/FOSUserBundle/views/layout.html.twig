@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
+    {{ include('CMS/Common/head_css.html.twig') }}
+    <body class="{% block body_class %}{% endblock body_class %}">
         <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
@@ -30,4 +27,5 @@
             {% endblock fos_user_content %}
         </div>
     </body>
+    {{ include('CMS/Common/main_scripts.html.twig') }}
 </html>
