@@ -46,6 +46,18 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     protected $editDate;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", unique=false, nullable=true, length=255)
+     */
+    protected $name;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", unique=false, nullable=true, length=255, name="lastName")
+     */
+    protected $lastName;
+
+    /**
      * Operator constructor.
      * @param bool $isActive
      */
@@ -123,6 +135,43 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         $this->editDate = $editDate;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return Operator
+     */
+    public function setName(string $name): Operator
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     * @return Operator
+     */
+    public function setLastName(string $lastName): Operator
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
 
 
 
