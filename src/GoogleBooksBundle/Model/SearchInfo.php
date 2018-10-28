@@ -27,6 +27,16 @@ class SearchInfo
     {
     }
 
+    public static function create(array $searchInfoData):SearchInfo
+    {
+        $return = new SearchInfo();
+
+        $return
+            ->setTextSnippet($searchInfoData["textSnippet"]);
+
+        return $return;
+    }
+
     /**
      * @return string
      */

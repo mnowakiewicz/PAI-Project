@@ -13,7 +13,7 @@ namespace BookBundle\Model;
  * Class ReadingMode
  * @package BookBundle\Model
  */
-class ReadingMode
+class ReadingModes
 {
 
     /**
@@ -32,6 +32,17 @@ class ReadingMode
     {
     }
 
+    public static function create(array $readingModesData): ReadingModes
+    {
+        $return = new ReadingModes();
+
+        $return
+            ->setImage($readingModesData['image'])
+            ->setText($readingModesData['text']);
+
+        return $return;
+    }
+
     /**
      * @return bool
      */
@@ -42,9 +53,9 @@ class ReadingMode
 
     /**
      * @param bool $text
-     * @return ReadingMode
+     * @return ReadingModes
      */
-    public function setText(bool $text): ReadingMode
+    public function setText(bool $text): ReadingModes
     {
         $this->text = $text;
         return $this;
@@ -60,9 +71,9 @@ class ReadingMode
 
     /**
      * @param bool $image
-     * @return ReadingMode
+     * @return ReadingModes
      */
-    public function setImage(bool $image): ReadingMode
+    public function setImage(bool $image): ReadingModes
     {
         $this->image = $image;
         return $this;

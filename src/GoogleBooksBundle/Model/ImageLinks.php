@@ -13,7 +13,7 @@ namespace BookBundle\Model;
  * Class ImageLink
  * @package BookBundle\Model
  */
-class ImageLink
+class ImageLinks
 {
     /**
      * @var string
@@ -31,6 +31,17 @@ class ImageLink
     {
     }
 
+    public static function create(array $imageLinksData):ImageLinks
+    {
+        $return = new ImageLinks();
+
+        $return
+            ->setSmallThumbnail($imageLinksData["smallThumbnail"])
+            ->setThumbnail("thumbnail");
+
+        return $return;
+    }
+
     /**
      * @return string
      */
@@ -41,9 +52,9 @@ class ImageLink
 
     /**
      * @param string $smallThumbnail
-     * @return ImageLink
+     * @return ImageLinks
      */
-    public function setSmallThumbnail(string $smallThumbnail): ImageLink
+    public function setSmallThumbnail(string $smallThumbnail): ImageLinks
     {
         $this->smallThumbnail = $smallThumbnail;
         return $this;
@@ -59,9 +70,9 @@ class ImageLink
 
     /**
      * @param string $thumbnail
-     * @return ImageLink
+     * @return ImageLinks
      */
-    public function setThumbnail(string $thumbnail): ImageLink
+    public function setThumbnail(string $thumbnail): ImageLinks
     {
         $this->thumbnail = $thumbnail;
         return $this;

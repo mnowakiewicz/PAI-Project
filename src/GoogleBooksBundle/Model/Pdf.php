@@ -27,6 +27,16 @@ class Pdf
     {
     }
 
+    public static function create(array $pdfData):Pdf
+    {
+        $return = new Pdf();
+
+        $return
+            ->setIsAvailable($pdfData["isAvailable"]);
+
+        return $return;
+    }
+
     /**
      * @return bool
      */

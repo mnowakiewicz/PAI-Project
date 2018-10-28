@@ -44,7 +44,7 @@ class Item
      */
     private $accessInfo;
     /**
-     * @var SaleInfo
+     * @var SearchInfo
      */
     private $searchInfo;
 
@@ -182,18 +182,18 @@ class Item
     }
 
     /**
-     * @return SaleInfo
+     * @return SearchInfo
      */
-    public function getSearchInfo(): SaleInfo
+    public function getSearchInfo(): SearchInfo
     {
         return $this->searchInfo;
     }
 
     /**
-     * @param SaleInfo $searchInfo
+     * @param SearchInfo $searchInfo
      * @return Item
      */
-    public function setSearchInfo(SaleInfo $searchInfo): Item
+    public function setSearchInfo(SearchInfo $searchInfo): Item
     {
         $this->searchInfo = $searchInfo;
         return $this;
