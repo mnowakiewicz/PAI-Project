@@ -35,6 +35,10 @@ class SaleInfo
     {
     }
 
+    /**
+     * @param array $saleInfoData
+     * @return SaleInfo
+     */
     public static function create(array $saleInfoData): SaleInfo
     {
         $return = new SaleInfo();

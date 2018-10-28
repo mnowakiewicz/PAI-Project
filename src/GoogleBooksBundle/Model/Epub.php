@@ -27,7 +27,11 @@ class Epub
     {
     }
 
-    public static function create(array $epubData):Epub
+    /**
+     * @param array $epubData
+     * @return Epub
+     */
+    public static function create(array $epubData): Epub
     {
         $return = new Epub();
 
@@ -54,8 +58,6 @@ class Epub
         $this->isAvailable = $isAvailable;
         return $this;
     }
-
-
 
 
 }

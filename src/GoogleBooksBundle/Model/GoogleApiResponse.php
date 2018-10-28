@@ -9,6 +9,10 @@
 namespace BookBundle\Model;
 
 
+/**
+ * Class GoogleApiResponse
+ * @package BookBundle\Model
+ */
 class GoogleApiResponse
 {
     /**
@@ -31,13 +35,17 @@ class GoogleApiResponse
     {
     }
 
+    /**
+     * @param array $googleApiResponseData
+     * @return GoogleApiResponse
+     */
     public static function create(array $googleApiResponseData): GoogleApiResponse
     {
         $return = new GoogleApiResponse();
 
-        $items = array_map(function ($data){
+        $items = array_map(function ($data) {
             return Item::create($data);
-        },$googleApiResponseData["items"]);
+        }, $googleApiResponseData["items"]);
 
         $return
             ->setKind($googleApiResponseData["kind"])

@@ -79,6 +79,10 @@ class VolumeInfo
     {
     }
 
+    /**
+     * @param array $volumeInfoData
+     * @return VolumeInfo
+     */
     public static function create(array $volumeInfoData): VolumeInfo
     {
         $return = new VolumeInfo();
@@ -353,8 +357,6 @@ class VolumeInfo
         $this->canonicalVolumeLink = $canonicalVolumeLink;
         return $this;
     }
-
-
 
 
 }
