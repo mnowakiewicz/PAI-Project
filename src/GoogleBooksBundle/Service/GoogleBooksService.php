@@ -41,6 +41,7 @@ class GoogleBooksService
         $response = $client->get($url);
 
         $response = json_decode($response->getBody()->getContents(), true);
+        dump($response);
         return GoogleApiResponse::create($response);
     }
 

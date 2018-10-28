@@ -82,6 +82,12 @@ class VolumeInfo
     private $canonicalVolumeLink;
 
     /**
+     * @var IndustryIdentifier[]
+     */
+    private $industryIdentifiers;
+
+
+    /**
      * VolumeInfo constructor.
      */
     public function __construct()
@@ -98,12 +104,14 @@ class VolumeInfo
         $volumeInfo = new VolumeInfo();
         $reflection = new \ReflectionClass($volumeInfo);
         $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
-        dump($volumeInfoData);
+
         foreach ($props as $prop){
             $propName = $prop->getName();
+
             if(array_key_exists($propName, $volumeInfoData)){
                 $functionName = 'set' . ucfirst($prop->getName());
                 $data = $volumeInfoData[$propName];
+
                 switch ($propName){
                     case 'readingModes':
                         call_user_func_array([$volumeInfo, $functionName], [ReadingModes::create($data)]);
@@ -111,12 +119,18 @@ class VolumeInfo
                     case 'imageLinks':
                         call_user_func_array([$volumeInfo, $functionName], [ImageLinks::create($data)]);
                         break;
+                    case 'industryIdentifiers':
+                        $identifiers = array_map(function ($data){
+                            return IndustryIdentifier::create($data);
+                            }, $data);
+                        call_user_func_array([$volumeInfo, $functionName], [$identifiers]);
+                        break;
                     default:
                         call_user_func_array([$volumeInfo, $functionName], [$data]);
                 }
             }
         }
-        dump($volumeInfo);
+
         return $volumeInfo;
     }
 
@@ -405,6 +419,24 @@ class VolumeInfo
     public function setAuthors(array $authors): VolumeInfo
     {
         $this->authors = $authors;
+        return $this;
+    }
+
+    /**
+     * @return IndustryIdentifier[]
+     */
+    public function getIndustryIdentifiers(): array
+    {
+        return $this->industryIdentifiers;
+    }
+
+    /**
+     * @param IndustryIdentifier[] $industryIdentifiers
+     * @return VolumeInfo
+     */
+    public function setIndustryIdentifiers(array $industryIdentifiers): VolumeInfo
+    {
+        $this->industryIdentifiers = $industryIdentifiers;
         return $this;
     }
 
