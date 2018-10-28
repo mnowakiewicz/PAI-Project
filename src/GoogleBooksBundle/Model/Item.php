@@ -56,6 +56,27 @@ class Item
     }
 
     /**
+     * @param array $itemData
+     * @return Item
+     */
+    public static function create(array $itemData): Item
+    {
+        $return = new Item();
+
+        $return
+            ->setKind($itemData["kind"])
+            ->setId($itemData["id"])
+            ->setEtag($itemData["etag"])
+            ->setSelfLink($itemData["selfLink"])
+            ->setVolumeInfo(VolumeInfo::create($itemData["volumeInfo"]))
+            ->setSaleInfo(SaleInfo::create($itemData["saleInfo"]))
+            ->setAccessInfo(AccessInfo::create($itemData["accessInfo"]))
+            ->setSearchInfo(SearchInfo::create($itemData["searchInfo"]));
+
+        return $return;
+    }
+
+    /**
      * @return string
      */
     public function getKind(): string

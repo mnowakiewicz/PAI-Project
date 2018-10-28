@@ -27,7 +27,11 @@ class SearchInfo
     {
     }
 
-    public static function create(array $searchInfoData):SearchInfo
+    /**
+     * @param array $searchInfoData
+     * @return SearchInfo
+     */
+    public static function create(array $searchInfoData): SearchInfo
     {
         $return = new SearchInfo();
 

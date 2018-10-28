@@ -27,7 +27,11 @@ class Pdf
     {
     }
 
-    public static function create(array $pdfData):Pdf
+    /**
+     * @param array $pdfData
+     * @return Pdf
+     */
+    public static function create(array $pdfData): Pdf
     {
         $return = new Pdf();
 
@@ -54,8 +58,6 @@ class Pdf
         $this->isAvailable = $isAvailable;
         return $this;
     }
-
-
 
 
 }

@@ -31,7 +31,11 @@ class ImageLinks
     {
     }
 
-    public static function create(array $imageLinksData):ImageLinks
+    /**
+     * @param array $imageLinksData
+     * @return ImageLinks
+     */
+    public static function create(array $imageLinksData): ImageLinks
     {
         $return = new ImageLinks();
 
@@ -77,7 +81,6 @@ class ImageLinks
         $this->thumbnail = $thumbnail;
         return $this;
     }
-
 
 
 }

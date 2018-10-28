@@ -63,6 +63,10 @@ class AccessInfo
     {
     }
 
+    /**
+     * @param array $accessInfoData
+     * @return AccessInfo
+     */
     public static function create(array $accessInfoData): AccessInfo
     {
         $return = new AccessInfo();
@@ -261,8 +265,6 @@ class AccessInfo
         $this->quoteSharingAllowed = $quoteSharingAllowed;
         return $this;
     }
-
-
 
 
 }

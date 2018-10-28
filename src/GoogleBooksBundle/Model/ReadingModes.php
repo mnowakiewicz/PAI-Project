@@ -32,6 +32,10 @@ class ReadingModes
     {
     }
 
+    /**
+     * @param array $readingModesData
+     * @return ReadingModes
+     */
     public static function create(array $readingModesData): ReadingModes
     {
         $return = new ReadingModes();
