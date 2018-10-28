@@ -1,3 +1,13 @@
+#google_books:
+#    resource: "@GoogleBooksBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+
+#book:
+#    resource: "@BookBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+
 #common:
 #    resource: "@CommonBundle/Controller/"
 #    type:     annotation
