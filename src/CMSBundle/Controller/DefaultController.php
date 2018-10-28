@@ -17,12 +17,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $parameters = new GoogleBooksAPIRequestParameters();
-        $parameters->setOrderBy(OrderByEnum::RELEVANCE())
-            ->setPrintType(PrintTypeEnum::MAGAZINES());
 
-        dump($parameters->getPrintType());
-        $parameters->parametersToString();
+        $parameters = new GoogleBooksAPIRequestParameters('adam');
+        $parameters->setMaxResults(1);
+        $service = $this->get('google.books.service')->getMappedModel($parameters);
         return $this->render('CMS/Index/index.html.twig');
     }
 }

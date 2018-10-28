@@ -15,3 +15,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+
+    googleApiKey: AIzaSyCh4KC9TriPPBwkV8k1RVyxM7kD5abvT5U

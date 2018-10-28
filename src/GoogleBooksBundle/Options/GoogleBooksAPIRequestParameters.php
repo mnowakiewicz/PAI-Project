@@ -16,7 +16,7 @@ namespace GoogleBooksBundle\Options;
 class GoogleBooksAPIRequestParameters
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $q;
     /**
@@ -65,7 +65,17 @@ class GoogleBooksAPIRequestParameters
     private $startIndex;
 
     /**
-     * @return null|string
+     * GoogleBooksAPIRequestParameters constructor.
+     * @param string $q
+     */
+    public function __construct(string $q)
+    {
+        $this->q = $q;
+    }
+
+
+    /**
+     * @return string
      */
     public function getQ(): ?string
     {
@@ -73,7 +83,7 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $q
+     * @param string $q
      * @return GoogleBooksAPIRequestParameters
      */
     public function setQ(?string $q): GoogleBooksAPIRequestParameters
