@@ -128,7 +128,7 @@ module.exports = function (grunt) { // jshint ignore:line
         separator: '\n\n',
         banner   : '/*! AdminLTE app.js\n'
         + '* ================\n'
-        + '* Main JS application file for AdminLTE v2. This file\n'
+        + '* Parts JS application file for AdminLTE v2. This file\n'
         + '* should be included in all pages. It controls some layout\n'
         + '* options and implements exclusive AdminLTE plugins.\n'
         + '*\n'

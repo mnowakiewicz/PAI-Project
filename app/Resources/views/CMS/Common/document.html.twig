@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ include('CMS/Common/head.html.twig') }}
+
+<body class="{% block body_class %}hold-transition skin-blue sidebar-mini{% endblock %}">
+    {% block body_content %}{% endblock %}
+</body>
+
+{{ include('CMS/Common/main_scripts.html.twig') }}
+{% block extra_scripts %}{% endblock %}
+</html>
