@@ -8,16 +8,51 @@
 
 namespace GoogleBooksBundle\Service;
 
-
-use BookBundle\Model\GoogleApiResponse;
+use GoogleBooksBundle\Model\GoogleApiResponse;
 use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GoogleBooksService
 {
-//"https://www.googleapis.com/books/v1/volumes?q=adam&key=AIzaSyCh4KC9TriPPBwkV8k1RVyxM7kD5abvT5U"
 
-    public function getMappedModel(GoogleBooksAPIRequestParameters $parameters): GoogleApiResponse
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * GoogleBooksService constructor.
+     * @param $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+
+    /**
+     * @param GoogleBooksAPIRequestParameters $parameters
+     * @return GoogleApiResponse
+     */
+    public function getMappedModel(GoogleBooksAPIRequestParameters $parameters):GoogleApiResponse
+    {
+        $url = $this->createUrl($parameters->parametersToString());
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get($url);
+
+        $response = json_decode($response->getBody()->getContents(), true);
+        return GoogleApiResponse::create($response);
+    }
+
+    private function createUrl(string $parametersToString) : string
     {
 
+        $url = 'https://www.googleapis.com/books/v1/volumes?';
+        $url .=
+            $parametersToString .
+            "&key=" .
+            $this->container->getParameter('googleApiKey');
+
+        return $url;
     }
 }

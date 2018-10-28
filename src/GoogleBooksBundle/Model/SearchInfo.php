@@ -6,7 +6,7 @@
  * Time: 12:04
  */
 
-namespace BookBundle\Model;
+namespace GoogleBooksBundle\Model;
 
 
 /**

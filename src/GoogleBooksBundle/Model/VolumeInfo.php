@@ -6,7 +6,7 @@
  * Time: 11:49
  */
 
-namespace BookBundle\Model;
+namespace GoogleBooksBundle\Model;
 
 
 /**
@@ -19,6 +19,15 @@ class VolumeInfo
      * @var string
      */
     private $title;
+    /**
+     * @var string
+     */
+    private $subtitle;
+
+    /**
+     * @var array
+     */
+    private $authors;
     /**
      * @var string
      */
@@ -46,7 +55,7 @@ class VolumeInfo
     /**
      * @var boolean
      */
-    private $allowAnonLoggin;
+    private $allowAnonLogging;
     /**
      * @var string
      */
@@ -82,28 +91,33 @@ class VolumeInfo
     /**
      * @param array $volumeInfoData
      * @return VolumeInfo
+     * @throws \ReflectionException
      */
     public static function create(array $volumeInfoData): VolumeInfo
     {
-        $return = new VolumeInfo();
-
-        $return
-            ->setTitle($volumeInfoData["title"])
-            ->setPublishedDate($volumeInfoData["publishedDate"])
-            ->setDescription($volumeInfoData["description"])
-            ->setReadingModes(ReadingModes::create($volumeInfoData["readingModes"]))
-            ->setPageCount($volumeInfoData["pageCount"])
-            ->setPrintType($volumeInfoData["printType"])
-            ->setMaturityRating($volumeInfoData["maturityRating"])
-            ->setAllowAnonLoggin($volumeInfoData["allowAnonLogging"])
-            ->setContentVersion($volumeInfoData["contentVersion"])
-            ->setImageLinks(ImageLinks::create($volumeInfoData["imageLinks"]))
-            ->setLanguage($volumeInfoData["language"])
-            ->setPreviewLink($volumeInfoData["previewLink"])
-            ->setInfoLink($volumeInfoData["infoLink"])
-            ->setCanonicalVolumeLink($volumeInfoData["canonicalVolumeLink"]);
-
-        return $return;
+        $volumeInfo = new VolumeInfo();
+        $reflection = new \ReflectionClass($volumeInfo);
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+        dump($volumeInfoData);
+        foreach ($props as $prop){
+            $propName = $prop->getName();
+            if(array_key_exists($propName, $volumeInfoData)){
+                $functionName = 'set' . ucfirst($prop->getName());
+                $data = $volumeInfoData[$propName];
+                switch ($propName){
+                    case 'readingModes':
+                        call_user_func_array([$volumeInfo, $functionName], [ReadingModes::create($data)]);
+                        break;
+                    case 'imageLinks':
+                        call_user_func_array([$volumeInfo, $functionName], [ImageLinks::create($data)]);
+                        break;
+                    default:
+                        call_user_func_array([$volumeInfo, $functionName], [$data]);
+                }
+            }
+        }
+        dump($volumeInfo);
+        return $volumeInfo;
     }
 
     /**
@@ -121,6 +135,24 @@ class VolumeInfo
     public function setTitle(string $title): VolumeInfo
     {
         $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubtitle(): string
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * @param string $subtitle
+     * @return VolumeInfo
+     */
+    public function setSubtitle(string $subtitle): VolumeInfo
+    {
+        $this->subtitle = $subtitle;
         return $this;
     }
 
@@ -235,18 +267,18 @@ class VolumeInfo
     /**
      * @return bool
      */
-    public function isAllowAnonLoggin(): bool
+    public function isAllowAnonLogging(): bool
     {
-        return $this->allowAnonLoggin;
+        return $this->allowAnonLogging;
     }
 
     /**
-     * @param bool $allowAnonLoggin
+     * @param bool $allowAnonLogging
      * @return VolumeInfo
      */
-    public function setAllowAnonLoggin(bool $allowAnonLoggin): VolumeInfo
+    public function setAllowAnonLogging(bool $allowAnonLogging): VolumeInfo
     {
-        $this->allowAnonLoggin = $allowAnonLoggin;
+        $this->allowAnonLogging = $allowAnonLogging;
         return $this;
     }
 
@@ -357,6 +389,26 @@ class VolumeInfo
         $this->canonicalVolumeLink = $canonicalVolumeLink;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getAuthors(): array
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param array $authors
+     * @return VolumeInfo
+     */
+    public function setAuthors(array $authors): VolumeInfo
+    {
+        $this->authors = $authors;
+        return $this;
+    }
+
+
 
 
 }
