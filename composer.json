@@ -8,7 +8,8 @@
             "OperatorBundle\\": "src/OperatorBundle",
             "CommonBundle\\": "src/CommonBundle",
             "BookBundle\\": "src/BookBundle",
-            "GoogleBooksBundle\\": "src/GoogleBooksBundle"
+            "GoogleBooksBundle\\": "src/GoogleBooksBundle",
+            "CMSBundle\\": "src/CMSBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },

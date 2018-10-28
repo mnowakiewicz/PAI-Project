@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new BookBundle\BookBundle(),
             new GoogleBooksBundle\GoogleBooksBundle(),
+            new CMSBundle\CMSBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
