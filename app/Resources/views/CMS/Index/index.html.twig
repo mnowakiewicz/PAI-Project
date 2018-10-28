@@ -1,29 +1,6 @@
-{% extends "CMS/Common/document.html.twig" %}
+{% extends 'CMS/Common/base.html.twig' %}
 
-{% block body_content %}
-    <!-- Site wrapper -->
-    <div class="wrapper">
-        <!-- Header / navbar -->
-        {{ include('CMS/Parts/header.html.twig') }}
-        <!-- =============================================== -->
-        {{ include('CMS/Parts/sidebar.html.twig') }}
-        <!-- =============================================== -->
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            {{ include('CMS/Parts/Content/content_header_breadcrumb.html.twig') }}
-            <!-- Main content -->
-            {{ include('CMS/Parts/Content/main_content.html.twig') }}
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <!-- Footer-->
-       {{ include('CMS/Parts/footer.html.twig') }}
-        <!-- =============================================== -->
-        <!-- Add the sidebar's background. This div must be placed
-             immediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
-    </div>
-    <!-- ./wrapper -->
+{% block content_wrapper %}
+
 
 {% endblock %}
