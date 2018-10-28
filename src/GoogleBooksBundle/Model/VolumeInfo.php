@@ -35,6 +35,10 @@ class VolumeInfo
     /**
      * @var string
      */
+    private $publisher;
+    /**
+     * @var string
+     */
     private $description;
     /**
      * @var ReadingModes
@@ -85,6 +89,10 @@ class VolumeInfo
      * @var IndustryIdentifier[]
      */
     private $industryIdentifiers;
+    /**
+     * @var array
+     */
+    private $categories;
 
 
     /**
@@ -439,6 +447,43 @@ class VolumeInfo
         $this->industryIdentifiers = $industryIdentifiers;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param array $categories
+     * @return VolumeInfo
+     */
+    public function setCategories(array $categories): VolumeInfo
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublisher(): string
+    {
+        return $this->publisher;
+    }
+
+    /**
+     * @param string $publisher
+     * @return VolumeInfo
+     */
+    public function setPublisher(string $publisher): VolumeInfo
+    {
+        $this->publisher = $publisher;
+        return $this;
+    }
+
 
 
 
