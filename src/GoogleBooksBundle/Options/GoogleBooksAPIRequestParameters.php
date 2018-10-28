@@ -289,10 +289,9 @@ class GoogleBooksAPIRequestParameters
         return $this;
     }
 
-
-
-
-
+    /**
+     * @return string
+     */
     public function parametersToString(): string
     {
         $string = '';
