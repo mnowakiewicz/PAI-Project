@@ -6,7 +6,9 @@
     "autoload": {
         "psr-4": {
             "OperatorBundle\\": "src/OperatorBundle",
-            "CommonBundle\\": "src/CommonBundle"
+            "CommonBundle\\": "src/CommonBundle",
+            "BookBundle\\": "src/BookBundle",
+            "GoogleBooksBundle\\": "src/GoogleBooksBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },

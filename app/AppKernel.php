@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new OperatorBundle\OperatorBundle(),
             new CommonBundle\CommonBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new BookBundle\BookBundle(),
+            new GoogleBooksBundle\GoogleBooksBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
