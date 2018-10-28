@@ -1,6 +1,6 @@
 <?php
 
-namespace SecurityBundle\Tests\Controller;
+namespace CMSBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
