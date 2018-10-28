@@ -16,276 +16,290 @@ namespace GoogleBooksBundle\Options;
 class GoogleBooksAPIRequestParameters
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $q;
     /**
-     * @var string
+     * @var string|null
      */
     private $filter;
     /**
-     * @var string
+     * @var string|null
      */
     private $langRestrict;
     /**
-     * @var string
+     * @var string|null
      */
     private $libraryRestrict;
     /**
-     * @var integer
+     * @var integer|null
      */
     private $maxResults;
     /**
-     * @var string
+     * @var string|null
      */
     private $orderBy;
     /**
-     * @var string
+     * @var string|null
      */
     private $partner;
     /**
-     * @var string
+     * @var string|null
      */
     private $printType;
     /**
-     * @var string
+     * @var string|null
      */
     private $projection;
     /**
-     * @var boolean
+     * @var boolean|null
      */
     private $showPreorders;
     /**
-     * @var string
+     * @var string|null
      */
     private $source;
     /**
-     * @var integer
+     * @var integer|null
      */
     private $startIndex;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getQ(): string
+    public function getQ(): ?string
     {
         return $this->q;
     }
 
     /**
-     * @param string $q
+     * @param null|string $q
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setQ(string $q): GoogleBooksAPIRequestParameters
+    public function setQ(?string $q): GoogleBooksAPIRequestParameters
     {
         $this->q = $q;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getFilter(): string
+    public function getFilter(): ?string
     {
         return $this->filter;
     }
 
-
     /**
-     * @param FilterEnum $filterEnum
+     * @param null|string $filter
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setFilter(FilterEnum $filterEnum): GoogleBooksAPIRequestParameters
+    public function setFilter(?string $filter): GoogleBooksAPIRequestParameters
     {
-        $this->filter = $filterEnum->getValue();
+        $this->filter = $filter;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLangRestrict(): string
+    public function getLangRestrict(): ?string
     {
         return $this->langRestrict;
     }
 
     /**
-     * @param string $langRestrict
+     * @param null|string $langRestrict
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLangRestrict(string $langRestrict): GoogleBooksAPIRequestParameters
+    public function setLangRestrict(?string $langRestrict): GoogleBooksAPIRequestParameters
     {
         $this->langRestrict = $langRestrict;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLibraryRestrict(): string
+    public function getLibraryRestrict(): ?string
     {
         return $this->libraryRestrict;
     }
 
-
     /**
-     * @param LibraryRestrictEnum $libraryRestrictEnum
+     * @param null|string $libraryRestrict
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLibraryRestrict(LibraryRestrictEnum $libraryRestrictEnum): GoogleBooksAPIRequestParameters
+    public function setLibraryRestrict(?string $libraryRestrict): GoogleBooksAPIRequestParameters
     {
-        $this->libraryRestrict = $libraryRestrictEnum->getValue();
+        $this->libraryRestrict = $libraryRestrict;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxResults(): int
+    public function getMaxResults(): ?int
     {
         return $this->maxResults;
     }
 
     /**
-     * @param int $maxResults
+     * @param int|null $maxResults
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setMaxResults(int $maxResults): GoogleBooksAPIRequestParameters
+    public function setMaxResults(?int $maxResults): GoogleBooksAPIRequestParameters
     {
         $this->maxResults = $maxResults;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getOrderBy(): string
+    public function getOrderBy(): ?string
     {
         return $this->orderBy;
     }
 
-
     /**
-     * @param OrderByEnum $orderByEnum
+     * @param null|string $orderBy
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setOrderBy(OrderByEnum $orderByEnum): GoogleBooksAPIRequestParameters
+    public function setOrderBy(?string $orderBy): GoogleBooksAPIRequestParameters
     {
-        $this->orderBy = $orderByEnum->getValue();
+        $this->orderBy = $orderBy;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPartner(): string
+    public function getPartner(): ?string
     {
         return $this->partner;
     }
 
     /**
-     * @param string $partner
+     * @param null|string $partner
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setPartner(string $partner): GoogleBooksAPIRequestParameters
+    public function setPartner(?string $partner): GoogleBooksAPIRequestParameters
     {
         $this->partner = $partner;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPrintType(): string
+    public function getPrintType(): ?string
     {
         return $this->printType;
     }
 
-
     /**
-     * @param PrintTypeEnum $printTypeEnum
+     * @param null|string $printType
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setPrintType(PrintTypeEnum $printTypeEnum): GoogleBooksAPIRequestParameters
+    public function setPrintType(?string $printType): GoogleBooksAPIRequestParameters
     {
-        $this->printType = $printTypeEnum->getValue();
+        $this->printType = $printType;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getProjection(): string
+    public function getProjection(): ?string
     {
         return $this->projection;
     }
 
-
     /**
-     * @param ProjectionEnum $projectionEnum
+     * @param null|string $projection
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setProjection(ProjectionEnum $projectionEnum): GoogleBooksAPIRequestParameters
+    public function setProjection(?string $projection): GoogleBooksAPIRequestParameters
     {
-        $this->projection = $projectionEnum->getValue();
+        $this->projection = $projection;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isShowPreorders(): bool
+    public function getShowPreorders(): ?bool
     {
         return $this->showPreorders;
     }
 
     /**
-     * @param bool $showPreorders
+     * @param bool|null $showPreorders
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setShowPreorders(bool $showPreorders): GoogleBooksAPIRequestParameters
+    public function setShowPreorders(?bool $showPreorders): GoogleBooksAPIRequestParameters
     {
         $this->showPreorders = $showPreorders;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSource(): string
+    public function getSource(): ?string
     {
         return $this->source;
     }
 
     /**
-     * @param string $source
+     * @param null|string $source
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setSource(string $source): GoogleBooksAPIRequestParameters
+    public function setSource(?string $source): GoogleBooksAPIRequestParameters
     {
         $this->source = $source;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getStartIndex(): int
+    public function getStartIndex(): ?int
     {
         return $this->startIndex;
     }
 
     /**
-     * @param int $startIndex
+     * @param int|null $startIndex
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setStartIndex(int $startIndex): GoogleBooksAPIRequestParameters
+    public function setStartIndex(?int $startIndex): GoogleBooksAPIRequestParameters
     {
         $this->startIndex = $startIndex;
         return $this;
     }
 
 
+    public function parametersToString(): string
+    {
+        $string = '';
+        try {
+            $reflect = new \ReflectionClass(self::class);
+            $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
+        } catch (\ReflectionException $e) {
+        }
 
+        if (count($props)) {
+            for ($i = 0; $i < count($props); $i++) {
+                $functionName = 'get' . ucfirst($props[$i]->getName());
+                if (call_user_func_array([$this, $functionName], []) != null) {
+                    $string .= $props[$i]->getName() . '=' . call_user_func_array([$this, $functionName], []) . '&';
+                }
+            }
+        }
+        $string = substr($string, 0, -1);
+        return $string;
+    }
 
 }
