@@ -35,6 +35,18 @@ class SaleInfo
     {
     }
 
+    public static function create(array $saleInfoData): SaleInfo
+    {
+        $return = new SaleInfo();
+
+        $return
+            ->setCountry($saleInfoData["country"])
+            ->setSaleability($saleInfoData["saleability"])
+            ->setIsEbook($saleInfoData["isEbook"]);
+
+        return $return;
+    }
+
     /**
      * @return string
      */

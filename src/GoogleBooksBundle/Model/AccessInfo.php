@@ -63,7 +63,24 @@ class AccessInfo
     {
     }
 
+    public static function create(array $accessInfoData): AccessInfo
+    {
+        $return = new AccessInfo();
 
+        $return
+            ->setCountry($accessInfoData["country"])
+            ->setViewability($accessInfoData["viewability"])
+            ->setEmbeddable($accessInfoData["embeddable"])
+            ->setPublicDomain($accessInfoData["publicDomain"])
+            ->setTextToSpeechPermission($accessInfoData["textToSpeechPermission"])
+            ->setEpub(Epub::create($accessInfoData["epub"]))
+            ->setPdf(Pdf::create($accessInfoData["pdf"]))
+            ->setWebReaderLink($accessInfoData["webReaderLink"])
+            ->setAccessViewStatus($accessInfoData["accessViewStatus"])
+            ->setQuoteSharingAllowed($accessInfoData["quoteSharingAllowed"]);
+
+        return $return;
+    }
 
     /**
      * @return string

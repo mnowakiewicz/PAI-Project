@@ -27,6 +27,16 @@ class Epub
     {
     }
 
+    public static function create(array $epubData):Epub
+    {
+        $return = new Epub();
+
+        $return
+            ->setIsAvailable($epubData["isAvailable"]);
+
+        return $return;
+    }
+
     /**
      * @return bool
      */

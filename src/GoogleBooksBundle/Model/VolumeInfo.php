@@ -28,7 +28,7 @@ class VolumeInfo
      */
     private $description;
     /**
-     * @var ReadingMode
+     * @var ReadingModes
      */
     private $readingModes;
     /**
@@ -52,7 +52,7 @@ class VolumeInfo
      */
     private $contentVersion;
     /**
-     * @var ImageLink
+     * @var ImageLinks
      */
     private $imageLinks;
     /**
@@ -77,6 +77,29 @@ class VolumeInfo
      */
     public function __construct()
     {
+    }
+
+    public static function create(array $volumeInfoData): VolumeInfo
+    {
+        $return = new VolumeInfo();
+
+        $return
+            ->setTitle($volumeInfoData["title"])
+            ->setPublishedDate($volumeInfoData["publishedDate"])
+            ->setDescription($volumeInfoData["description"])
+            ->setReadingModes(ReadingModes::create($volumeInfoData["readingModes"]))
+            ->setPageCount($volumeInfoData["pageCount"])
+            ->setPrintType($volumeInfoData["printType"])
+            ->setMaturityRating($volumeInfoData["maturityRating"])
+            ->setAllowAnonLoggin($volumeInfoData["allowAnonLogging"])
+            ->setContentVersion($volumeInfoData["contentVersion"])
+            ->setImageLinks(ImageLinks::create($volumeInfoData["imageLinks"]))
+            ->setLanguage($volumeInfoData["language"])
+            ->setPreviewLink($volumeInfoData["previewLink"])
+            ->setInfoLink($volumeInfoData["infoLink"])
+            ->setCanonicalVolumeLink($volumeInfoData["canonicalVolumeLink"]);
+
+        return $return;
     }
 
     /**
@@ -134,18 +157,18 @@ class VolumeInfo
     }
 
     /**
-     * @return ReadingMode
+     * @return ReadingModes
      */
-    public function getReadingModes(): ReadingMode
+    public function getReadingModes(): ReadingModes
     {
         return $this->readingModes;
     }
 
     /**
-     * @param ReadingMode $readingModes
+     * @param ReadingModes $readingModes
      * @return VolumeInfo
      */
-    public function setReadingModes(ReadingMode $readingModes): VolumeInfo
+    public function setReadingModes(ReadingModes $readingModes): VolumeInfo
     {
         $this->readingModes = $readingModes;
         return $this;
@@ -242,18 +265,18 @@ class VolumeInfo
     }
 
     /**
-     * @return ImageLink
+     * @return ImageLinks
      */
-    public function getImageLinks(): ImageLink
+    public function getImageLinks(): ImageLinks
     {
         return $this->imageLinks;
     }
 
     /**
-     * @param ImageLink $imageLinks
+     * @param ImageLinks $imageLinks
      * @return VolumeInfo
      */
-    public function setImageLinks(ImageLink $imageLinks): VolumeInfo
+    public function setImageLinks(ImageLinks $imageLinks): VolumeInfo
     {
         $this->imageLinks = $imageLinks;
         return $this;
