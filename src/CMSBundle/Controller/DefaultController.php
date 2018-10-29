@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
 
-        $parameters = new GoogleBooksAPIRequestParameters('bibla');
+        $parameters = new GoogleBooksAPIRequestParameters('adam');
         $parameters->setMaxResults(10);
         dump($service = $this->get('google.books.service')->getMappedModel($parameters));
         return $this->render('CMS/Index/index.html.twig');
