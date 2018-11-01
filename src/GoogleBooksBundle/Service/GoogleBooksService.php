@@ -43,6 +43,8 @@ class GoogleBooksService
 
 
     /**
+     * Returns mapped googleBookApi response (json) to PHP Object.
+     *
      * @param GoogleBooksAPIRequestParameters $parameters
      * @return GoogleApiResponse
      */
@@ -58,6 +60,9 @@ class GoogleBooksService
     }
 
     /**
+     * Creates URL,
+     * example https://www.googleapis.com/books/v1/volumes?q={value}$key={googleApiKey}
+     *
      * @param string $parametersToString
      * @return string
      */
@@ -74,19 +79,21 @@ class GoogleBooksService
     }
 
     /**
+     * Returns string in a format {parameter1}={value1}&{parameter2}={value2}&...{parameterN}={valueN}
+     *
      * @param GoogleBooksAPIRequestParameters $parameters
      * @return string
      */
     private function parametersToString(GoogleBooksAPIRequestParameters $parameters): string
     {
-        $props = $this->getPrivateClassFields($parameters);
+        $fields = $this->getPrivateClassFields($parameters);
 
         $string = '';
-        if (count($props)) {
-            for ($i = 0; $i < count($props); $i++) {
-                $functionName = 'get' . ucfirst($props[$i]->getName());
+        if (count($fields)) {
+            for ($i = 0; $i < count($fields); $i++) {
+                $functionName = 'get' . ucfirst($fields[$i]->getName());
                 if (call_user_func_array([$this, $functionName], []) != null) {
-                    $string .= $props[$i]->getName() . '=' . call_user_func_array([$this, $functionName], []) . '&';
+                    $string .= $fields[$i]->getName() . '=' . call_user_func_array([$this, $functionName], []) . '&';
                 }
             }
             $string = substr($string, 0, -1);
@@ -96,8 +103,11 @@ class GoogleBooksService
 
 
     /**
+     * Function returns empty array if error occurs.
+     *
      * @param GoogleBooksAPIRequestParameters $parameters
      * @return array|\ReflectionProperty
+     *
      */
     private function getPrivateClassFields(GoogleBooksAPIRequestParameters $parameters): \ReflectionProperty
     {
