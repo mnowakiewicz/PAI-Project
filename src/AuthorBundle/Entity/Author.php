@@ -24,14 +24,14 @@ class Author extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lastName", type="string", length=50, nullable=true, name="lastName")
+     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
      */
     private $lastName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $pseudonym;
 

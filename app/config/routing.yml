@@ -13,11 +13,6 @@ publisher:
     type:     annotation
     prefix:   /
 
-pubisher:
-    resource: "@PubisherBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 author:
     resource: "@AuthorBundle/Controller/"
     type:     annotation

@@ -152,4 +152,22 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return Operator
+     */
+    public function setIsActive(bool $isActive): CommonEntityMethodsInterface
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
 }

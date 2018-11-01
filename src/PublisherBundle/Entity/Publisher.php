@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Publisher
  *
  * @ORM\Table(name="publisher")
- * @ORM\Entity(repositoryClass="PublisherBundle\Repository\PublisherRepository")
+ * @ORM\Entity(repositoryClass="BookBundle\Repository\PrintTypeRepository")
  */
 class Publisher extends CommonSuperClass
 {
