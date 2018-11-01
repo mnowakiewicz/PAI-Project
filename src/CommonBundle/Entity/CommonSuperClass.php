@@ -38,7 +38,7 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface
      */
     protected $creationDate;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      * @ORM\Column(name="editDate", nullable=true, unique=false, type="datetime")
      */
     protected $editDate;
@@ -47,7 +47,7 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface
      * Operator constructor.
      * @param bool $isActive
      */
-    public function __construct($isActive = true)
+    public function __construct(bool $isActive = true)
     {
         $this->creationDate = new \DateTime('now');
         $this->isActive = $isActive;
@@ -71,7 +71,7 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface
 
     /**
      * @param bool $isActive
-     * @return CommonSuperClass
+     * @return CommonEntityMethodsInterface
      */
     public function setIsActive(bool $isActive): CommonEntityMethodsInterface
     {
@@ -89,7 +89,7 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface
 
     /**
      * @param \DateTime $creationDate
-     * @return CommonSuperClass
+     * @return CommonEntityMethodsInterface
      */
     public function setCreationDate(\DateTime $creationDate): CommonEntityMethodsInterface
     {
@@ -98,15 +98,15 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getEditDate(): \DateTime
+    public function getEditDate(): ?\DateTime
     {
         return $this->editDate;
     }
 
     /**
-     * @param \DateTime $editDate
+     * @param \DateTime|null $editDate
      * @return CommonEntityMethodsInterface
      */
     public function setEditDate(\DateTime $editDate): CommonEntityMethodsInterface

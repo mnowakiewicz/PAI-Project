@@ -51,9 +51,13 @@ class GoogleBooksService
     public function getMappedModel(GoogleBooksAPIRequestParameters $parameters):GoogleApiResponse
     {
         $url = $this->createUrl($this->parametersToString($parameters));
+
+        $this->logger->info('Sending list request to GoogeApiBooks', [
+            'url' => $url,
+        ]);
+
         $client = new \GuzzleHttp\Client();
         $response = $client->get($url);
-
         $response = json_decode($response->getBody()->getContents(), true);
         dump($response);
         return GoogleApiResponse::create($response);
@@ -92,8 +96,8 @@ class GoogleBooksService
         if (count($fields)) {
             for ($i = 0; $i < count($fields); $i++) {
                 $functionName = 'get' . ucfirst($fields[$i]->getName());
-                if (call_user_func_array([$this, $functionName], []) != null) {
-                    $string .= $fields[$i]->getName() . '=' . call_user_func_array([$this, $functionName], []) . '&';
+                if (call_user_func_array([$parameters, $functionName], []) != null) {
+                    $string .= $fields[$i]->getName() . '=' . call_user_func_array([$parameters, $functionName], []) . '&';
                 }
             }
             $string = substr($string, 0, -1);
@@ -106,10 +110,10 @@ class GoogleBooksService
      * Function returns empty array if error occurs.
      *
      * @param GoogleBooksAPIRequestParameters $parameters
-     * @return array|\ReflectionProperty
+     * @return array|\ReflectionProperty[]
      *
      */
-    private function getPrivateClassFields(GoogleBooksAPIRequestParameters $parameters): \ReflectionProperty
+    private function getPrivateClassFields(GoogleBooksAPIRequestParameters $parameters): array
     {
         try {
             $reflect = new \ReflectionClass($parameters);
