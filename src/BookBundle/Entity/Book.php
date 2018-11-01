@@ -17,7 +17,7 @@ class Book extends CommonSuperClass
     /**
      * @var string
      *
-     * @ORM\Column(name="googleId", type="string", length=50)
+     * @ORM\Column(name="googleId", type="string", length=50, name="googleId")
      */
     private $googleId;
 
@@ -45,7 +45,7 @@ class Book extends CommonSuperClass
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="publishedDate", type="datetime", nullable=true)
+     * @ORM\Column(name="publishedDate", type="datetime", nullable=true, name="publishedDate")
      */
     private $publishedDate;
 
@@ -59,7 +59,7 @@ class Book extends CommonSuperClass
     /**
      * @var int|null
      *
-     * @ORM\Column(name="pageCount", type="integer", nullable=true)
+     * @ORM\Column(name="pageCount", type="integer", nullable=true, name="pageCount")
      */
     private $pageCount;
 
@@ -73,7 +73,7 @@ class Book extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true)
+     * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true, name="webReaderLink")
      */
     private $webReaderLink;
 

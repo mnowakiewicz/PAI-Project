@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PrintType
  *
- * @ORM\Table(name="print_type")
+ * @ORM\Table(name="PrintType")
  * @ORM\Entity(repositoryClass="BookBundle\Repository\PrintTypeRepository")
  */
 class PrintType extends CommonSuperClass

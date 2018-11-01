@@ -24,7 +24,7 @@ class Author extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lastName", type="string", length=50, nullable=true)
+     * @ORM\Column(name="lastName", type="string", length=50, nullable=true, name="lastName")
      */
     private $lastName;
 

@@ -37,7 +37,7 @@ class Image extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="smallThumbnail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="smallThumbnail", type="string", length=255, nullable=true, name="smallThumbnail")
      */
     private $smallThumbnail;
 
