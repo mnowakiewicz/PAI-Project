@@ -58,22 +58,41 @@ class Item
     /**
      * @param array $itemData
      * @return Item
+     * @throws \ReflectionException
      */
     public static function create(array $itemData): Item
     {
-        $return = new Item();
+        $item = new Item();
+        $reflection = new \ReflectionClass($item);
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
 
-        $return
-            ->setKind($itemData["kind"])
-            ->setId($itemData["id"])
-            ->setEtag($itemData["etag"])
-            ->setSelfLink($itemData["selfLink"])
-            ->setVolumeInfo(VolumeInfo::create($itemData["volumeInfo"]))
-            ->setSaleInfo(SaleInfo::create($itemData["saleInfo"]))
-            ->setAccessInfo(AccessInfo::create($itemData["accessInfo"]))
-            ->setSearchInfo(SearchInfo::create($itemData["searchInfo"]));
+        foreach ($props as $prop){
+            $propName = $prop->getName();
 
-        return $return;
+            if(array_key_exists($propName, $itemData)){
+                $functionName = 'set' . ucfirst($prop->getName());
+                $data = $itemData[$propName];
+
+                switch ($propName){
+                    case 'volumeInfo':
+                        call_user_func_array([$item, $functionName], [VolumeInfo::create($data)]);
+                        break;
+                    case 'saleInfo':
+                        call_user_func_array([$item, $functionName], [SaleInfo::create($data)]);
+                        break;
+                    case 'accessInfo':
+                        call_user_func_array([$item, $functionName], [AccessInfo::create($data)]);
+                        break;
+                    case 'searchInfo':
+                        call_user_func_array([$item, $functionName], [SearchInfo::create($data)]);
+                        break;
+                    default:
+                        call_user_func_array([$item, $functionName], [$data]);
+                }
+            }
+        }
+
+        return $item;
     }
 
     /**

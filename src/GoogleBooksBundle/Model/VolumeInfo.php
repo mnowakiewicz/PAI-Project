@@ -35,6 +35,10 @@ class VolumeInfo
     /**
      * @var string
      */
+    private $publisher;
+    /**
+     * @var string
+     */
     private $description;
     /**
      * @var ReadingModes
@@ -82,6 +86,16 @@ class VolumeInfo
     private $canonicalVolumeLink;
 
     /**
+     * @var IndustryIdentifier[]
+     */
+    private $industryIdentifiers;
+    /**
+     * @var array
+     */
+    private $categories;
+
+
+    /**
      * VolumeInfo constructor.
      */
     public function __construct()
@@ -98,12 +112,14 @@ class VolumeInfo
         $volumeInfo = new VolumeInfo();
         $reflection = new \ReflectionClass($volumeInfo);
         $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
-        dump($volumeInfoData);
+
         foreach ($props as $prop){
             $propName = $prop->getName();
+
             if(array_key_exists($propName, $volumeInfoData)){
                 $functionName = 'set' . ucfirst($prop->getName());
                 $data = $volumeInfoData[$propName];
+
                 switch ($propName){
                     case 'readingModes':
                         call_user_func_array([$volumeInfo, $functionName], [ReadingModes::create($data)]);
@@ -111,12 +127,18 @@ class VolumeInfo
                     case 'imageLinks':
                         call_user_func_array([$volumeInfo, $functionName], [ImageLinks::create($data)]);
                         break;
+                    case 'industryIdentifiers':
+                        $identifiers = array_map(function ($data){
+                            return IndustryIdentifier::create($data);
+                            }, $data);
+                        call_user_func_array([$volumeInfo, $functionName], [$identifiers]);
+                        break;
                     default:
                         call_user_func_array([$volumeInfo, $functionName], [$data]);
                 }
             }
         }
-        dump($volumeInfo);
+
         return $volumeInfo;
     }
 
@@ -407,6 +429,61 @@ class VolumeInfo
         $this->authors = $authors;
         return $this;
     }
+
+    /**
+     * @return IndustryIdentifier[]
+     */
+    public function getIndustryIdentifiers(): array
+    {
+        return $this->industryIdentifiers;
+    }
+
+    /**
+     * @param IndustryIdentifier[] $industryIdentifiers
+     * @return VolumeInfo
+     */
+    public function setIndustryIdentifiers(array $industryIdentifiers): VolumeInfo
+    {
+        $this->industryIdentifiers = $industryIdentifiers;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param array $categories
+     * @return VolumeInfo
+     */
+    public function setCategories(array $categories): VolumeInfo
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublisher(): string
+    {
+        return $this->publisher;
+    }
+
+    /**
+     * @param string $publisher
+     * @return VolumeInfo
+     */
+    public function setPublisher(string $publisher): VolumeInfo
+    {
+        $this->publisher = $publisher;
+        return $this;
+    }
+
 
 
 

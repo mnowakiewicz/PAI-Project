@@ -73,11 +73,10 @@ class GoogleBooksAPIRequestParameters
         $this->q = $q;
     }
 
-
     /**
      * @return string
      */
-    public function getQ(): ?string
+    public function getQ(): string
     {
         return $this->q;
     }
@@ -86,7 +85,7 @@ class GoogleBooksAPIRequestParameters
      * @param string $q
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setQ(?string $q): GoogleBooksAPIRequestParameters
+    public function setQ(string $q): GoogleBooksAPIRequestParameters
     {
         $this->q = $q;
         return $this;
@@ -101,10 +100,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $filter
+     * @param string $filter
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setFilter(?string $filter): GoogleBooksAPIRequestParameters
+    public function setFilter(string $filter): GoogleBooksAPIRequestParameters
     {
         $this->filter = $filter;
         return $this;
@@ -119,10 +118,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $langRestrict
+     * @param string $langRestrict
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLangRestrict(?string $langRestrict): GoogleBooksAPIRequestParameters
+    public function setLangRestrict(string $langRestrict): GoogleBooksAPIRequestParameters
     {
         $this->langRestrict = $langRestrict;
         return $this;
@@ -137,10 +136,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $libraryRestrict
+     * @param string $libraryRestrict
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLibraryRestrict(?string $libraryRestrict): GoogleBooksAPIRequestParameters
+    public function setLibraryRestrict(string $libraryRestrict): GoogleBooksAPIRequestParameters
     {
         $this->libraryRestrict = $libraryRestrict;
         return $this;
@@ -155,10 +154,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param int|null $maxResults
+     * @param null $maxResults
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setMaxResults(?int $maxResults): GoogleBooksAPIRequestParameters
+    public function setMaxResults(int $maxResults): GoogleBooksAPIRequestParameters
     {
         $this->maxResults = $maxResults;
         return $this;
@@ -173,10 +172,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $orderBy
+     * @param string $orderBy
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setOrderBy(?string $orderBy): GoogleBooksAPIRequestParameters
+    public function setOrderBy(string $orderBy): GoogleBooksAPIRequestParameters
     {
         $this->orderBy = $orderBy;
         return $this;
@@ -191,10 +190,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $partner
+     * @param string $partner
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setPartner(?string $partner): GoogleBooksAPIRequestParameters
+    public function setPartner(string $partner): GoogleBooksAPIRequestParameters
     {
         $this->partner = $partner;
         return $this;
@@ -209,10 +208,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $printType
+     * @param string $printType
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setPrintType(?string $printType): GoogleBooksAPIRequestParameters
+    public function setPrintType(string $printType): GoogleBooksAPIRequestParameters
     {
         $this->printType = $printType;
         return $this;
@@ -227,10 +226,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $projection
+     * @param string $projection
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setProjection(?string $projection): GoogleBooksAPIRequestParameters
+    public function setProjection(string $projection): GoogleBooksAPIRequestParameters
     {
         $this->projection = $projection;
         return $this;
@@ -245,10 +244,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param bool|null $showPreorders
+     * @param bool $showPreorders
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setShowPreorders(?bool $showPreorders): GoogleBooksAPIRequestParameters
+    public function setShowPreorders(bool $showPreorders): GoogleBooksAPIRequestParameters
     {
         $this->showPreorders = $showPreorders;
         return $this;
@@ -263,10 +262,10 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param null|string $source
+     * @param string $source
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setSource(?string $source): GoogleBooksAPIRequestParameters
+    public function setSource(string $source): GoogleBooksAPIRequestParameters
     {
         $this->source = $source;
         return $this;
@@ -281,35 +280,13 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param int|null $startIndex
+     * @param int $startIndex
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setStartIndex(?int $startIndex): GoogleBooksAPIRequestParameters
+    public function setStartIndex(int $startIndex): GoogleBooksAPIRequestParameters
     {
         $this->startIndex = $startIndex;
         return $this;
-    }
-
-
-    public function parametersToString(): string
-    {
-        $string = '';
-        try {
-            $reflect = new \ReflectionClass(self::class);
-            $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
-        } catch (\ReflectionException $e) {
-        }
-
-        if (count($props)) {
-            for ($i = 0; $i < count($props); $i++) {
-                $functionName = 'get' . ucfirst($props[$i]->getName());
-                if (call_user_func_array([$this, $functionName], []) != null) {
-                    $string .= $props[$i]->getName() . '=' . call_user_func_array([$this, $functionName], []) . '&';
-                }
-            }
-        }
-        $string = substr($string, 0, -1);
-        return $string;
     }
 
 }
