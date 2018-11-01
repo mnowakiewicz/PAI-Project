@@ -45,7 +45,7 @@ interface CommonEntityMethodsInterface
     /**
      * @return \DateTime
      */
-    public function getEditDate(): \DateTime;
+    public function getEditDate(): ?\DateTime;
 
     /**
      * @param \DateTime $editDate

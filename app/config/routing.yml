@@ -1,12 +1,37 @@
+category:
+    resource: "@CategoryBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+image:
+    resource: "@ImageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+publisher:
+    resource: "@PublisherBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pubisher:
+    resource: "@PubisherBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+author:
+    resource: "@AuthorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 #google_books:
 #    resource: "@GoogleBooksBundle/Controller/"
 #    type:     annotation
 #    prefix:   /
 
-#book:
-#    resource: "@BookBundle/Controller/"
-#    type:     annotation
-#    prefix:   /
+book:
+    resource: "@BookBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
 #common:
 #    resource: "@CommonBundle/Controller/"

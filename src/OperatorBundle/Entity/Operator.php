@@ -40,19 +40,19 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
      */
     protected $creationDate;
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      * @ORM\Column(name="editDate", nullable=true, unique=false, type="datetime")
      */
     protected $editDate;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", unique=false, nullable=true, length=255)
      */
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", unique=false, nullable=true, length=255, name="lastName")
      */
     protected $lastName;
@@ -61,7 +61,7 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
      * Operator constructor.
      * @param bool $isActive
      */
-    public function __construct($isActive = true)
+    public function __construct(bool $isActive = true)
     {
         parent::__construct();
         $this->creationDate = new \DateTime('now');
@@ -78,33 +78,12 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     }
 
     /**
-     * @return bool
-     */
-    public function isActive(): bool
-    {
-        return $this->isActive;
-    }
-
-
-    /**
-     * @param bool $isActive
-     * @return Operator
-     */
-    public function setIsActive(bool $isActive): CommonEntityMethodsInterface
-    {
-        $this->isActive = $isActive;
-        return $this;
-    }
-
-
-    /**
      * @return \DateTime
      */
     public function getCreationDate(): \DateTime
     {
         return $this->creationDate;
     }
-
 
     /**
      * @param \DateTime $creationDate
@@ -116,11 +95,10 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         return $this;
     }
 
-
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getEditDate(): \DateTime
+    public function getEditDate(): ?\DateTime
     {
         return $this->editDate;
     }
@@ -128,7 +106,7 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
 
     /**
      * @param \DateTime $editDate
-     * @return Operator
+     * @return CommonEntityMethodsInterface
      */
     public function setEditDate(\DateTime $editDate): CommonEntityMethodsInterface
     {
@@ -137,12 +115,13 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
+
 
     /**
      * @param string $name
@@ -155,12 +134,13 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLastName()
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
+
 
     /**
      * @param string $lastName
@@ -171,8 +151,5 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         $this->lastName = $lastName;
         return $this;
     }
-
-
-
 
 }

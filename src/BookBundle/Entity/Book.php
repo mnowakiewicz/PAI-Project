@@ -29,49 +29,49 @@ class Book extends CommonSuperClass
     private $etag;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="subtitle", type="string", length=50, nullable=true)
      */
     private $subtitle;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @ORM\Column(name="publishedDate", type="datetime", nullable=true)
      */
     private $publishedDate;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(name="pageCount", type="integer", nullable=true)
      */
     private $pageCount;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="language", type="string", length=10, nullable=true)
      */
     private $language;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true)
      */
@@ -79,219 +79,184 @@ class Book extends CommonSuperClass
 
 
     /**
-     * Set googleId
-     *
+     * Book constructor.
      * @param string $googleId
-     *
-     * @return Book
+     * @param string $etag
+     * @param bool $isActive
      */
-    public function setGoogleId($googleId)
+    public function __construct(string $googleId, string $etag, bool $isActive = true)
     {
+        parent::__construct($isActive);
         $this->googleId = $googleId;
-
-        return $this;
+        $this->etag = $etag;
     }
 
     /**
-     * Get googleId
-     *
      * @return string
      */
-    public function getGoogleId()
+    public function getGoogleId(): string
     {
         return $this->googleId;
     }
 
     /**
-     * Set etag
-     *
-     * @param string $etag
-     *
+     * @param string $googleId
      * @return Book
      */
-    public function setEtag($etag)
+    public function setGoogleId(string $googleId): Book
     {
-        $this->etag = $etag;
-
+        $this->googleId = $googleId;
         return $this;
     }
 
     /**
-     * Get etag
-     *
      * @return string
      */
-    public function getEtag()
+    public function getEtag(): string
     {
         return $this->etag;
     }
 
     /**
-     * Set title
-     *
-     * @param string $title
-     *
+     * @param string $etag
      * @return Book
      */
-    public function setTitle($title)
+    public function setEtag(string $etag): Book
     {
-        $this->title = $title;
-
+        $this->etag = $etag;
         return $this;
     }
 
     /**
-     * Get title
-     *
-     * @return string
+     * @return null|string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
+
     /**
-     * Set subtitle
-     *
-     * @param string $subtitle
-     *
+     * @param string $title
      * @return Book
      */
-    public function setSubtitle($subtitle)
+    public function setTitle(string $title): Book
     {
-        $this->subtitle = $subtitle;
-
+        $this->title = $title;
         return $this;
     }
 
     /**
-     * Get subtitle
-     *
-     * @return string
+     * @return null|string
      */
-    public function getSubtitle()
+    public function getSubtitle(): ?string
     {
         return $this->subtitle;
     }
 
+
     /**
-     * Set publishedDate
-     *
-     * @param \DateTime $publishedDate
-     *
+     * @param string $subtitle
      * @return Book
      */
-    public function setPublishedDate($publishedDate)
+    public function setSubtitle(string $subtitle): Book
     {
-        $this->publishedDate = $publishedDate;
-
+        $this->subtitle = $subtitle;
         return $this;
     }
 
     /**
-     * Get publishedDate
-     *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getPublishedDate()
+    public function getPublishedDate(): ?\DateTime
     {
         return $this->publishedDate;
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
+     * @param \DateTime $publishedDate
      * @return Book
      */
-    public function setDescription($description)
+    public function setPublishedDate(\DateTime $publishedDate): Book
     {
-        $this->description = $description;
-
+        $this->publishedDate = $publishedDate;
         return $this;
     }
 
     /**
-     * Get description
-     *
-     * @return string
+     * @return null|string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * Set pageCount
-     *
-     * @param integer $pageCount
-     *
+     * @param string $description
      * @return Book
      */
-    public function setPageCount($pageCount)
+    public function setDescription(string $description): Book
     {
-        $this->pageCount = $pageCount;
-
+        $this->description = $description;
         return $this;
     }
 
     /**
-     * Get pageCount
-     *
-     * @return int
+     * @return int|null
      */
-    public function getPageCount()
+    public function getPageCount(): ?int
     {
         return $this->pageCount;
     }
 
+
     /**
-     * Set language
-     *
-     * @param string $language
-     *
+     * @param int $pageCount
      * @return Book
      */
-    public function setLanguage($language)
+    public function setPageCount(int $pageCount): Book
     {
-        $this->language = $language;
-
+        $this->pageCount = $pageCount;
         return $this;
     }
 
     /**
-     * Get language
-     *
-     * @return string
+     * @return null|string
      */
-    public function getLanguage()
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
+
     /**
-     * Set webReaderLink
-     *
-     * @param string $webReaderLink
-     *
+     * @param string $language
      * @return Book
      */
-    public function setWebReaderLink($webReaderLink)
+    public function setLanguage(string $language): Book
     {
-        $this->webReaderLink = $webReaderLink;
-
+        $this->language = $language;
         return $this;
     }
 
     /**
-     * Get webReaderLink
-     *
-     * @return string
+     * @return null|string
      */
-    public function getWebReaderLink()
+    public function getWebReaderLink(): ?string
     {
         return $this->webReaderLink;
     }
+
+
+    /**
+     * @param string $webReaderLink
+     * @return Book
+     */
+    public function setWebReaderLink(string $webReaderLink): Book
+    {
+        $this->webReaderLink = $webReaderLink;
+        return $this;
+    }
+
 }
 
