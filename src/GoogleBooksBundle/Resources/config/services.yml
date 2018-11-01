@@ -6,3 +6,4 @@ services:
     class: GoogleBooksBundle\Service\GoogleBooksService
     arguments:
       - '@service_container'
+      - '@logger'

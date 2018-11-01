@@ -289,28 +289,4 @@ class GoogleBooksAPIRequestParameters
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function parametersToString(): string
-    {
-        $string = '';
-        try {
-            $reflect = new \ReflectionClass(self::class);
-            $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
-        } catch (\ReflectionException $e) {
-        }
-
-        if (count($props)) {
-            for ($i = 0; $i < count($props); $i++) {
-                $functionName = 'get' . ucfirst($props[$i]->getName());
-                if (call_user_func_array([$this, $functionName], []) != null) {
-                    $string .= $props[$i]->getName() . '=' . call_user_func_array([$this, $functionName], []) . '&';
-                }
-            }
-        }
-        $string = substr($string, 0, -1);
-        return $string;
-    }
-
 }
