@@ -27,7 +27,6 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
      * @ORM\Id
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\OneToMany(targetEntity="BookBundle\Entity\Book", mappedBy="lastEditor")
      */
     protected $id;
 

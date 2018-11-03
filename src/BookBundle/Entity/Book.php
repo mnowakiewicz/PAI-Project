@@ -124,15 +124,15 @@ class Book extends CommonSuperClass
      * @var Operator
      *
      * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="booksCreated")
-     * @ORM\Column(name="creatorId", nullable=false, unique=false, type="bigint")
+     * @ORM\JoinColumn(name="creatorId", unique=false, nullable=false)
      */
     private $creator;
 
     /**
      * @var Operator|null
      *
-     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="id")
-     * @ORM\Column(name="lastEditorId", nullable=true, unique=false, type="bigint")
+     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator")
+     * @ORM\JoinColumn(name="lastEditorId", nullable=true, unique=false)
      */
     private $lastEditor;
 
