@@ -2,6 +2,7 @@
 
 namespace ImageBundle\Entity;
 
+use BookBundle\Entity\Book;
 use CommonBundle\Entity\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +43,14 @@ class Image extends CommonSuperClass
     private $smallThumbnail;
 
     /**
+     * @var Book|null
+     *
+     * @ORM\OneToOne(targetEntity="BookBundle\Entity\Book", inversedBy="image")
+     * @ORM\JoinColumn(name="bookId", unique=true, nullable=true)
+     */
+    private $book;
+
+    /**
      * Image constructor.
      * @param string $name
      * @param bool $isActive
@@ -51,7 +60,6 @@ class Image extends CommonSuperClass
         parent::__construct($isActive);
         $this->name = $name;
     }
-
 
     /**
      * @return string
@@ -79,9 +87,8 @@ class Image extends CommonSuperClass
         return $this->url;
     }
 
-
     /**
-     * @param string $url
+     * @param null|string $url
      * @return Image
      */
     public function setUrl(string $url): Image
@@ -98,9 +105,8 @@ class Image extends CommonSuperClass
         return $this->thumbnail;
     }
 
-
     /**
-     * @param string $thumbnail
+     * @param null|string $thumbnail
      * @return Image
      */
     public function setThumbnail(string $thumbnail): Image
@@ -117,9 +123,8 @@ class Image extends CommonSuperClass
         return $this->smallThumbnail;
     }
 
-
     /**
-     * @param string $smallThumbnail
+     * @param null|string $smallThumbnail
      * @return Image
      */
     public function setSmallThumbnail(string $smallThumbnail): Image
@@ -128,5 +133,22 @@ class Image extends CommonSuperClass
         return $this;
     }
 
+    /**
+     * @return Book|null
+     */
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    /**
+     * @param Book|null $book
+     * @return Image
+     */
+    public function setBook(Book $book): Image
+    {
+        $this->book = $book;
+        return $this;
+    }
 }
 

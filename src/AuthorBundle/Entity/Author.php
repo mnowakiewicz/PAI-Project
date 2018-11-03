@@ -2,7 +2,9 @@
 
 namespace AuthorBundle\Entity;
 
+use BookBundle\Entity\Book;
 use CommonBundle\Entity\CommonSuperClass;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,35 @@ class Author extends CommonSuperClass
      */
     private $pseudonym;
 
+
+    /**
+     * @var null|\DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true, name="birthDate")
+     */
+    private $birthDate;
+
+    /**
+     * @var null|\DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true, name="deathDate")
+     */
+    private $deathDate;
+
+    /**
+     * @var null|string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $about;
+
+    /**
+     * @var Book[]
+     *
+     * @ORM\ManyToMany(targetEntity="BookBundle\Entity\Book", mappedBy="authors")
+     */
+    private $books;
+
     /**
      * Author constructor.
      * @param string $name
@@ -44,6 +75,7 @@ class Author extends CommonSuperClass
     {
         parent::__construct($isActive);
         $this->name = $name;
+        $this->books = [];
     }
 
     /**
@@ -53,7 +85,6 @@ class Author extends CommonSuperClass
     {
         return $this->name;
     }
-
 
     /**
      * @param string $name
@@ -65,7 +96,6 @@ class Author extends CommonSuperClass
         return $this;
     }
 
-
     /**
      * @return null|string
      */
@@ -73,7 +103,6 @@ class Author extends CommonSuperClass
     {
         return $this->lastName;
     }
-
 
     /**
      * @param string $lastName
@@ -85,7 +114,6 @@ class Author extends CommonSuperClass
         return $this;
     }
 
-
     /**
      * @return null|string
      */
@@ -93,7 +121,6 @@ class Author extends CommonSuperClass
     {
         return $this->pseudonym;
     }
-
 
     /**
      * @param string $pseudonym
@@ -104,5 +131,79 @@ class Author extends CommonSuperClass
         $this->pseudonym = $pseudonym;
         return $this;
     }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getBirthDate(): ?\DateTime
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * @param \DateTime $birthDate
+     * @return Author
+     */
+    public function setBirthDate(\DateTime $birthDate): Author
+    {
+        $this->birthDate = $birthDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDeathDate(): ?\DateTime
+    {
+        return $this->deathDate;
+    }
+
+    /**
+     * @param \DateTime $deathDate
+     * @return Author
+     */
+    public function setDeathDate(\DateTime $deathDate): Author
+    {
+        $this->deathDate = $deathDate;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAbout(): ?string
+    {
+        return $this->about;
+    }
+
+    /**
+     * @param string $about
+     * @return Author
+     */
+    public function setAbout(string $about): Author
+    {
+        $this->about = $about;
+        return $this;
+    }
+
+    /**
+     * @return Book[]
+     */
+    public function getBooks(): array
+    {
+        return $this->books;
+    }
+
+    /**
+     * @param Book[] $books
+     * @return Author
+     */
+    public function setBooks(array $books): Author
+    {
+        $this->books = $books;
+        return $this;
+    }
+
+
 }
 
