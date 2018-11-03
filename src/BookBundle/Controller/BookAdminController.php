@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class BookAdminController extends Controller
 {
     /**
-     * @Route(path="/")
+     * @Route(path="/index")
      */
     public function indexAction()
     {
