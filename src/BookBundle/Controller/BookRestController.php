@@ -22,7 +22,7 @@ class BookRestController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function dataTableDataAction(Request $request)
+    public function dataTableAction(Request $request)
     {
         $dataTables = $this->get('datatables');
         try {
