@@ -51,57 +51,20 @@ class BooksDataTable implements DataTableHandlerInterface
     public function handle(DataTableQuery $request): DataTableResults
     {
         $results = new DataTableResults();
-        $results->recordsTotal = $this->setTotalNumberOfBooks($results);
 
-        $qb = $repository = $this->entityManager
-            ->getRepository('BookBundle:Book')
+        $repository  = $this->entityManager
+            ->getRepository('BookBundle:Book');
+
+        // Total number of books.
+        $results->recordsTotal = $repository->getAllActiveBooks();
+
+        // Query to get requested entities.
+        $qb = $repository
             ->createQueryBuilder('b');
 
-        $qb = $this->appendSearchConditions($request, $qb);
-        $qb = $this->addOrderingToQB($request, $qb);
-        $results = $this->setFilteredCount($results, $qb);
-        $qb = $this->restrictResults($request, $qb);
-
-        /** @var Book[] $books */
-        $books = $qb->getQuery()->getResult();
-
-        $results = $this->setData($books, $results);
-
-        return $results;
-    }
-
-    /**
-     * @param DataTableQuery $request
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
-     */
-    private function restrictResults(DataTableQuery $request, QueryBuilder $qb):QueryBuilder
-    {
-        $qb->setMaxResults($request->length);
-        $qb->setFirstResult($request->start);
-
-        return $qb;
-    }
-
-    /**
-     * @param DataTableResults $results
-     * @return DataTableResults
-     */
-    private function setTotalNumberOfBooks(DataTableResults $results): int
-    {
-        $repository = $this->entityManager->getRepository('BookBundle:Book');
-        return $results->recordsTotal = $repository->getAllActiveBooks();
-    }
-
-    /**
-     * @param DataTableQuery $request
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
-     */
-    private function appendSearchConditions(DataTableQuery $request, QueryBuilder $qb):QueryBuilder
-    {
         $expr = new Expr;
 
+        // Search.
         if ($request->search->value){
             $qb
                 ->where(
@@ -114,16 +77,7 @@ class BooksDataTable implements DataTableHandlerInterface
                 ->setParameter('search', strtolower('%'.$request->search->value.'%'));
         }
 
-        return $qb;
-    }
-
-    /**
-     * @param DataTableQuery $request
-     * @param QueryBuilder $qb
-     * @return QueryBuilder
-     */
-    private function addOrderingToQB(DataTableQuery $request, QueryBuilder $qb):QueryBuilder
-    {
+        // Order.
         foreach ($request->order as $order){
             switch ($order->column){
                 case 0: $qb->addOrderBy('b.id', $order->dir); break;
@@ -136,32 +90,20 @@ class BooksDataTable implements DataTableHandlerInterface
             }
         }
 
-        return $qb;
-    }
-
-    /**
-     * @param DataTableResults $results
-     * @param QueryBuilder $qb
-     * @return DataTableResults
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    private function setFilteredCount(DataTableResults $results, QueryBuilder $qb):DataTableResults
-    {
+        // Get filtered count.
         $queryCount = clone $qb;
         $queryCount->select('COUNT(b.id)');
         $results->recordsFiltered = $queryCount->getQuery()->getSingleScalarResult();
 
-        return $results;
-    }
 
-    /**
-     * @param Book[] $books
-     * @param DataTableResults $results
-     * @return DataTableResults
-     */
-    private function setData(array $books, DataTableResults $results):DataTableResults
-    {
+        // Restrict results.
+        $qb->setMaxResults($request->length);
+        $qb->setFirstResult($request->start);
+
+        /** @var Book[] $books */
+        $books = $qb->getQuery()->getResult();
+
+        //Response Data
         if(!empty($books)){
             foreach ($books as $book){
                 $results->data[] = [

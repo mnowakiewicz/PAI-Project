@@ -1,5 +1,0 @@
-services:
-    abstrat.data.table:
-      class: CommonBundle\DataTable\AbstractDataTable
-      abstract: true
-      arguments: ['@doctrine.orm.entity_manager']
