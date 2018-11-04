@@ -1,5 +1,5 @@
 /**
- * Arabic-Tunisia translation for bootstrap-datepicker
+ * Arabic-Tunisia Translation for bootstrap-datepicker
  * Souhaieb Besbes <besbes.souhaieb@gmail.com>
  */
 ;(function($){

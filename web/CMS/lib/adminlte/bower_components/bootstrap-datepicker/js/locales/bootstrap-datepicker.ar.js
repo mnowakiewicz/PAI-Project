@@ -1,5 +1,5 @@
 /**
- * Arabic translation for bootstrap-datepicker
+ * Arabic Translation for bootstrap-datepicker
  * Mohammed Alshehri <alshehri866@gmail.com>
  */
 ;(function($){

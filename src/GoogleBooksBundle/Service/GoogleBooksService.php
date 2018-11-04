@@ -8,10 +8,21 @@
 
 namespace GoogleBooksBundle\Service;
 
+use AuthorBundle\Entity\Author;
+use BookBundle\Entity\Book;
+use BookBundle\Entity\PrintType;
+use Doctrine\ORM\EntityManager;
 use GoogleBooksBundle\Model\GoogleApiResponse;
+use GoogleBooksBundle\Options\Enum\FilterEnum;
+use GoogleBooksBundle\Options\Enum\LibraryRestrictEnum;
+use GoogleBooksBundle\Options\Enum\OrderByEnum;
+use GoogleBooksBundle\Options\Enum\PrintTypeEnum;
+use GoogleBooksBundle\Options\Enum\ProjectionEnum;
 use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
+use ImageBundle\Entity\Image;
 use Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class GoogleBooksService
@@ -31,14 +42,28 @@ class GoogleBooksService
     private $logger;
 
     /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * GoogleBooksService constructor.
      * @param ContainerInterface $container
      * @param Logger $logger
+     * @param TokenStorage $tokenStorage
+     * @param EntityManager $entityManager
      */
-    public function __construct(ContainerInterface $container, Logger $logger)
+    public function __construct(ContainerInterface $container, Logger $logger, TokenStorage $tokenStorage, EntityManager $entityManager)
     {
         $this->container = $container;
         $this->logger = $logger;
+        $this->tokenStorage = $tokenStorage;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -48,7 +73,7 @@ class GoogleBooksService
      * @param GoogleBooksAPIRequestParameters $parameters
      * @return GoogleApiResponse
      */
-    public function getMappedModel(GoogleBooksAPIRequestParameters $parameters):GoogleApiResponse
+    public function getMappedResponseModel(GoogleBooksAPIRequestParameters $parameters ):GoogleApiResponse
     {
         $url = $this->createUrl($this->parametersToString($parameters));
 
@@ -59,7 +84,6 @@ class GoogleBooksService
         $client = new \GuzzleHttp\Client();
         $response = $client->get($url);
         $response = json_decode($response->getBody()->getContents(), true);
-        dump($response);
         return GoogleApiResponse::create($response);
     }
 
@@ -129,4 +153,105 @@ class GoogleBooksService
 
         return $props;
     }
+
+
+    /**
+     * @param GoogleApiResponse $apiResponse
+     * @return Book[]
+     */
+    public function createBookObjectsFromMappedModel(GoogleApiResponse $apiResponse):array
+    {
+        $books = [];
+        $username = $this->tokenStorage->getToken()->getUsername();
+        $repository = $this->entityManager->getRepository('OperatorBundle:Operator');
+
+        $operator = $repository->getOperatorByUsername($username);
+
+        foreach ($apiResponse -> getItems() as $item){
+            $book = new Book($operator, $item->getId(), $item->getEtag());
+            $volumeInfo = $item->getVolumeInfo();
+            $accessInfo = $item->getAccessInfo();
+
+            $authors = [];
+            foreach ($volumeInfo->getAuthors() as $author){
+                $authors[] = new Author($author);
+            }
+
+            $image = new Image($volumeInfo->getTitle());
+
+            $image
+                ->setThumbnail($volumeInfo->getImageLinks()->getThumbnail())
+                ->setSmallThumbnail($volumeInfo->getImageLinks()->getSmallThumbnail());
+
+            $book
+                ->setTitle($volumeInfo->getTitle())
+                ->setSubtitle($volumeInfo->getSubtitle())
+                ->setPublishedDate($volumeInfo->getPublishedDate())
+                ->setDescription($volumeInfo->getDescription())
+                ->setPageCount($volumeInfo->getPageCount())
+                ->setLanguage($volumeInfo->getLanguage())
+                ->setWebReaderLink($accessInfo->getWebReaderLink())
+                ->setAuthors($authors)
+                ->setPrintType(new PrintType($volumeInfo->getPrintType()))
+                ->setImage($image);
+
+            $books[] = $book;
+
+        }
+        return $books;
+    }
+
+    /**
+     * @param array $form
+     * @return GoogleBooksAPIRequestParameters
+     */
+    public function mapFormToGoogleBookParameters(array $form):GoogleBooksAPIRequestParameters
+    {
+        $googleParams = new GoogleBooksAPIRequestParameters($form['q']);
+
+        try {
+            $reflection = new \ReflectionClass($googleParams);
+        } catch (\ReflectionException $e) {
+            $this->logger->error('Error occurred while reflecting class', [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return $googleParams;
+        }
+
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+
+        foreach ($props as $prop){
+            $propName = $prop->getName();
+
+            if(array_key_exists($propName, $form) && $form[$propName] != null ){
+                $functionName = 'set' . ucfirst($prop->getName());
+                $data = $form[$propName];
+
+                switch ($propName){
+                    case 'filter':
+                        call_user_func_array([$googleParams, $functionName], [new FilterEnum($form[$propName])]);
+                        break;
+                    case 'libraryRestrict':
+                        call_user_func_array([$googleParams, $functionName], [new LibraryRestrictEnum($form[$propName])]);
+                        break;
+                    case 'orderBy':
+                        call_user_func_array([$googleParams, $functionName], [new OrderByEnum($form[$propName])]);
+                        break;
+                    case 'printType':
+                        call_user_func_array([$googleParams, $functionName], [new PrintTypeEnum($form[$propName])]);
+                        break;
+                    case 'projection':
+                        call_user_func_array([$googleParams, $functionName], [new ProjectionEnum($form[$propName])]);
+                        break;
+                    default:
+                        call_user_func_array([$googleParams, $functionName], [$data]);
+                }
+            }
+        }
+
+        return $googleParams;
+    }
+
 }

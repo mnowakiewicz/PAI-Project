@@ -1,5 +1,5 @@
 /**
- * Danish translation for bootstrap-datepicker
+ * Danish Translation for bootstrap-datepicker
  * Christian Pedersen <http://github.com/chripede>
  * Ivan Mylyanyk <https://github.com/imylyanyk>
  */

@@ -1,5 +1,5 @@
 /**
- * Breton translation for bootstrap-datepicker
+ * Breton Translation for bootstrap-datepicker
  * Gwenn Meynier <tornoz@laposte.net>
  */
 ;(function($){

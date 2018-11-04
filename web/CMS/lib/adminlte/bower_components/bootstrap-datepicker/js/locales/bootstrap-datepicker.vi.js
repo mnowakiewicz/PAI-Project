@@ -1,5 +1,5 @@
 /**
- * Vietnamese translation for bootstrap-datepicker
+ * Vietnamese Translation for bootstrap-datepicker
  * An Vo <https://github.com/anvoz/>
  */
 ;(function($){

@@ -8,6 +8,7 @@
 
 namespace OperatorBundle\Entity;
 
+use BookBundle\Entity\Book;
 use CommonBundle\Entity\CommonEntityMethodsInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -58,6 +59,21 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     protected $lastName;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="avatar", nullable=true, unique=false, type="blob")
+     */
+    protected $avatar;
+
+    /**
+     * @var Book[]
+     *
+     * @ORM\OneToMany(targetEntity="BookBundle\Entity\Book", mappedBy="creator")
+     */
+    protected $booksCreated;
+
+
+    /**
      * Operator constructor.
      * @param bool $isActive
      */
@@ -66,6 +82,7 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         parent::__construct();
         $this->creationDate = new \DateTime('now');
         $this->isActive = $isActive;
+        $this->booksCreated = [];
     }
 
 
@@ -151,5 +168,60 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         $this->lastName = $lastName;
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return Operator
+     */
+    public function setIsActive(bool $isActive): CommonEntityMethodsInterface
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param null|string $avatar
+     * @return Operator
+     */
+    public function setAvatar(string $avatar): Operator
+    {
+        $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * @return Book[]
+     */
+    public function getBooksCreated(): array
+    {
+        return $this->booksCreated;
+    }
+
+    /**
+     * @param Book[] $booksCreated
+     * @return Operator
+     */
+    public function setBooksCreated(array $booksCreated): Operator
+    {
+        $this->booksCreated = $booksCreated;
+        return $this;
+    }
+
 
 }

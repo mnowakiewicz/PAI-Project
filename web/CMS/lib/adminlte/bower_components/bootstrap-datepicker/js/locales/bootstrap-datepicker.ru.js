@@ -1,5 +1,5 @@
 /**
- * Russian translation for bootstrap-datepicker
+ * Russian Translation for bootstrap-datepicker
  * Victor Taranenko <darwin@snowdale.com>
  */
 ;(function($){

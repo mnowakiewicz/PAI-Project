@@ -1,5 +1,5 @@
 /**
- * Finnish translation for bootstrap-datepicker
+ * Finnish Translation for bootstrap-datepicker
  * Jaakko Salonen <https://github.com/jsalonen>
  */
 ;(function($){

@@ -1,5 +1,5 @@
 /**
- * Thai translation for bootstrap-datepicker
+ * Thai Translation for bootstrap-datepicker
  * Suchau Jiraprapot <seroz24@gmail.com>
  */
 ;(function($){

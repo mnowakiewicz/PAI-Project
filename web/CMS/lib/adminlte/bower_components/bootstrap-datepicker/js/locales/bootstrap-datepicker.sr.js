@@ -1,5 +1,5 @@
 /**
- * Serbian cyrillic translation for bootstrap-datepicker
+ * Serbian cyrillic Translation for bootstrap-datepicker
  * Bojan Milosavlević <milboj@gmail.com>
  */
 ;(function($){

@@ -1,5 +1,5 @@
 /**
- * Bahasa translation for bootstrap-datepicker
+ * Bahasa Translation for bootstrap-datepicker
  * Azwar Akbar <azwar.akbar@gmail.com>
  */
 ;(function($){

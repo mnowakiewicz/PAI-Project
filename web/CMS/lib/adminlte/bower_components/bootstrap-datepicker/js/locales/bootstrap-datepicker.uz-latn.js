@@ -1,5 +1,5 @@
 /**
- * Uzbek latin translation for bootstrap-datepicker
+ * Uzbek latin Translation for bootstrap-datepicker
  * Kakhramonov Javlonbek <kakjavlon@gmail.com>
  */
 ;(function($){

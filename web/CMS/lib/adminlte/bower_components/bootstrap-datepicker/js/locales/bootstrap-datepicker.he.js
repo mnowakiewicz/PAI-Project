@@ -1,5 +1,5 @@
 /**
- * Hebrew translation for bootstrap-datepicker
+ * Hebrew Translation for bootstrap-datepicker
  * Sagie Maoz <sagie@maoz.info>
  */
 ;(function($){

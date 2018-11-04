@@ -1,5 +1,5 @@
 /**
- * Hungarian translation for bootstrap-datepicker
+ * Hungarian Translation for bootstrap-datepicker
  * Sotus László <lacisan@gmail.com>
  */
 ;(function($){

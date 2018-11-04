@@ -1,5 +1,5 @@
 /**
- * Simplified Chinese translation for bootstrap-datepicker
+ * Simplified Chinese Translation for bootstrap-datepicker
  * Yuan Cheung <advanimal@gmail.com>
  */
 ;(function($){

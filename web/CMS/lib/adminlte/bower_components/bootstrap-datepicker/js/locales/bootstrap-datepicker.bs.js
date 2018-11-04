@@ -1,5 +1,5 @@
 /**
- * Bosnian translation for bootstrap-datepicker
+ * Bosnian Translation for bootstrap-datepicker
  */
 ;(function($){
 	$.fn.datepicker.dates['bs'] = {

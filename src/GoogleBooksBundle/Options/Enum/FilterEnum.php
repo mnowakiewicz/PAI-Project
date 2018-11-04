@@ -6,7 +6,7 @@
  * Time: 20:00
  */
 
-namespace GoogleBooksBundle\Options;
+namespace GoogleBooksBundle\Options\Enum;
 
 
 use MyCLabs\Enum\Enum;
@@ -37,7 +37,7 @@ class FilterEnum extends Enum
     /**
      * Google eBook with a price.
      */
-    private const PAID_EBOOKS = "paid_ebooks";
+    private const PAID_EBOOKS = "paid-ebooks";
     /**
      * Public able to see parts of text.
      */

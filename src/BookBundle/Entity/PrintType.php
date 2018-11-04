@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PrintType
  *
- * @ORM\Table(name="print_type")
+ * @ORM\Table(name="printType")
  * @ORM\Entity(repositoryClass="BookBundle\Repository\PrintTypeRepository")
  */
 class PrintType extends CommonSuperClass
@@ -20,34 +20,55 @@ class PrintType extends CommonSuperClass
      */
     private $name;
 
+    /**
+     * @var Book[]
+     *
+     * @ORM\OneToMany(targetEntity="BookBundle\Entity\Book", mappedBy="printType")
+     */
+    private $books;
+
     public function __construct(string $name, bool $isActive = true)
     {
         parent::__construct($isActive);
         $this->name = $name;
+        $this->books = [];
     }
 
     /**
-     * Set name
-     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @param string $name
-     *
      * @return PrintType
      */
-    public function setName($name)
+    public function setName(string $name): PrintType
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @return Book[]
      */
-    public function getName()
+    public function getBooks(): array
     {
-        return $this->name;
+        return $this->books;
     }
+
+    /**
+     * @param Book[] $books
+     * @return PrintType
+     */
+    public function setBooks(array $books): PrintType
+    {
+        $this->books = $books;
+        return $this;
+    }
+
 }
 

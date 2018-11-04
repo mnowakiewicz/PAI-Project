@@ -1,5 +1,5 @@
 /**
- * Persian translation for bootstrap-datepicker
+ * Persian Translation for bootstrap-datepicker
  * Mostafa Rokooie <mostafa.rokooie@gmail.com>
  */
 ;(function($){

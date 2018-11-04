@@ -1,5 +1,5 @@
 /**
- * Japanese translation for bootstrap-datepicker
+ * Japanese Translation for bootstrap-datepicker
  * Norio Suzuki <https://github.com/suzuki/>
  */
 ;(function($){

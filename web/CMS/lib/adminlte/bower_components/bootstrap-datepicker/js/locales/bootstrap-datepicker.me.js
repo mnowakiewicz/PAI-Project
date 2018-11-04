@@ -1,5 +1,5 @@
 /**
- * Montenegrin translation for bootstrap-datepicker
+ * Montenegrin Translation for bootstrap-datepicker
  * Miodrag Nikač <miodrag@restartit.me>
  */
 ;(function($){

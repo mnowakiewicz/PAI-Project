@@ -1,5 +1,5 @@
 /**
- * Welsh translation for bootstrap-datepicker
+ * Welsh Translation for bootstrap-datepicker
  * S. Morris <s.morris@bangor.ac.uk>
  */
 ;(function($){

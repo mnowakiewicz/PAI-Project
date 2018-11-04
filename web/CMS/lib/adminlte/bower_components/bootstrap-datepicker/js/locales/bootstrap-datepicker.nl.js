@@ -1,5 +1,5 @@
 /**
- * Dutch translation for bootstrap-datepicker
+ * Dutch Translation for bootstrap-datepicker
  * Reinier Goltstein <mrgoltstein@gmail.com>
  */
 ;(function($){

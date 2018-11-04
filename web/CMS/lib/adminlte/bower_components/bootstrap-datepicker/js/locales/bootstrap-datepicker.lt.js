@@ -1,5 +1,5 @@
 /**
- * Lithuanian translation for bootstrap-datepicker
+ * Lithuanian Translation for bootstrap-datepicker
  * Šarūnas Gliebus <ssharunas@yahoo.co.uk>
  */
 

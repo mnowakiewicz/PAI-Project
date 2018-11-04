@@ -1,5 +1,5 @@
 /**
- * Faroese translation for bootstrap-datepicker
+ * Faroese Translation for bootstrap-datepicker
  * Theodor Johannesen <http://github.com/theodorjohannesen>
  */
 ;(function($){

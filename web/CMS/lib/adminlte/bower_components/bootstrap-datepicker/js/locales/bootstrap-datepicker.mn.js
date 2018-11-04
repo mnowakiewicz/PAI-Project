@@ -1,5 +1,5 @@
 /**
- * Mongolian translation for bootstrap-datepicker
+ * Mongolian Translation for bootstrap-datepicker
  * Andrey Torsunov <andrey.torsunov@gmail.com>
  */
 ;(function($){

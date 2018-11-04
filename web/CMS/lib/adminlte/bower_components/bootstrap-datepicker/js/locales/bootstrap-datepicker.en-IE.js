@@ -1,5 +1,5 @@
 /**
- * Irish English translation for bootstrap-datepicker
+ * Irish English Translation for bootstrap-datepicker
  */
 ;(function($){
 	$.fn.datepicker.dates['en-IE'] = {

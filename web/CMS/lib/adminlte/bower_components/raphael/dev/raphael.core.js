@@ -2620,8 +2620,8 @@ define(["eve"], function(eve) {
          **
          * Splits matrix into primitive transformations
          = (object) in format:
-         o dx (number) translation by x
-         o dy (number) translation by y
+         o dx (number) Translation by x
+         o dy (number) Translation by y
          o scalex (number) scale by x
          o scaley (number) scale by y
          o shear (number) shear
@@ -2630,7 +2630,7 @@ define(["eve"], function(eve) {
         \*/
         matrixproto.split = function () {
             var out = {};
-            // translation
+            // Translation
             out.dx = this.e;
             out.dy = this.f;
 

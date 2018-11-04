@@ -6,7 +6,7 @@
  * Time: 20:13
  */
 
-namespace GoogleBooksBundle\Options;
+namespace GoogleBooksBundle\Options\Enum;
 
 
 use MyCLabs\Enum\Enum;

@@ -2,8 +2,13 @@
 
 namespace BookBundle\Entity;
 
+use AuthorBundle\Entity\Author;
+use CategoryBundle\Entity\Category;
 use CommonBundle\Entity\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
+use ImageBundle\Entity\Image;
+use OperatorBundle\Entity\Operator;
+use PublisherBundle\Entity\Publisher;
 
 /**
  * Book
@@ -17,14 +22,14 @@ class Book extends CommonSuperClass
     /**
      * @var string
      *
-     * @ORM\Column(name="googleId", type="string", length=50)
+     * @ORM\Column(name="googleId", nullable=true, type="string", length=50, name="googleId")
      */
     private $googleId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="etag", type="string", length=50)
+     * @ORM\Column(name="etag", nullable=true, type="string", length=50)
      */
     private $etag;
 
@@ -43,9 +48,9 @@ class Book extends CommonSuperClass
     private $subtitle;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="publishedDate", type="datetime", nullable=true)
+     * @ORM\Column(name="publishedDate", type="string", nullable=true, name="publishedDate")
      */
     private $publishedDate;
 
@@ -59,7 +64,7 @@ class Book extends CommonSuperClass
     /**
      * @var int|null
      *
-     * @ORM\Column(name="pageCount", type="integer", nullable=true)
+     * @ORM\Column(name="pageCount", type="integer", nullable=true, name="pageCount")
      */
     private $pageCount;
 
@@ -73,22 +78,78 @@ class Book extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true)
+     * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true, name="webReaderLink")
      */
     private $webReaderLink;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AuthorBundle\Entity\Author", inversedBy="books")
+     *
+     * @var Author[]
+     */
+    private $authors;
+
+    /**
+     * @var PrintType|null
+     *
+     * @ORM\ManyToOne(targetEntity="BookBundle\Entity\PrintType", inversedBy="books", cascade={"persist"})
+     * @ORM\JoinColumn(name="printTypeId", nullable=true, unique=false)
+     */
+    private $printType;
+
+    /**
+     * @var Category[]
+     *
+     * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books")
+     */
+    private $categories;
+
+    /**
+     * @var Publisher|null
+     *
+     * @ORM\ManyToOne(targetEntity="PublisherBundle\Entity\Publisher", inversedBy="books")
+     * @ORM\JoinColumn(name="publisherId", nullable=true, unique=false)
+     */
+    private $publisher;
+
+    /**
+     * @var Image|null
+     *
+     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image",mappedBy="book", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $image;
+
+    /**
+     * @var Operator
+     *
+     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="booksCreated", cascade={ "persist" })
+     * @ORM\JoinColumn(name="creatorId", unique=false, nullable=false)
+     */
+    private $creator;
+
+    /**
+     * @var Operator|null
+     *
+     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", cascade={"persist"})
+     * @ORM\JoinColumn(name="lastEditorId", nullable=true, unique=false)
+     */
+    private $lastEditor;
 
     /**
      * Book constructor.
+     * @param Operator $creator
      * @param string $googleId
      * @param string $etag
      * @param bool $isActive
      */
-    public function __construct(string $googleId, string $etag, bool $isActive = true)
+    public function __construct(Operator $creator, string $googleId, string $etag, bool $isActive = true)
     {
         parent::__construct($isActive);
         $this->googleId = $googleId;
         $this->etag = $etag;
+        $this->authors = [];
+        $this->categories = [];
+        $this->creator = $creator;
     }
 
     /**
@@ -135,12 +196,11 @@ class Book extends CommonSuperClass
         return $this->title;
     }
 
-
     /**
-     * @param string $title
+     * @param null|string $title
      * @return Book
      */
-    public function setTitle(string $title): Book
+    public function setTitle(?string $title): Book
     {
         $this->title = $title;
         return $this;
@@ -154,30 +214,29 @@ class Book extends CommonSuperClass
         return $this->subtitle;
     }
 
-
     /**
-     * @param string $subtitle
+     * @param null|string $subtitle
      * @return Book
      */
-    public function setSubtitle(string $subtitle): Book
+    public function setSubtitle(?string $subtitle): Book
     {
         $this->subtitle = $subtitle;
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return null|string
      */
-    public function getPublishedDate(): ?\DateTime
+    public function getPublishedDate(): ?string
     {
         return $this->publishedDate;
     }
 
     /**
-     * @param \DateTime $publishedDate
+     * @param null|string $publishedDate
      * @return Book
      */
-    public function setPublishedDate(\DateTime $publishedDate): Book
+    public function setPublishedDate(?string $publishedDate): Book
     {
         $this->publishedDate = $publishedDate;
         return $this;
@@ -192,10 +251,10 @@ class Book extends CommonSuperClass
     }
 
     /**
-     * @param string $description
+     * @param null|string $description
      * @return Book
      */
-    public function setDescription(string $description): Book
+    public function setDescription($description): Book
     {
         $this->description = $description;
         return $this;
@@ -209,12 +268,11 @@ class Book extends CommonSuperClass
         return $this->pageCount;
     }
 
-
     /**
-     * @param int $pageCount
+     * @param int|null $pageCount
      * @return Book
      */
-    public function setPageCount(int $pageCount): Book
+    public function setPageCount(?int $pageCount): Book
     {
         $this->pageCount = $pageCount;
         return $this;
@@ -228,12 +286,11 @@ class Book extends CommonSuperClass
         return $this->language;
     }
 
-
     /**
-     * @param string $language
+     * @param null|string $language
      * @return Book
      */
-    public function setLanguage(string $language): Book
+    public function setLanguage(?string $language): Book
     {
         $this->language = $language;
         return $this;
@@ -247,14 +304,139 @@ class Book extends CommonSuperClass
         return $this->webReaderLink;
     }
 
-
     /**
-     * @param string $webReaderLink
+     * @param null|string $webReaderLink
      * @return Book
      */
-    public function setWebReaderLink(string $webReaderLink): Book
+    public function setWebReaderLink(?string $webReaderLink): Book
     {
         $this->webReaderLink = $webReaderLink;
+        return $this;
+    }
+
+    /**
+     * @return Author[]
+     */
+    public function getAuthors(): array
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param Author[] $authors
+     * @return Book
+     */
+    public function setAuthors(array $authors): Book
+    {
+        $this->authors = $authors;
+        return $this;
+    }
+
+    /**
+     * @return PrintType|null
+     */
+    public function getPrintType(): ?PrintType
+    {
+        return $this->printType;
+    }
+
+    /**
+     * @param PrintType|null $printType
+     * @return Book
+     */
+    public function setPrintType(?PrintType $printType): Book
+    {
+        $this->printType = $printType;
+        return $this;
+    }
+
+    /**
+     * @return Category[]
+     */
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param Category[] $categories
+     * @return Book
+     */
+    public function setCategories(array $categories): Book
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
+    /**
+     * @return null|Publisher
+     */
+    public function getPublisher(): ?Publisher
+    {
+        return $this->publisher;
+    }
+
+    /**
+     * @param null|Publisher $publisher
+     * @return Book
+     */
+    public function setPublisher(?Publisher $publisher): Book
+    {
+        $this->publisher = $publisher;
+        return $this;
+    }
+
+    /**
+     * @return Image|null
+     */
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param Image|null $image
+     * @return Book
+     */
+    public function setImage(?Image $image): Book
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return Operator
+     */
+    public function getCreator(): Operator
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param Operator $creator
+     * @return Book
+     */
+    public function setCreator(Operator $creator): Book
+    {
+        $this->creator = $creator;
+        return $this;
+    }
+
+    /**
+     * @return null|Operator
+     */
+    public function getLastEditor(): ?Operator
+    {
+        return $this->lastEditor;
+    }
+
+    /**
+     * @param null|Operator $lastEditor
+     * @return Book
+     */
+    public function setLastEditor(?Operator $lastEditor): Book
+    {
+        $this->lastEditor = $lastEditor;
         return $this;
     }
 

@@ -1,5 +1,5 @@
 /**
- * Canadian English translation for bootstrap-datepicker
+ * Canadian English Translation for bootstrap-datepicker
  * Mike Nacey <mnacey@gmail.com>
  */
 ;(function($){

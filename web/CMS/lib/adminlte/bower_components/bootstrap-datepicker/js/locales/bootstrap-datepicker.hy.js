@@ -1,5 +1,5 @@
 /**
- * Armenian translation for bootstrap-datepicker
+ * Armenian Translation for bootstrap-datepicker
  * Hayk Chamyan <hamshen@gmail.com>
  */
 ;(function($){

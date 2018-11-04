@@ -1,5 +1,5 @@
 /**
- * Albanian translation for bootstrap-datepicker
+ * Albanian Translation for bootstrap-datepicker
  * Tomor Pupovci <http://www.github.com/ttomor>
  */
 ;(function($){

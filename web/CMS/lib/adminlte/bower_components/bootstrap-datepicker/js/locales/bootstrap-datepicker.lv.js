@@ -1,5 +1,5 @@
 /**
- * Latvian translation for bootstrap-datepicker
+ * Latvian Translation for bootstrap-datepicker
  * Artis Avotins <artis@apit.lv>
  */
 

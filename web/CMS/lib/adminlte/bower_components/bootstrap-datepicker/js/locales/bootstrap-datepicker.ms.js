@@ -1,5 +1,5 @@
 /**
- * Malay translation for bootstrap-datepicker
+ * Malay Translation for bootstrap-datepicker
  * Ateman Faiz <noorulfaiz@gmail.com>
  */
 ;(function($){

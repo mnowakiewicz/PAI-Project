@@ -1,5 +1,5 @@
 /**
- * Norwegian translation for bootstrap-datepicker
+ * Norwegian Translation for bootstrap-datepicker
  * George Gooding <george@nettsentrisk.no>
  */
 ;(function($){

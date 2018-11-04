@@ -1,5 +1,5 @@
 /**
- * Turkmen translation for bootstrap-datepicker
+ * Turkmen Translation for bootstrap-datepicker
  * N'Bayramberdiyev <nbayramberdiyev@outlook.com>
  */
 ;(function($){

@@ -2,6 +2,7 @@
 
 namespace ImageBundle\Entity;
 
+use BookBundle\Entity\Book;
 use CommonBundle\Entity\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,9 +38,17 @@ class Image extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="smallThumbnail", type="string", length=255, nullable=true)
+     * @ORM\Column(name="smallThumbnail", type="string", length=255, nullable=true, name="smallThumbnail")
      */
     private $smallThumbnail;
+
+    /**
+     * @var Book|null
+     *
+     * @ORM\OneToOne(targetEntity="BookBundle\Entity\Book", inversedBy="image")
+     * @ORM\JoinColumn(name="bookId", unique=true, nullable=true)
+     */
+    private $book;
 
     /**
      * Image constructor.
@@ -51,7 +60,6 @@ class Image extends CommonSuperClass
         parent::__construct($isActive);
         $this->name = $name;
     }
-
 
     /**
      * @return string
@@ -79,12 +87,11 @@ class Image extends CommonSuperClass
         return $this->url;
     }
 
-
     /**
-     * @param string $url
+     * @param null|string $url
      * @return Image
      */
-    public function setUrl(string $url): Image
+    public function setUrl(?string $url): Image
     {
         $this->url = $url;
         return $this;
@@ -98,12 +105,11 @@ class Image extends CommonSuperClass
         return $this->thumbnail;
     }
 
-
     /**
-     * @param string $thumbnail
+     * @param null|string $thumbnail
      * @return Image
      */
-    public function setThumbnail(string $thumbnail): Image
+    public function setThumbnail(?string $thumbnail): Image
     {
         $this->thumbnail = $thumbnail;
         return $this;
@@ -117,16 +123,34 @@ class Image extends CommonSuperClass
         return $this->smallThumbnail;
     }
 
-
     /**
-     * @param string $smallThumbnail
+     * @param null|string $smallThumbnail
      * @return Image
      */
-    public function setSmallThumbnail(string $smallThumbnail): Image
+    public function setSmallThumbnail(?string $smallThumbnail): Image
     {
         $this->smallThumbnail = $smallThumbnail;
         return $this;
     }
+
+    /**
+     * @return Book|null
+     */
+    public function getBook(): ?Book
+    {
+        return $this->book;
+    }
+
+    /**
+     * @param Book|null $book
+     * @return Image
+     */
+    public function setBook(?Book $book): Image
+    {
+        $this->book = $book;
+        return $this;
+    }
+
 
 }
 

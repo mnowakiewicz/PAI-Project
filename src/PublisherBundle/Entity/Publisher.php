@@ -2,6 +2,7 @@
 
 namespace PublisherBundle\Entity;
 
+use BookBundle\Entity\Book;
 use CommonBundle\Entity\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Publisher
  *
  * @ORM\Table(name="publisher")
- * @ORM\Entity(repositoryClass="PublisherBundle\Repository\PublisherRepository")
+ * @ORM\Entity(repositoryClass="BookBundle\Repository\PrintTypeRepository")
  */
 class Publisher extends CommonSuperClass
 {
@@ -22,6 +23,14 @@ class Publisher extends CommonSuperClass
     private $name;
 
     /**
+     * @var Book[]
+     *
+     * @ORM\OneToMany(targetEntity="BookBundle\Entity\Book", mappedBy="publisher")
+     */
+    private $books;
+
+
+    /**
      * Publisher constructor.
      * @param string $name
      * @param bool $isActive
@@ -30,6 +39,7 @@ class Publisher extends CommonSuperClass
     {
         parent::__construct($isActive);
         $this->name = $name;
+        $this->books = [];
     }
 
     /**
@@ -55,5 +65,24 @@ class Publisher extends CommonSuperClass
     {
         return $this->name;
     }
+
+    /**
+     * @return Book[]
+     */
+    public function getBooks(): array
+    {
+        return $this->books;
+    }
+
+    /**
+     * @param Book[] $books
+     * @return Publisher
+     */
+    public function setBooks(array $books): Publisher
+    {
+        $this->books = $books;
+        return $this;
+    }
+
 }
 

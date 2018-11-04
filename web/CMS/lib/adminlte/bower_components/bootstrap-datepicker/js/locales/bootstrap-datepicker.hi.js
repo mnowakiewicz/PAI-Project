@@ -1,5 +1,5 @@
 /**
- * Hindi translation for bootstrap-datepicker
+ * Hindi Translation for bootstrap-datepicker
  * Visar Uruqi <visar.uruqi@gmail.com>
  */
 ; (function($){

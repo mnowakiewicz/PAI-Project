@@ -1,5 +1,5 @@
 /**
- * Tamil translation for bootstrap-datepicker
+ * Tamil Translation for bootstrap-datepicker
  * Abubacker Siddik A <abuabdul86@hotmail.com>
  */
 ;(function($){

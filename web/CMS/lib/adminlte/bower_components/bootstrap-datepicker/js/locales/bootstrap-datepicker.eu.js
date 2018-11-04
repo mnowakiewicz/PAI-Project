@@ -1,5 +1,5 @@
 /**
- * Basque translation for bootstrap-datepicker
+ * Basque Translation for bootstrap-datepicker
  * Arkaitz Etxeberria <kondi80@gmail.com>
  */
 ;(function($){

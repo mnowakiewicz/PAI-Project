@@ -1,5 +1,5 @@
 /**
- * Slovene translation for bootstrap-datepicker
+ * Slovene Translation for bootstrap-datepicker
  * Gregor Rudolf <gregor.rudolf@gmail.com>
  */
 ;(function($){

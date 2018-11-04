@@ -16,11 +16,11 @@ namespace GoogleBooksBundle\Model;
 class ImageLinks
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $smallThumbnail;
     /**
-     * @var string
+     * @var string|null
      */
     private $thumbnail;
 
@@ -47,40 +47,41 @@ class ImageLinks
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSmallThumbnail(): string
+    public function getSmallThumbnail(): ?string
     {
         return $this->smallThumbnail;
     }
 
     /**
-     * @param string $smallThumbnail
+     * @param null|string $smallThumbnail
      * @return ImageLinks
      */
-    public function setSmallThumbnail(string $smallThumbnail): ImageLinks
+    public function setSmallThumbnail(?string $smallThumbnail): ImageLinks
     {
         $this->smallThumbnail = $smallThumbnail;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getThumbnail(): string
+    public function getThumbnail(): ?string
     {
         return $this->thumbnail;
     }
 
     /**
-     * @param string $thumbnail
+     * @param null|string $thumbnail
      * @return ImageLinks
      */
-    public function setThumbnail(string $thumbnail): ImageLinks
+    public function setThumbnail(?string $thumbnail): ImageLinks
     {
         $this->thumbnail = $thumbnail;
         return $this;
     }
+
 
 
 }

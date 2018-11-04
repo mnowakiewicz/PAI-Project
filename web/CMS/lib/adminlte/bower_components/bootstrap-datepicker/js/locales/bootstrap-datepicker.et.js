@@ -1,5 +1,5 @@
 /**
- * Estonian translation for bootstrap-datepicker
+ * Estonian Translation for bootstrap-datepicker
  * Ando Roots <https://github.com/anroots>
  * Fixes by Illimar Tambek <<https://github.com/ragulka>
  */

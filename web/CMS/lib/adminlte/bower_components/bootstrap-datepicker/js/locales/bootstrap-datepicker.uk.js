@@ -1,5 +1,5 @@
 /**
- * Ukrainian translation for bootstrap-datepicker
+ * Ukrainian Translation for bootstrap-datepicker
  * Igor Polynets
  */
 ;(function($){

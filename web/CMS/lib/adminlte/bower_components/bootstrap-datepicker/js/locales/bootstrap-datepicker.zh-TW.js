@@ -1,5 +1,5 @@
 /**
- * Traditional Chinese translation for bootstrap-datepicker
+ * Traditional Chinese Translation for bootstrap-datepicker
  * Rung-Sheng Jang <daniel@i-trend.co.cc>
  * FrankWu  <frankwu100@gmail.com> Fix more appropriate use of Traditional Chinese habit
  */

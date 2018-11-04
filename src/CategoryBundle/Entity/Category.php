@@ -2,7 +2,9 @@
 
 namespace CategoryBundle\Entity;
 
+use BookBundle\Entity\Book;
 use CommonBundle\Entity\CommonSuperClass;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +23,13 @@ class Category extends CommonSuperClass
     private $name;
 
     /**
+     * @var Book[]
+     *
+     * @ORM\ManyToMany(targetEntity="BookBundle\Entity\Book", mappedBy="categories")
+     */
+    private $books;
+
+    /**
      * Category constructor.
      * @param string $name
      * @param bool $isActive
@@ -29,30 +38,44 @@ class Category extends CommonSuperClass
     {
         parent::__construct($isActive);
         $this->name = $name;
+        $this->books = [];
     }
 
     /**
-     * Set name
-     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @param string $name
-     *
      * @return Category
      */
-    public function setName($name)
+    public function setName(string $name): Category
     {
         $this->name = $name;
-
         return $this;
     }
 
     /**
-     * Get name
-     *
-     * @return string
+     * @return Book[]
      */
-    public function getName()
+    public function getBooks(): array
     {
-        return $this->name;
+        return $this->books;
     }
+
+    /**
+     * @param Book[] $books
+     * @return Category
+     */
+    public function setBooks(array $books): Category
+    {
+        $this->books = $books;
+        return $this;
+    }
+
 }
 

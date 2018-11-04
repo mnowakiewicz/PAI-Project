@@ -7,3 +7,5 @@ services:
     arguments:
       - '@service_container'
       - '@logger'
+      - '@security.token_storage'
+      - '@doctrine.orm.entity_manager'

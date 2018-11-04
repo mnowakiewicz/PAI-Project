@@ -1,5 +1,5 @@
 /**
- * Icelandic translation for bootstrap-datepicker
+ * Icelandic Translation for bootstrap-datepicker
  * Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>
  */
 ;(function($){
