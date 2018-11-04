@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new PublisherBundle\PublisherBundle(),
             new ImageBundle\ImageBundle(),
             new CategoryBundle\CategoryBundle(),
+            new DataTables\DataTablesBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
