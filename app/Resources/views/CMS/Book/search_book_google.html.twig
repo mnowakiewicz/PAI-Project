@@ -43,6 +43,7 @@
             $(function () {
                 $('#data-table').DataTable({
                     serverSide: true,
+                    searching: false,
                     ajax: '{{ path('api_books_datatable_data') }}'
                 });
             })

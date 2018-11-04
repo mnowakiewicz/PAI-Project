@@ -91,7 +91,7 @@ class Image extends CommonSuperClass
      * @param null|string $url
      * @return Image
      */
-    public function setUrl(string $url): Image
+    public function setUrl(?string $url): Image
     {
         $this->url = $url;
         return $this;
@@ -109,7 +109,7 @@ class Image extends CommonSuperClass
      * @param null|string $thumbnail
      * @return Image
      */
-    public function setThumbnail(string $thumbnail): Image
+    public function setThumbnail(?string $thumbnail): Image
     {
         $this->thumbnail = $thumbnail;
         return $this;
@@ -127,7 +127,7 @@ class Image extends CommonSuperClass
      * @param null|string $smallThumbnail
      * @return Image
      */
-    public function setSmallThumbnail(string $smallThumbnail): Image
+    public function setSmallThumbnail(?string $smallThumbnail): Image
     {
         $this->smallThumbnail = $smallThumbnail;
         return $this;
@@ -145,10 +145,12 @@ class Image extends CommonSuperClass
      * @param Book|null $book
      * @return Image
      */
-    public function setBook(Book $book): Image
+    public function setBook(?Book $book): Image
     {
         $this->book = $book;
         return $this;
     }
+
+
 }
 

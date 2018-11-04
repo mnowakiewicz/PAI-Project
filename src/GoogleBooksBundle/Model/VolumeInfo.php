@@ -16,11 +16,11 @@ namespace GoogleBooksBundle\Model;
 class VolumeInfo
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $title;
     /**
-     * @var string
+     * @var string|null
      */
     private $subtitle;
 
@@ -29,39 +29,39 @@ class VolumeInfo
      */
     private $authors;
     /**
-     * @var string
+     * @var string|null
      */
     private $publishedDate;
     /**
-     * @var string
+     * @var string|null
      */
     private $publisher;
     /**
-     * @var string
+     * @var string|null
      */
     private $description;
     /**
-     * @var ReadingModes
+     * @var ReadingModes|null
      */
     private $readingModes;
     /**
-     * @var integer
+     * @var integer|null
      */
     private $pageCount;
     /**
-     * @var string
+     * @var string|null
      */
     private $printType;
     /**
-     * @var string
+     * @var string|null
      */
     private $maturityRating;
     /**
-     * @var boolean
+     * @var boolean|null
      */
     private $allowAnonLogging;
     /**
-     * @var string
+     * @var string|null
      */
     private $contentVersion;
     /**
@@ -69,28 +69,28 @@ class VolumeInfo
      */
     private $imageLinks;
     /**
-     * @var string
+     * @var string|null
      */
     private $language;
     /**
-     * @var string
+     * @var string|null
      */
     private $previewLink;
     /**
-     * @var string
+     * @var string|null
      */
     private $infoLink;
     /**
-     * @var string
+     * @var string|null
      */
     private $canonicalVolumeLink;
 
     /**
-     * @var IndustryIdentifier[]
+     * @var IndustryIdentifier[]|null
      */
     private $industryIdentifiers;
     /**
-     * @var array
+     * @var array|null
      */
     private $categories;
 
@@ -100,6 +100,8 @@ class VolumeInfo
      */
     public function __construct()
     {
+        $this->authors = [];
+        $this->imageLinks = new ImageLinks();
     }
 
     /**
@@ -143,272 +145,328 @@ class VolumeInfo
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param null|string $title
      * @return VolumeInfo
      */
-    public function setTitle(string $title): VolumeInfo
+    public function setTitle(?string $title): VolumeInfo
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSubtitle(): string
+    public function getSubtitle(): ?string
     {
         return $this->subtitle;
     }
 
     /**
-     * @param string $subtitle
+     * @param null|string $subtitle
      * @return VolumeInfo
      */
-    public function setSubtitle(string $subtitle): VolumeInfo
+    public function setSubtitle(?string $subtitle): VolumeInfo
     {
         $this->subtitle = $subtitle;
         return $this;
     }
 
+
+
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPublishedDate(): string
+    public function getPublishedDate(): ?string
     {
         return $this->publishedDate;
     }
 
     /**
-     * @param string $publishedDate
+     * @param null|string $publishedDate
      * @return VolumeInfo
      */
-    public function setPublishedDate(string $publishedDate): VolumeInfo
+    public function setPublishedDate(?string $publishedDate): VolumeInfo
     {
         $this->publishedDate = $publishedDate;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDescription(): string
+    public function getPublisher(): ?string
+    {
+        return $this->publisher;
+    }
+
+    /**
+     * @param null|string $publisher
+     * @return VolumeInfo
+     */
+    public function setPublisher(?string $publisher): VolumeInfo
+    {
+        $this->publisher = $publisher;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param null|string $description
      * @return VolumeInfo
      */
-    public function setDescription(string $description): VolumeInfo
+    public function setDescription(?string $description): VolumeInfo
     {
         $this->description = $description;
         return $this;
     }
 
     /**
-     * @return ReadingModes
+     * @return ReadingModes|null
      */
-    public function getReadingModes(): ReadingModes
+    public function getReadingModes(): ?ReadingModes
     {
         return $this->readingModes;
     }
 
     /**
-     * @param ReadingModes $readingModes
+     * @param ReadingModes|null $readingModes
      * @return VolumeInfo
      */
-    public function setReadingModes(ReadingModes $readingModes): VolumeInfo
+    public function setReadingModes(?ReadingModes $readingModes): VolumeInfo
     {
         $this->readingModes = $readingModes;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPageCount(): int
+    public function getPageCount(): ?int
     {
         return $this->pageCount;
     }
 
     /**
-     * @param int $pageCount
+     * @param int|null $pageCount
      * @return VolumeInfo
      */
-    public function setPageCount(int $pageCount): VolumeInfo
+    public function setPageCount(?int $pageCount): VolumeInfo
     {
         $this->pageCount = $pageCount;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPrintType(): string
+    public function getPrintType(): ?string
     {
         return $this->printType;
     }
 
     /**
-     * @param string $printType
+     * @param null|string $printType
      * @return VolumeInfo
      */
-    public function setPrintType(string $printType): VolumeInfo
+    public function setPrintType(?string $printType): VolumeInfo
     {
         $this->printType = $printType;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMaturityRating(): string
+    public function getMaturityRating(): ?string
     {
         return $this->maturityRating;
     }
 
     /**
-     * @param string $maturityRating
+     * @param null|string $maturityRating
      * @return VolumeInfo
      */
-    public function setMaturityRating(string $maturityRating): VolumeInfo
+    public function setMaturityRating(?string $maturityRating): VolumeInfo
     {
         $this->maturityRating = $maturityRating;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isAllowAnonLogging(): bool
+    public function getAllowAnonLogging(): ?bool
     {
         return $this->allowAnonLogging;
     }
 
     /**
-     * @param bool $allowAnonLogging
+     * @param bool|null $allowAnonLogging
      * @return VolumeInfo
      */
-    public function setAllowAnonLogging(bool $allowAnonLogging): VolumeInfo
+    public function setAllowAnonLogging(?bool $allowAnonLogging): VolumeInfo
     {
         $this->allowAnonLogging = $allowAnonLogging;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getContentVersion(): string
+    public function getContentVersion(): ?string
     {
         return $this->contentVersion;
     }
 
     /**
-     * @param string $contentVersion
+     * @param null|string $contentVersion
      * @return VolumeInfo
      */
-    public function setContentVersion(string $contentVersion): VolumeInfo
+    public function setContentVersion(?string $contentVersion): VolumeInfo
     {
         $this->contentVersion = $contentVersion;
         return $this;
     }
 
     /**
-     * @return ImageLinks
+     * @return ImageLinks|null
      */
-    public function getImageLinks(): ImageLinks
+    public function getImageLinks(): ?ImageLinks
     {
         return $this->imageLinks;
     }
 
     /**
-     * @param ImageLinks $imageLinks
+     * @param ImageLinks|null $imageLinks
      * @return VolumeInfo
      */
-    public function setImageLinks(ImageLinks $imageLinks): VolumeInfo
+    public function setImageLinks(?ImageLinks $imageLinks): VolumeInfo
     {
         $this->imageLinks = $imageLinks;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLanguage(): string
+    public function getLanguage(): ?string
     {
         return $this->language;
     }
 
     /**
-     * @param string $language
+     * @param null|string $language
      * @return VolumeInfo
      */
-    public function setLanguage(string $language): VolumeInfo
+    public function setLanguage(?string $language): VolumeInfo
     {
         $this->language = $language;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPreviewLink(): string
+    public function getPreviewLink(): ?string
     {
         return $this->previewLink;
     }
 
     /**
-     * @param string $previewLink
+     * @param null|string $previewLink
      * @return VolumeInfo
      */
-    public function setPreviewLink(string $previewLink): VolumeInfo
+    public function setPreviewLink(?string $previewLink): VolumeInfo
     {
         $this->previewLink = $previewLink;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getInfoLink(): string
+    public function getInfoLink(): ?string
     {
         return $this->infoLink;
     }
 
     /**
-     * @param string $infoLink
+     * @param null|string $infoLink
      * @return VolumeInfo
      */
-    public function setInfoLink(string $infoLink): VolumeInfo
+    public function setInfoLink(?string $infoLink): VolumeInfo
     {
         $this->infoLink = $infoLink;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCanonicalVolumeLink(): string
+    public function getCanonicalVolumeLink(): ?string
     {
         return $this->canonicalVolumeLink;
     }
 
     /**
-     * @param string $canonicalVolumeLink
+     * @param null|string $canonicalVolumeLink
      * @return VolumeInfo
      */
-    public function setCanonicalVolumeLink(string $canonicalVolumeLink): VolumeInfo
+    public function setCanonicalVolumeLink(?string $canonicalVolumeLink): VolumeInfo
     {
         $this->canonicalVolumeLink = $canonicalVolumeLink;
+        return $this;
+    }
+
+    /**
+     * @return IndustryIdentifier[]|null
+     */
+    public function getIndustryIdentifiers(): ?array
+    {
+        return $this->industryIdentifiers;
+    }
+
+    /**
+     * @param IndustryIdentifier[]|null $industryIdentifiers
+     * @return VolumeInfo
+     */
+    public function setIndustryIdentifiers(?array $industryIdentifiers): VolumeInfo
+    {
+        $this->industryIdentifiers = $industryIdentifiers;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getCategories(): ?array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param array|null $categories
+     * @return VolumeInfo
+     */
+    public function setCategories(?array $categories): VolumeInfo
+    {
+        $this->categories = $categories;
         return $this;
     }
 
@@ -427,60 +485,6 @@ class VolumeInfo
     public function setAuthors(array $authors): VolumeInfo
     {
         $this->authors = $authors;
-        return $this;
-    }
-
-    /**
-     * @return IndustryIdentifier[]
-     */
-    public function getIndustryIdentifiers(): array
-    {
-        return $this->industryIdentifiers;
-    }
-
-    /**
-     * @param IndustryIdentifier[] $industryIdentifiers
-     * @return VolumeInfo
-     */
-    public function setIndustryIdentifiers(array $industryIdentifiers): VolumeInfo
-    {
-        $this->industryIdentifiers = $industryIdentifiers;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCategories(): array
-    {
-        return $this->categories;
-    }
-
-    /**
-     * @param array $categories
-     * @return VolumeInfo
-     */
-    public function setCategories(array $categories): VolumeInfo
-    {
-        $this->categories = $categories;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPublisher(): string
-    {
-        return $this->publisher;
-    }
-
-    /**
-     * @param string $publisher
-     * @return VolumeInfo
-     */
-    public function setPublisher(string $publisher): VolumeInfo
-    {
-        $this->publisher = $publisher;
         return $this;
     }
 

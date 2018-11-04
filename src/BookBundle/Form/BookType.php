@@ -14,8 +14,6 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('googleId')
-            ->add('etag')
             ->add('title')
             ->add('subtitle')
             ->add('publishedDate')

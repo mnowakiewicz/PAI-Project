@@ -8,10 +8,16 @@
 
 namespace GoogleBooksBundle\Service;
 
+use AuthorBundle\Entity\Author;
+use BookBundle\Entity\Book;
+use BookBundle\Entity\PrintType;
+use Doctrine\ORM\EntityManager;
 use GoogleBooksBundle\Model\GoogleApiResponse;
 use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
+use ImageBundle\Entity\Image;
 use Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class GoogleBooksService
@@ -31,14 +37,28 @@ class GoogleBooksService
     private $logger;
 
     /**
+     * @var TokenStorage
+     */
+    private $tokenStorage;
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * GoogleBooksService constructor.
      * @param ContainerInterface $container
      * @param Logger $logger
+     * @param TokenStorage $tokenStorage
+     * @param EntityManager $entityManager
      */
-    public function __construct(ContainerInterface $container, Logger $logger)
+    public function __construct(ContainerInterface $container, Logger $logger, TokenStorage $tokenStorage, EntityManager $entityManager)
     {
         $this->container = $container;
         $this->logger = $logger;
+        $this->tokenStorage = $tokenStorage;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -128,5 +148,52 @@ class GoogleBooksService
         }
 
         return $props;
+    }
+
+
+    /**
+     * @param GoogleApiResponse $apiResponse
+     * @return Book[]
+     */
+    public function createBookObjectsFromMappedModel(GoogleApiResponse $apiResponse):array
+    {
+        $books = [];
+        $username = $this->tokenStorage->getToken()->getUsername();
+        $repository = $this->entityManager->getRepository('OperatorBundle:Operator');
+
+        $operator = $repository->getOperatorByUsername($username);
+
+        foreach ($apiResponse -> getItems() as $item){
+            $book = new Book($operator, $item->getId(), $item->getEtag());
+            $volumeInfo = $item->getVolumeInfo();
+            $accessInfo = $item->getAccessInfo();
+
+            $authors = [];
+            foreach ($volumeInfo->getAuthors() as $author){
+                $authors[] = new Author($author);
+            }
+
+            $image = new Image($volumeInfo->getTitle());
+
+            $image
+                ->setThumbnail($volumeInfo->getImageLinks()->getThumbnail())
+                ->setSmallThumbnail($volumeInfo->getImageLinks()->getSmallThumbnail());
+
+            $book
+                ->setTitle($volumeInfo->getTitle())
+                ->setSubtitle($volumeInfo->getSubtitle())
+                ->setPublishedDate($volumeInfo->getPublishedDate())
+                ->setDescription($volumeInfo->getDescription())
+                ->setPageCount($volumeInfo->getPageCount())
+                ->setLanguage($volumeInfo->getLanguage())
+                ->setWebReaderLink($accessInfo->getWebReaderLink())
+                ->setAuthors($authors)
+                ->setPrintType(new PrintType($volumeInfo->getPrintType()))
+                ->setImage($image);
+
+            $books[] = $book;
+
+        }
+        return $books;
     }
 }

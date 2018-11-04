@@ -3,7 +3,6 @@
 namespace BookBundle\Controller;
 
 
-use DataTables\DataTablesInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  *
  * @Route(path="/api/v1")
  */
-class BookRestController extends Controller
+class RestBookControllerController extends Controller
 {
     /**
      * @Route("/datatable/data", name="api_books_datatable_data")
@@ -35,3 +34,5 @@ class BookRestController extends Controller
     }
 
 }
+
+

@@ -49,9 +49,9 @@ class Book extends CommonSuperClass
     private $subtitle;
 
     /**
-     * @var \DateTime|null
+     * @var string|null
      *
-     * @ORM\Column(name="publishedDate", type="datetime", nullable=true, name="publishedDate")
+     * @ORM\Column(name="publishedDate", type="string", nullable=true, name="publishedDate")
      */
     private $publishedDate;
 
@@ -93,7 +93,7 @@ class Book extends CommonSuperClass
     /**
      * @var PrintType|null
      *
-     * @ORM\ManyToOne(targetEntity="BookBundle\Entity\PrintType", inversedBy="books")
+     * @ORM\ManyToOne(targetEntity="BookBundle\Entity\PrintType", inversedBy="books", cascade={"persist"})
      * @ORM\JoinColumn(name="printTypeId", nullable=true, unique=false)
      */
     private $printType;
@@ -123,7 +123,7 @@ class Book extends CommonSuperClass
     /**
      * @var Operator
      *
-     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="booksCreated")
+     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="booksCreated", cascade={ "persist" })
      * @ORM\JoinColumn(name="creatorId", unique=false, nullable=false)
      */
     private $creator;
@@ -131,7 +131,7 @@ class Book extends CommonSuperClass
     /**
      * @var Operator|null
      *
-     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator")
+     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", cascade={"persist"})
      * @ORM\JoinColumn(name="lastEditorId", nullable=true, unique=false)
      */
     private $lastEditor;
@@ -201,7 +201,7 @@ class Book extends CommonSuperClass
      * @param null|string $title
      * @return Book
      */
-    public function setTitle(string $title): Book
+    public function setTitle(?string $title): Book
     {
         $this->title = $title;
         return $this;
@@ -219,25 +219,25 @@ class Book extends CommonSuperClass
      * @param null|string $subtitle
      * @return Book
      */
-    public function setSubtitle(string $subtitle): Book
+    public function setSubtitle(?string $subtitle): Book
     {
         $this->subtitle = $subtitle;
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return null|string
      */
-    public function getPublishedDate(): ?\DateTime
+    public function getPublishedDate(): ?string
     {
         return $this->publishedDate;
     }
 
     /**
-     * @param \DateTime|null $publishedDate
+     * @param null|string $publishedDate
      * @return Book
      */
-    public function setPublishedDate(\DateTime $publishedDate): Book
+    public function setPublishedDate(?string $publishedDate): Book
     {
         $this->publishedDate = $publishedDate;
         return $this;
@@ -255,7 +255,7 @@ class Book extends CommonSuperClass
      * @param null|string $description
      * @return Book
      */
-    public function setDescription(string $description): Book
+    public function setDescription($description): Book
     {
         $this->description = $description;
         return $this;
@@ -273,7 +273,7 @@ class Book extends CommonSuperClass
      * @param int|null $pageCount
      * @return Book
      */
-    public function setPageCount(int $pageCount): Book
+    public function setPageCount(?int $pageCount): Book
     {
         $this->pageCount = $pageCount;
         return $this;
@@ -291,7 +291,7 @@ class Book extends CommonSuperClass
      * @param null|string $language
      * @return Book
      */
-    public function setLanguage(string $language): Book
+    public function setLanguage(?string $language): Book
     {
         $this->language = $language;
         return $this;
@@ -309,7 +309,7 @@ class Book extends CommonSuperClass
      * @param null|string $webReaderLink
      * @return Book
      */
-    public function setWebReaderLink(string $webReaderLink): Book
+    public function setWebReaderLink(?string $webReaderLink): Book
     {
         $this->webReaderLink = $webReaderLink;
         return $this;
@@ -345,7 +345,7 @@ class Book extends CommonSuperClass
      * @param PrintType|null $printType
      * @return Book
      */
-    public function setPrintType(PrintType $printType): Book
+    public function setPrintType(?PrintType $printType): Book
     {
         $this->printType = $printType;
         return $this;
@@ -381,7 +381,7 @@ class Book extends CommonSuperClass
      * @param null|Publisher $publisher
      * @return Book
      */
-    public function setPublisher(Publisher $publisher): Book
+    public function setPublisher(?Publisher $publisher): Book
     {
         $this->publisher = $publisher;
         return $this;
@@ -399,7 +399,7 @@ class Book extends CommonSuperClass
      * @param Image|null $image
      * @return Book
      */
-    public function setImage(Image $image): Book
+    public function setImage(?Image $image): Book
     {
         $this->image = $image;
         return $this;
@@ -435,11 +435,13 @@ class Book extends CommonSuperClass
      * @param null|Operator $lastEditor
      * @return Book
      */
-    public function setLastEditor(Operator $lastEditor): Book
+    public function setLastEditor(?Operator $lastEditor): Book
     {
         $this->lastEditor = $lastEditor;
         return $this;
     }
+
+
 
 
 }

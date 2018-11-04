@@ -9,6 +9,12 @@
 namespace GoogleBooksBundle\Options;
 
 
+use GoogleBooksBundle\Options\Enum\FilterEnum;
+use GoogleBooksBundle\Options\Enum\LibraryRestrictEnum;
+use GoogleBooksBundle\Options\Enum\OrderByEnum;
+use GoogleBooksBundle\Options\Enum\PrintTypeEnum;
+use GoogleBooksBundle\Options\Enum\ProjectionEnum;
+
 /**
  * Class GoogleBooksAPIRequestParameters
  * @package GoogleBooksBundle\Options
@@ -100,12 +106,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param string $filter
+     * @param FilterEnum $filterEnum
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setFilter(string $filter): GoogleBooksAPIRequestParameters
+    public function setFilter(FilterEnum $filterEnum): GoogleBooksAPIRequestParameters
     {
-        $this->filter = $filter;
+        $this->filter = $filterEnum->getValue();
         return $this;
     }
 
@@ -118,12 +124,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param string $langRestrict
+     * @param LibraryRestrictEnum $enum
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLangRestrict(string $langRestrict): GoogleBooksAPIRequestParameters
+    public function setLangRestrict(LibraryRestrictEnum $enum): GoogleBooksAPIRequestParameters
     {
-        $this->langRestrict = $langRestrict;
+        $this->langRestrict = $enum->getValue();
         return $this;
     }
 
@@ -172,12 +178,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param string $orderBy
+     * @param OrderByEnum $enum
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setOrderBy(string $orderBy): GoogleBooksAPIRequestParameters
+    public function setOrderBy(OrderByEnum $enum): GoogleBooksAPIRequestParameters
     {
-        $this->orderBy = $orderBy;
+        $this->orderBy = $enum->getValue();
         return $this;
     }
 
@@ -208,12 +214,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param string $printType
+     * @param PrintTypeEnum $enum
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setPrintType(string $printType): GoogleBooksAPIRequestParameters
+    public function setPrintType(PrintTypeEnum $enum): GoogleBooksAPIRequestParameters
     {
-        $this->printType = $printType;
+        $this->printType = $enum->getValue();
         return $this;
     }
 
@@ -226,12 +232,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param string $projection
+     * @param ProjectionEnum $projectionEnum
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setProjection(string $projection): GoogleBooksAPIRequestParameters
+    public function setProjection(ProjectionEnum $projectionEnum): GoogleBooksAPIRequestParameters
     {
-        $this->projection = $projection;
+        $this->projection = $projectionEnum->getValue();
         return $this;
     }
 
