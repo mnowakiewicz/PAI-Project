@@ -10,13 +10,11 @@ namespace BookBundle\DataTable;
 
 
 use BookBundle\Entity\Book;
-use DataTables\DataTableException;
 use DataTables\DataTableHandlerInterface;
 use DataTables\DataTableQuery;
 use DataTables\DataTableResults;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class BooksDataTable
@@ -52,8 +50,7 @@ class BooksDataTable implements DataTableHandlerInterface
     {
         $results = new DataTableResults();
 
-        $repository  = $this->entityManager
-            ->getRepository('BookBundle:Book');
+        $repository  = $this->entityManager->getRepository('BookBundle:Book');
 
         // Total number of books.
         $results->recordsTotal = $repository->getAllActiveBooks();
