@@ -5,7 +5,6 @@ namespace BookBundle\Entity;
 use AuthorBundle\Entity\Author;
 use CategoryBundle\Entity\Category;
 use CommonBundle\Entity\CommonSuperClass;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ImageBundle\Entity\Image;
 use OperatorBundle\Entity\Operator;
@@ -440,9 +439,6 @@ class Book extends CommonSuperClass
         $this->lastEditor = $lastEditor;
         return $this;
     }
-
-
-
 
 }
 

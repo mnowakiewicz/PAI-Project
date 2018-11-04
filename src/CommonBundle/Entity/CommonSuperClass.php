@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass()
  */
-abstract class CommonSuperClass implements CommonEntityMethodsInterface
+abstract class CommonSuperClass implements CommonEntityMethodsInterface, \JsonSerializable
 {
     /**
      * @var integer
@@ -114,4 +114,34 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface
         $this->editDate = $editDate;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    protected function serializeThis():array
+    {
+        try {
+            $reflection = new \ReflectionClass($this);
+        } catch (\ReflectionException $e) {
+            return [];
+        }
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+
+        $return = [];
+        foreach ($props as $prop){
+            $return[$prop->getName()] = call_user_func_array([$this, 'get' . ucfirst($prop->getName())], []);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->serializeThis();
+    }
+
+
 }

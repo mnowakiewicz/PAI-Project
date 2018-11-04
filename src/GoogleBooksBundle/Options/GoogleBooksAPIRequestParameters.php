@@ -124,12 +124,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param LibraryRestrictEnum $enum
+     * @param string $langRestrict
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLangRestrict(LibraryRestrictEnum $enum): GoogleBooksAPIRequestParameters
+    public function setLangRestrict(string $langRestrict): GoogleBooksAPIRequestParameters
     {
-        $this->langRestrict = $enum->getValue();
+        $this->langRestrict = $langRestrict;
         return $this;
     }
 
@@ -142,12 +142,12 @@ class GoogleBooksAPIRequestParameters
     }
 
     /**
-     * @param string $libraryRestrict
+     * @param LibraryRestrictEnum $enum
      * @return GoogleBooksAPIRequestParameters
      */
-    public function setLibraryRestrict(string $libraryRestrict): GoogleBooksAPIRequestParameters
+    public function setLibraryRestrict(LibraryRestrictEnum $enum): GoogleBooksAPIRequestParameters
     {
-        $this->libraryRestrict = $libraryRestrict;
+        $this->libraryRestrict = $enum->getValue();
         return $this;
     }
 
@@ -294,5 +294,7 @@ class GoogleBooksAPIRequestParameters
         $this->startIndex = $startIndex;
         return $this;
     }
+
+
 
 }

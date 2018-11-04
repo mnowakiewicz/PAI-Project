@@ -28,7 +28,7 @@ class BookAdminController extends Controller
     public function indexAction():Response
     {
         $parameters = new GoogleBooksAPIRequestParameters('ryby');
-        $response = $this->get('google.books.service')->getMappedModel($parameters);
+        $response = $this->get('google.books.service')->getMappedResponseModel($parameters);
         dump($response);
 
         $books = $this->get('google.books.service')->createBookObjectsFromMappedModel($response);

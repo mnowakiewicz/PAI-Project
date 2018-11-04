@@ -13,6 +13,11 @@ use BookBundle\Entity\Book;
 use BookBundle\Entity\PrintType;
 use Doctrine\ORM\EntityManager;
 use GoogleBooksBundle\Model\GoogleApiResponse;
+use GoogleBooksBundle\Options\Enum\FilterEnum;
+use GoogleBooksBundle\Options\Enum\LibraryRestrictEnum;
+use GoogleBooksBundle\Options\Enum\OrderByEnum;
+use GoogleBooksBundle\Options\Enum\PrintTypeEnum;
+use GoogleBooksBundle\Options\Enum\ProjectionEnum;
 use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
 use ImageBundle\Entity\Image;
 use Monolog\Logger;
@@ -68,7 +73,7 @@ class GoogleBooksService
      * @param GoogleBooksAPIRequestParameters $parameters
      * @return GoogleApiResponse
      */
-    public function getMappedModel(GoogleBooksAPIRequestParameters $parameters):GoogleApiResponse
+    public function getMappedResponseModel(GoogleBooksAPIRequestParameters $parameters ):GoogleApiResponse
     {
         $url = $this->createUrl($this->parametersToString($parameters));
 
@@ -79,7 +84,6 @@ class GoogleBooksService
         $client = new \GuzzleHttp\Client();
         $response = $client->get($url);
         $response = json_decode($response->getBody()->getContents(), true);
-        dump($response);
         return GoogleApiResponse::create($response);
     }
 
@@ -196,4 +200,58 @@ class GoogleBooksService
         }
         return $books;
     }
+
+    /**
+     * @param array $form
+     * @return GoogleBooksAPIRequestParameters
+     */
+    public function mapFormToGoogleBookParameters(array $form):GoogleBooksAPIRequestParameters
+    {
+        $googleParams = new GoogleBooksAPIRequestParameters($form['q']);
+
+        try {
+            $reflection = new \ReflectionClass($googleParams);
+        } catch (\ReflectionException $e) {
+            $this->logger->error('Error occurred while reflecting class', [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return $googleParams;
+        }
+
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+
+        foreach ($props as $prop){
+            $propName = $prop->getName();
+
+            if(array_key_exists($propName, $form) && $form[$propName] != null ){
+                $functionName = 'set' . ucfirst($prop->getName());
+                $data = $form[$propName];
+
+                switch ($propName){
+                    case 'filter':
+                        call_user_func_array([$googleParams, $functionName], [new FilterEnum($form[$propName])]);
+                        break;
+                    case 'libraryRestrict':
+                        call_user_func_array([$googleParams, $functionName], [new LibraryRestrictEnum($form[$propName])]);
+                        break;
+                    case 'orderBy':
+                        call_user_func_array([$googleParams, $functionName], [new OrderByEnum($form[$propName])]);
+                        break;
+                    case 'printType':
+                        call_user_func_array([$googleParams, $functionName], [new PrintTypeEnum($form[$propName])]);
+                        break;
+                    case 'projection':
+                        call_user_func_array([$googleParams, $functionName], [new ProjectionEnum($form[$propName])]);
+                        break;
+                    default:
+                        call_user_func_array([$googleParams, $functionName], [$data]);
+                }
+            }
+        }
+
+        return $googleParams;
+    }
+
 }
