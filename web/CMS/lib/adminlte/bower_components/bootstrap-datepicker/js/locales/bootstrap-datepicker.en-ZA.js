@@ -1,5 +1,5 @@
 /**
- * South African English translation for bootstrap-datepicker
+ * South African English Translation for bootstrap-datepicker
  */
 ;(function($){
 	$.fn.datepicker.dates['en-ZA'] = {

@@ -803,7 +803,7 @@ define(["./raphael.core"], function(R) {
      [ method ]
      **
      * Deprecated! Use @Element.transform instead.
-     * Adds translation by given amount to the list of transformations of the element.
+     * Adds Translation by given amount to the list of transformations of the element.
      > Parameters
      - dx (number) horisontal shift
      - dy (number) vertical shift
@@ -827,13 +827,13 @@ define(["./raphael.core"], function(R) {
      [ method ]
      **
      * Adds transformation to the element which is separate to other attributes,
-     * i.e. translation doesn’t change `x` or `y` of the rectange. The format
+     * i.e. Translation doesn’t change `x` or `y` of the rectange. The format
      * of transformation string is similar to the path string syntax:
      | "t100,100r30,100,100s2,2,100,100r45s1.5"
      * Each letter is a command. There are four commands: `t` is for translate, `r` is for rotate, `s` is for
      * scale and `m` is for matrix.
      *
-     * There are also alternative “absolute” translation, rotation and scale: `T`, `R` and `S`. They will not take previous transformation into account. For example, `...T100,0` will always move element 100 px horisontally, while `...t100,0` could move it vertically if there is `r90` before. Just compare results of `r90t100,0` and `r90T100,0`.
+     * There are also alternative “absolute” Translation, rotation and scale: `T`, `R` and `S`. They will not take previous transformation into account. For example, `...T100,0` will always move element 100 px horisontally, while `...t100,0` could move it vertically if there is `r90` before. Just compare results of `r90t100,0` and `r90T100,0`.
      *
      * So, the example line above could be read like “translate by 100, 100; rotate 30° around 100, 100; scale twice around 100, 100;
      * rotate 45° around centre; scale 1.5 times relative to centre”. As you can see rotate and scale commands have origin

@@ -1,5 +1,5 @@
 /**
- * Czech translation for bootstrap-datepicker
+ * Czech Translation for bootstrap-datepicker
  * Matěj Koubík <matej@koubik.name>
  * Fixes by Michal Remiš <michal.remis@gmail.com>
  */

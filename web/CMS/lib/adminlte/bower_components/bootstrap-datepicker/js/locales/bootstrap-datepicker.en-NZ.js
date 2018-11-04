@@ -1,5 +1,5 @@
 /**
- * New Zealand English translation for bootstrap-datepicker
+ * New Zealand English Translation for bootstrap-datepicker
  */
 ;(function($){
 	$.fn.datepicker.dates['en-NZ'] = {

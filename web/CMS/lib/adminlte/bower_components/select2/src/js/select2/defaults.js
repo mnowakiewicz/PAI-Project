@@ -264,9 +264,9 @@ define([
             name = this.defaults.amdLanguageBase + name;
             language = Translation.loadPath(name);
           } catch (ex) {
-            // The translation could not be loaded at all. Sometimes this is
+            // The Translation could not be loaded at all. Sometimes this is
             // because of a configuration problem, other times this can be
-            // because of how Select2 helps load all possible translation files.
+            // because of how Select2 helps load all possible Translation files.
             if (options.debug && window.console && console.warn) {
               console.warn(
                 'Select2: The language file for "' + name + '" could not be ' +

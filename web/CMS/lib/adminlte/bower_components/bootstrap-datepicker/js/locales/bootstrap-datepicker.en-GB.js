@@ -1,5 +1,5 @@
 /**
- * British English translation for bootstrap-datepicker
+ * British English Translation for bootstrap-datepicker
  * Xavier Dutreilh <xavier@dutreilh.com>
  */
 ;(function($){

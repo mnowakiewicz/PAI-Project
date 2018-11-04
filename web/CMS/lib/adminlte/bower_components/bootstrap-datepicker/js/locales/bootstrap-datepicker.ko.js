@@ -1,5 +1,5 @@
 /**
- * Korean translation for bootstrap-datepicker
+ * Korean Translation for bootstrap-datepicker
  * This is a port from https://github.com/moment/moment/blob/develop/src/locale/ko.js
  */
 ;(function($){

@@ -1,5 +1,5 @@
 /**
- * Bulgarian translation for bootstrap-datepicker
+ * Bulgarian Translation for bootstrap-datepicker
  * Apostol Apostolov <apostol.s.apostolov@gmail.com>
  */
 ;(function($){

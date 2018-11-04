@@ -23,14 +23,14 @@ class Book extends CommonSuperClass
     /**
      * @var string
      *
-     * @ORM\Column(name="googleId", type="string", length=50, name="googleId")
+     * @ORM\Column(name="googleId", nullable=true, type="string", length=50, name="googleId")
      */
     private $googleId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="etag", type="string", length=50)
+     * @ORM\Column(name="etag", nullable=true, type="string", length=50)
      */
     private $etag;
 

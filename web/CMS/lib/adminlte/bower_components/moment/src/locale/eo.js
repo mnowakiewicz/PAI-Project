@@ -2,7 +2,7 @@
 //! locale : Esperanto [eo]
 //! author : Colin Dean : https://github.com/colindean
 //! author : Mia Nordentoft Imperatori : https://github.com/miestasmia
-//! comment : miestasmia corrected the translation by colindean
+//! comment : miestasmia corrected the Translation by colindean
 
 import moment from '../moment';
 

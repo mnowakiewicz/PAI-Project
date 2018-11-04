@@ -10,13 +10,17 @@
         <!-- =============================================== -->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            {% block content_wrapper%}
-            <!-- Content Header (Page header) -->
-            {{ include('CMS/Parts/Content/content_header_breadcrumb.html.twig') }}
-            <!-- Main content -->
-            {{ include('CMS/Parts/Content/main_content.html.twig') }}
-            <!-- /.content -->
-            {% endblock %}
+            <section class="content">
+                <div class="row">
+                    {% block content_wrapper%}
+                        <!-- Content Header (Page header) -->
+                        {{ include('CMS/Parts/Content/content_header_breadcrumb.html.twig') }}
+                        <!-- Main content -->
+                        {{ include('CMS/Parts/Content/main_content.html.twig') }}
+                        <!-- /.content -->
+                    {% endblock %}
+                </div>
+            </section>
         </div>
         <!-- /.content-wrapper -->
         <!-- Footer-->

@@ -1,5 +1,5 @@
 /**
- * Italian translation for bootstrap-datepicker
+ * Italian Translation for bootstrap-datepicker
  * Enrico Rubboli <rubboli@gmail.com>
  */
 ;(function($){

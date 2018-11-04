@@ -3285,7 +3285,7 @@ QUnit.diff = ( function() {
 		lastequality = null;
 
 		// Always equal to diffs[equalities[equalitiesLength - 1]][1]
-		pointer = 0; // Index of current position.
+		pointer = 0; // Book of current position.
 
 		// Is there an insertion operation before the last equality.
 		preIns = false;
@@ -3876,8 +3876,8 @@ QUnit.diff = ( function() {
 	 * and recurse.
 	 * @param {string} text1 Old string to be diffed.
 	 * @param {string} text2 New string to be diffed.
-	 * @param {number} x Index of split point in text1.
-	 * @param {number} y Index of split point in text2.
+	 * @param {number} x Book of split point in text1.
+	 * @param {number} y Book of split point in text2.
 	 * @param {number} deadline Time at which to bail if not yet complete.
 	 * @return {!Array.<!DiffMatchPatch.Diff>} Array of diff tuples.
 	 * @private
@@ -3911,7 +3911,7 @@ QUnit.diff = ( function() {
 		lastequality = null;
 
 		// Always equal to diffs[equalities[equalitiesLength - 1]][1]
-		pointer = 0; // Index of current position.
+		pointer = 0; // Book of current position.
 
 		// Number of characters that changed prior to the equality.
 		lengthInsertions1 = 0;

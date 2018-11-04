@@ -1,5 +1,5 @@
 /**
- * Australian English translation for bootstrap-datepicker
+ * Australian English Translation for bootstrap-datepicker
  * Steve Chapman <steven.p.chapman@gmail.com>
  */
 ;(function($){

@@ -1,5 +1,5 @@
 /**
- * Greek translation for bootstrap-datepicker
+ * Greek Translation for bootstrap-datepicker
  */
 ;(function($){
   $.fn.datepicker.dates['el'] = {

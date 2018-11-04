@@ -38,6 +38,9 @@ framework:
     assets: ~
     php_errors:
         log: true
+    translator:
+        paths:
+             - '%kernel.project_dir%/app/Resources/Translation'
 
 # Twig Configuration
 twig:

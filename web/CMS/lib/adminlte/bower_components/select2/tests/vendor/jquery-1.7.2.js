@@ -1039,7 +1039,7 @@ jQuery.Callbacks = function( flags ) {
 		firingStart,
 		// End of the loop when firing
 		firingLength,
-		// Index of currently firing callback (modified by remove if needed)
+		// Book of currently firing callback (modified by remove if needed)
 		firingIndex,
 		// Add one or several callbacks to the list
 		add = function( args ) {

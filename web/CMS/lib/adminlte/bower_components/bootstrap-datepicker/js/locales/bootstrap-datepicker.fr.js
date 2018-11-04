@@ -1,5 +1,5 @@
 /**
- * French translation for bootstrap-datepicker
+ * French Translation for bootstrap-datepicker
  * Nico Mollet <nico.mollet@gmail.com>
  */
 ;(function($){

@@ -1,5 +1,5 @@
 /**
- * Swedish translation for bootstrap-datepicker
+ * Swedish Translation for bootstrap-datepicker
  * Patrik Ragnarsson <patrik@starkast.net>
  */
 ;(function($){

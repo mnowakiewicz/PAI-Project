@@ -1,5 +1,5 @@
 /**
- * Belgium-Dutch translation for bootstrap-datepicker
+ * Belgium-Dutch Translation for bootstrap-datepicker
  * Julien Poulin <poulin_julien@hotmail.com>
  */
 ;(function($){

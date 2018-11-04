@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class BookRestController extends Controller
 {
     /**
-     * @Route("/data_dt", name="api_books_datatable")
+     * @Route("/datatable/data", name="api_books_datatable_data")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

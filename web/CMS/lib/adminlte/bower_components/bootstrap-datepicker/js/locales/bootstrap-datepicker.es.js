@@ -1,5 +1,5 @@
 /**
- * Spanish translation for bootstrap-datepicker
+ * Spanish Translation for bootstrap-datepicker
  * Bruno Bonamin <bruno.bonamin@gmail.com>
  */
 ;(function($){

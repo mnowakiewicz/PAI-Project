@@ -14913,7 +14913,7 @@ function program17(depth0,data) {
 })(wysihtml5);
 
 /**
- * English translation for bootstrap-wysihtml5
+ * English Translation for bootstrap-wysihtml5
  */
 (function (factory) {
     if (typeof define === 'function' && define.amd) {

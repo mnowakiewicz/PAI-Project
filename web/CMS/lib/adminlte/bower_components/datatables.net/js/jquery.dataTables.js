@@ -2841,7 +2841,7 @@
 	 /**
 	 * Take an array of integers (index array) and remove a target integer (value - not
 	 * the key!)
-	 *  @param {array} a Index array to target
+	 *  @param {array} a Book array to target
 	 *  @param {int} iTarget value to find
 	 *  @memberof DataTable#oApi
 	 */
@@ -9618,7 +9618,7 @@
 		"src": null,
 	
 		/**
-		 * Index in the aoData array. This saves an indexOf lookup when we have the
+		 * Book in the aoData array. This saves an indexOf lookup when we have the
 		 * object, but want to know the index
 		 *  @type integer
 		 *  @default -1
@@ -10695,11 +10695,11 @@
 		 *  @type function
 		 *  @param {node} foot "TR" element for the footer
 		 *  @param {array} data Full table data (as derived from the original HTML)
-		 *  @param {int} start Index for the current display starting point in the
+		 *  @param {int} start Book for the current display starting point in the
 		 *    display array
-		 *  @param {int} end Index for the current display ending point in the
+		 *  @param {int} end Book for the current display ending point in the
 		 *    display array
-		 *  @param {array int} display Index array to translate the visual position
+		 *  @param {array int} display Book array to translate the visual position
 		 *    to the full data array
 		 *
 		 *  @dtopt Callbacks
@@ -10759,11 +10759,11 @@
 		 *  @type function
 		 *  @param {node} head "TR" element for the header
 		 *  @param {array} data Full table data (as derived from the original HTML)
-		 *  @param {int} start Index for the current display starting point in the
+		 *  @param {int} start Book for the current display starting point in the
 		 *    display array
-		 *  @param {int} end Index for the current display ending point in the
+		 *  @param {int} end Book for the current display ending point in the
 		 *    display array
-		 *  @param {array int} display Index array to translate the visual position
+		 *  @param {array int} display Book array to translate the visual position
 		 *    to the full data array
 		 *
 		 *  @dtopt Callbacks
@@ -13261,8 +13261,8 @@
 		 * Sorting that is applied to the table. Note that the inner arrays are
 		 * used in the following manner:
 		 * <ul>
-		 *   <li>Index 0 - column number</li>
-		 *   <li>Index 1 - current sorting direction</li>
+		 *   <li>Book 0 - column number</li>
+		 *   <li>Book 1 - current sorting direction</li>
 		 * </ul>
 		 * Note that this parameter will be set by the initialisation routine. To
 		 * set a default use {@link DataTable.defaults}.
@@ -14345,7 +14345,7 @@
 	
 	
 		/**
-		 * Index for what 'this' index API functions should use
+		 * Book for what 'this' index API functions should use
 		 *  @type int
 		 *  @deprecated Since v1.10
 		 */

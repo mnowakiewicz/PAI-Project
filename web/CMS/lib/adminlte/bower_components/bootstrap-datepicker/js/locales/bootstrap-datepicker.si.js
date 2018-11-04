@@ -1,5 +1,5 @@
 /**
- * Sinhala translation for bootstrap-datepicker
+ * Sinhala Translation for bootstrap-datepicker
  * Chanaka Fernando <chanaka.fernando@hotmail.com>
  */
 ;(function($){
