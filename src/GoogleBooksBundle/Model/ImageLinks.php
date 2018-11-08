@@ -41,7 +41,7 @@ class ImageLinks
 
         $return
             ->setSmallThumbnail($imageLinksData["smallThumbnail"])
-            ->setThumbnail("thumbnail");
+            ->setThumbnail($imageLinksData["thumbnail"]);
 
         return $return;
     }

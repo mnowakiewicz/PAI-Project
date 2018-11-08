@@ -172,7 +172,7 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function getIsActive(): bool
     {
         return $this->isActive;
     }

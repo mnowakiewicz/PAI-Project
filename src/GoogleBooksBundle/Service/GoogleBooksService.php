@@ -231,19 +231,19 @@ class GoogleBooksService
 
                 switch ($propName){
                     case 'filter':
-                        call_user_func_array([$googleParams, $functionName], [new FilterEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new FilterEnum($data)]);
                         break;
                     case 'libraryRestrict':
-                        call_user_func_array([$googleParams, $functionName], [new LibraryRestrictEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new LibraryRestrictEnum($data)]);
                         break;
                     case 'orderBy':
-                        call_user_func_array([$googleParams, $functionName], [new OrderByEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new OrderByEnum($data)]);
                         break;
                     case 'printType':
-                        call_user_func_array([$googleParams, $functionName], [new PrintTypeEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new PrintTypeEnum($data)]);
                         break;
                     case 'projection':
-                        call_user_func_array([$googleParams, $functionName], [new ProjectionEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new ProjectionEnum($data)]);
                         break;
                     default:
                         call_user_func_array([$googleParams, $functionName], [$data]);

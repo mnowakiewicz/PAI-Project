@@ -52,13 +52,13 @@ class Image extends CommonSuperClass
 
     /**
      * Image constructor.
-     * @param string $name
+     * @param string $fullName
      * @param bool $isActive
      */
-    public function __construct(string $name, bool $isActive = true)
+    public function __construct(string $fullName, bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->name = $name;
+        $this->name = $fullName;
     }
 
     /**

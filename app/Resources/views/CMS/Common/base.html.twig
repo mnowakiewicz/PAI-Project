@@ -1,5 +1,6 @@
 {% extends "CMS/Common/document.html.twig" %}
-
+{% block head_css %}{% endblock %}
+{% block head_scripts %}{% endblock %}
 {% block body_content %}
     <!-- Site wrapper -->
     <div class="wrapper">
@@ -32,3 +33,4 @@
     </div>
     <!-- ./wrapper -->
 {% endblock %}
+{% block extra_scripts %}{{ parent() }}{% endblock %}

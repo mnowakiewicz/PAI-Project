@@ -3,6 +3,7 @@
 namespace BookBundle\Entity;
 
 use AuthorBundle\Entity\Author;
+use BookBundle\Entity\Enum\StatusEnum;
 use CategoryBundle\Entity\Category;
 use CommonBundle\Entity\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
@@ -83,6 +84,11 @@ class Book extends CommonSuperClass
     private $webReaderLink;
 
     /**
+     * @var string
+     */
+    private $status;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AuthorBundle\Entity\Author", inversedBy="books")
      *
      * @var Author[]
@@ -135,6 +141,8 @@ class Book extends CommonSuperClass
      */
     private $lastEditor;
 
+
+
     /**
      * Book constructor.
      * @param Operator $creator
@@ -150,6 +158,7 @@ class Book extends CommonSuperClass
         $this->authors = [];
         $this->categories = [];
         $this->creator = $creator;
+        $this->status = StatusEnum::DRAFT()->getValue();
     }
 
     /**
@@ -439,6 +448,25 @@ class Book extends CommonSuperClass
         $this->lastEditor = $lastEditor;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param StatusEnum $status
+     * @return Book
+     */
+    public function setStatus(StatusEnum $status): Book
+    {
+        $this->status = $status->getValue();
+        return $this;
+    }
+
 
 }
 

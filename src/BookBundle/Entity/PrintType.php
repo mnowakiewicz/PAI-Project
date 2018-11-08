@@ -27,10 +27,10 @@ class PrintType extends CommonSuperClass
      */
     private $books;
 
-    public function __construct(string $name, bool $isActive = true)
+    public function __construct(string $fullName, bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->name = $name;
+        $this->name = $fullName;
         $this->books = [];
     }
 
