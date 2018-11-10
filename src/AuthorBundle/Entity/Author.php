@@ -3,7 +3,7 @@
 namespace AuthorBundle\Entity;
 
 use BookBundle\Entity\Book;
-use CommonBundle\Entity\CommonSuperClass;
+use CommonBundle\Common\CommonSuperClass;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 

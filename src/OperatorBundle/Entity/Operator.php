@@ -9,7 +9,7 @@
 namespace OperatorBundle\Entity;
 
 use BookBundle\Entity\Book;
-use CommonBundle\Entity\CommonEntityMethodsInterface;
+use CommonBundle\Common\CommonEntityMethodsInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 

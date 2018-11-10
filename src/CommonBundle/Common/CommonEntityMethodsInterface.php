@@ -6,7 +6,7 @@
  * Time: 12:38
  */
 
-namespace CommonBundle\Entity;
+namespace CommonBundle\Common;
 
 
 /**

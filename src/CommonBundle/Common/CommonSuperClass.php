@@ -6,7 +6,7 @@
  * Time: 12:53
  */
 
-namespace CommonBundle\Entity;
+namespace CommonBundle\Common;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -51,6 +51,39 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface, \JsonSe
     {
         $this->creationDate = new \DateTime('now');
         $this->isActive = $isActive;
+    }
+
+    /**
+     * @return array
+     */
+    protected function serializeThis():array
+    {
+        try {
+            $reflection = new \ReflectionClass($this);
+        } catch (\ReflectionException $e) {
+            return [];
+        }
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+        $parentProps = $reflection->getParentClass()->getProperties(\ReflectionProperty::IS_PROTECTED);
+
+        $return = [];
+        foreach ($props as $prop){
+            $return[$prop->getName()] = call_user_func_array([$this, 'get' . ucfirst($prop->getName())], []);
+        }
+
+        foreach ($parentProps as $parentProp){
+            $return[$parentProp->getName()] = call_user_func_array([$this, 'parent::get' . ucfirst($parentProp->getName())], []);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->serializeThis();
     }
 
     /**
@@ -126,38 +159,6 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface, \JsonSe
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    protected function serializeThis():array
-    {
-        try {
-            $reflection = new \ReflectionClass($this);
-        } catch (\ReflectionException $e) {
-            return [];
-        }
-        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
-        $parentProps = $reflection->getParentClass()->getProperties(\ReflectionProperty::IS_PROTECTED);
-
-        $return = [];
-        foreach ($props as $prop){
-            $return[$prop->getName()] = call_user_func_array([$this, 'get' . ucfirst($prop->getName())], []);
-        }
-
-        foreach ($parentProps as $parentProp){
-            $return[$parentProp->getName()] = call_user_func_array([$this, 'parent::get' . ucfirst($parentProp->getName())], []);
-        }
-
-        return $return;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return $this->serializeThis();
-    }
 
 
 }

@@ -2,8 +2,9 @@
 
 namespace BookBundle\Controller;
 
+use BookBundle\Entity\Book;
 use Doctrine\DBAL\Types\TextType;
-use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
+use GoogleBooksBundle\Options\GoogleBooksParameters;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,7 +28,7 @@ class BookAdminController extends Controller
      */
     public function indexAction():Response
     {
-        $parameters = new GoogleBooksAPIRequestParameters('ryby');
+        $parameters = new GoogleBooksParameters('ryby');
         $response = $this->get('google.books.service')->getMappedResponseModel($parameters);
 
         $books = $this->get('google.books.service')->createBookObjectsFromMappedModel($response);
@@ -54,10 +55,19 @@ class BookAdminController extends Controller
     /**
      * @Route(path="/create", name="books_cms_create")
      */
-    public function createAction():Response
+    public function createAction(Request $request):Response
     {
-        $form = $this->createForm('BookBundle\Form\BookType');
+        $book = new Book();
+        $form = $this->createForm('BookBundle\Form\BookType', $book);
 
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $book = $form->getData();
+
+            return $this->redirectToRoute('books_cms_index');
+        }
         return $this->render('CMS/Book/create.html.twig', [
             'form' => $form->createView()
         ]);

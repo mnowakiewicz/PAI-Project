@@ -5,7 +5,7 @@ namespace BookBundle\Entity;
 use AuthorBundle\Entity\Author;
 use BookBundle\Entity\Enum\StatusEnum;
 use CategoryBundle\Entity\Category;
-use CommonBundle\Entity\CommonSuperClass;
+use CommonBundle\Common\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
 use ImageBundle\Entity\Image;
 use OperatorBundle\Entity\Operator;
@@ -21,14 +21,14 @@ class Book extends CommonSuperClass
 {
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="googleId", nullable=true, type="string", length=50, name="googleId")
+     * @ORM\Column(name="googleId", nullable=true, unique=true, type="string", length=50, name="googleId")
      */
     private $googleId;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="etag", nullable=true, type="string", length=50)
      */
@@ -126,7 +126,7 @@ class Book extends CommonSuperClass
     private $image;
 
     /**
-     * @var Operator
+     * @var Operator|null
      *
      * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="booksCreated", cascade={ "persist" })
      * @ORM\JoinColumn(name="creatorId", unique=false, nullable=false)
@@ -145,57 +145,52 @@ class Book extends CommonSuperClass
 
     /**
      * Book constructor.
-     * @param Operator $creator
-     * @param string $googleId
-     * @param string $etag
      * @param bool $isActive
      */
-    public function __construct(Operator $creator, string $googleId, string $etag, bool $isActive = true)
+    public function __construct(bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->googleId = $googleId;
-        $this->etag = $etag;
         $this->authors = [];
         $this->categories = [];
-        $this->creator = $creator;
         $this->status = StatusEnum::DRAFT()->getValue();
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getGoogleId(): string
+    public function getGoogleId(): ?string
     {
         return $this->googleId;
     }
 
     /**
-     * @param string $googleId
+     * @param null|string $googleId
      * @return Book
      */
-    public function setGoogleId(string $googleId): Book
+    public function setGoogleId(?string $googleId): Book
     {
         $this->googleId = $googleId;
         return $this;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getEtag(): string
+    public function getEtag(): ?string
     {
         return $this->etag;
     }
 
     /**
-     * @param string $etag
+     * @param null|string $etag
      * @return Book
      */
-    public function setEtag(string $etag): Book
+    public function setEtag(?string $etag): Book
     {
         $this->etag = $etag;
         return $this;
     }
+
 
     /**
      * @return null|string
@@ -414,18 +409,18 @@ class Book extends CommonSuperClass
     }
 
     /**
-     * @return Operator
+     * @return null|Operator
      */
-    public function getCreator(): Operator
+    public function getCreator(): ?Operator
     {
         return $this->creator;
     }
 
     /**
-     * @param Operator $creator
+     * @param null|Operator $creator
      * @return Book
      */
-    public function setCreator(Operator $creator): Book
+    public function setCreator(?Operator $creator): Book
     {
         $this->creator = $creator;
         return $this;

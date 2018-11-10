@@ -3,7 +3,7 @@
 namespace ImageBundle\Entity;
 
 use BookBundle\Entity\Book;
-use CommonBundle\Entity\CommonSuperClass;
+use CommonBundle\Common\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
