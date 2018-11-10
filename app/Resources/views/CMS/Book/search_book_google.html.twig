@@ -1,10 +1,23 @@
 {% extends 'CMS/Common/base.html.twig' %}
+{% block head_css %}
+    <style>
+       #btn-show-info, #btn-add-book {
+           min-width: 49.5%;
+       }
+       #table-box {
+           display: none;
+       }
 
+       tr.selected {
+           background-color: lavender;
+       }
+    </style>
+{% endblock %}
 {% block content_wrapper %}
     <div class="col-md-4 col-md-offset-4" id="form-box">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">{% trans %}books.google.add.book{% endtrans %}</h3>
+                <h3 class="box-title">Search Google Books API</h3>
             </div>
             <div class="box-body">
                 {{ form_start(form) }}
@@ -14,10 +27,16 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8" style="display: none" id="table-box">
+    <div class="col-md-8" id="table-box">
         <div class="box">
             <div class="box-body">
-                <table id="data-table" class="table table-bordered table-hover dataTable">
+                <button type="button" id="btn-show-info" class="btn btn-info disabled" disabled data-toggle="modal" data-target="#modal-information">
+                    Full Information
+                </button>
+                <button type="button" id="btn-add-book" class="btn btn-primary disabled" disabled >Add Selected Book</button>
+            </div>
+            <div class="box-body">
+                <table id="data-table" class="table table-bordered dataTable">
                     <thead>
                     <tr>
                         <th>No.</th>
@@ -31,57 +50,142 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal-information" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Full Information About Selected Book</h4>
+                </div>
+                <div class="modal-body">
+                    <pre class="modal-text">
+                    </pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
-
-
 {% block extra_scripts %}
     {{ parent() }}
     <script>
         var $table = $('#data-table');
-        var data;
+        var tableData;
+        var selectedId = null;
+        var pageLength = 5;
 
         $(function () {
             submitForm();
+            btnShowInfoEvent();
         });
-        
-        function prepareTable() {
-            $("tr[role='row']").each(function () {
+
+        function btnShowInfoEvent() {
+            $("#btn-show-info").click(function () {
+                if(window.selectedId != null){
+                    $(".modal-text").text(getFormattedJSON(window.tableData[window.selectedId]));
+                }
+            })
+        }
+
+        function getFormattedJSON(object) {
+           return JSON.stringify(object, function (key, value) {
+                if(value === null){
+                    return undefined;
+                }
+                return value;
+            }, 2);
+        }
+
+
+        function clickTableRowEvent() {
+            $("tbody tr[role='row']").each(function () {
                 $(this).click(function () {
-                    $("tr[role='row'].selected").removeClass('selected')
+                    $("tr[role='row'].selected").removeClass('selected');
                     $(this).addClass('selected');
+                    window.selectedId = $(this).find('td:first').text() - 1;
+                    turnOnButtons()
                 })
             })
+        }
+
+        function turnOnButtons() {
+            $("#btn-show-info, #btn-add-book")
+                .removeClass('disabled')
+                .attr('disabled', false);
         }
 
         function submitForm() {
             $('#submit-form').click(function (e) {
                 e.preventDefault();
-                var form = $("[name='googlebundle_parameters']")[0];
-                console.log(form);
-
-                var formData = new FormData(form);
-
-                $.ajax({
-                    url: '{{ path('api_googlebooks_get') }}',
-                    data: formData,
-                    type: 'POST',
-                    processData: false,
-                    contentType: false,
-                    dataType: "json",
-                    success: function (data) {
-                        this.data = JSON.parse(data);
-                        destroyAndCreateDT(JSON.parse(data));
-                        $('#form-box').removeClass('col-md-offset-4');
-                        $('#table-box').css("display", "block");
-                    }
-                })
+                if(validateForm()){
+                    sendAjax();
+                }
             });
+        }
+
+        function sendAjax() {
+            window.pageLength = $("#googlebundle_parameters_maxResults").val();
+            var form = $("[name='googlebundle_parameters']")[0];
+
+            var formData = new FormData(form);
+            $.ajax({
+                url: '{{ path('api_googlebooks_get') }}',
+                data: formData,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (data) {
+                    disableBottons();
+                    window.tableData = JSON.parse(data);
+                    destroyAndCreateDT(window.tableData);
+                    showTableBox();
+                    clickTableRowEvent();
+                }
+            })
+        }
+        
+        function validateForm() {
+            var $query = $("#googlebundle_parameters_q");
+            var $maxResults = $("#googlebundle_parameters_maxResults");
+
+            $("div.form-group").removeClass('has-error');
+
+            var isValid = true;
+
+            if($query.val().length == 0){
+                $query.parent().addClass('has-error');
+                isValid = false;
+            }
+
+            if ($maxResults.val() < 0 || $maxResults.val() > 40) {
+                $maxResults.parent().addClass('has-error');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        
+        function disableBottons() {
+            $("#btn-show-info, #btn-add-book")
+                .addClass('disabled')
+                .attr('disabled', true);
+            window.selectedId = null;
+        }
+
+        function showTableBox() {
+            $('#form-box').removeClass('col-md-offset-4');
+            $('#table-box').css("display", "block");
         }
 
         function destroyAndCreateDT(data){
             this.$table.DataTable().destroy();
-
             var rows = [];
 
             // <th>No.</th>
@@ -92,7 +196,7 @@
 
             data.forEach(function (row, index) {
                 rows.push([
-                    index,
+                    index+1,
                     row.title,
                     row.subtitle,
                     getAuthors(row.authors),
@@ -101,21 +205,21 @@
             });
 
             createDataTable(rows);
-            prepareTable();
         }
 
         function createDataTable(rows) {
             this.$table.DataTable({
                 searching: false,
-                paging: true,
+                paging: false,
+                responsive: true,
                 autoWidth: true,
+                pageLength: window.pageLength,
                 data: rows
             });
         }
 
         function getAuthors(rowAuthors) {
             var authors = '';
-            console.log(rowAuthors);
             rowAuthors.forEach(function (author, index) {
                 if(index == 0){
                     authors = author.fullName;
