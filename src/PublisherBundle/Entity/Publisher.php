@@ -3,7 +3,7 @@
 namespace PublisherBundle\Entity;
 
 use BookBundle\Entity\Book;
-use CommonBundle\Entity\CommonSuperClass;
+use CommonBundle\Common\CommonSuperClass;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,13 +32,13 @@ class Publisher extends CommonSuperClass
 
     /**
      * Publisher constructor.
-     * @param string $name
+     * @param string $fullName
      * @param bool $isActive
      */
-    public function __construct(string $name, bool $isActive = true)
+    public function __construct(string $fullName, bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->name = $name;
+        $this->name = $fullName;
         $this->books = [];
     }
 

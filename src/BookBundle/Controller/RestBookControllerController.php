@@ -41,7 +41,7 @@ class RestBookControllerController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function getGoogleBooks(Request $request):JsonResponse
+    public function getGoogleBooksAction(Request $request):JsonResponse
     {
         $googleService = $this->get('google.books.service');
         $googleParams = $googleService->mapFormToGoogleBookParameters($request->request->get('googlebundle_parameters'));

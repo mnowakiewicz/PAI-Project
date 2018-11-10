@@ -6,7 +6,7 @@
  * Time: 12:38
  */
 
-namespace CommonBundle\Entity;
+namespace CommonBundle\Common;
 
 
 /**
@@ -18,12 +18,12 @@ interface CommonEntityMethodsInterface
     /**
      * @return int
      */
-    public function getId(): int;
+    public function getId(): ?int;
 
     /**
      * @return bool
      */
-    public function isActive(): bool;
+    public function getIsActive(): bool;
 
     /**
      * @param bool $isActive

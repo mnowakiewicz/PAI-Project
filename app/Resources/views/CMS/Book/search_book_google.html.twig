@@ -1,18 +1,23 @@
 {% extends 'CMS/Common/base.html.twig' %}
+{% block head_css %}
+    <style>
+       #btn-show-info, #btn-add-book {
+           min-width: 49.5%;
+       }
+       #table-box {
+           display: none;
+       }
 
+       tr.selected {
+           background-color: lavender;
+       }
+    </style>
+{% endblock %}
 {% block content_wrapper %}
-    <div class="col-md-3">
+    <div class="col-md-4 col-md-offset-4" id="form-box">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">{% trans %}books.google.add.book{% endtrans %}</h3>
-
-                {#<div class="box-tools pull-right">#}
-                {#<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"#}
-                {#title="Collapse">#}
-                {#<i class="fa fa-minus"></i></button>#}
-                {#<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">#}
-                {#<i class="fa fa-times"></i></button>#}
-                {#</div>#}
+                <h3 class="box-title">Search Google Books API</h3>
             </div>
             <div class="box-body">
                 {{ form_start(form) }}
@@ -20,58 +25,210 @@
                 <button type="submit" id="submit-form" class="btn btn-primary">Search</button>
                 {{ form_end(form) }}
             </div>
-            <!-- /.box-body -->
         </div>
-        <!-- /.box -->
     </div>
-    <div class="col-md-9">
+    <div class="col-md-8" id="table-box">
         <div class="box">
             <div class="box-body">
-                <table id="data-table" class="table table-bordered table-striped">
+                <button type="button" id="btn-show-info" class="btn btn-info disabled" disabled data-toggle="modal" data-target="#modal-information">
+                    Full Information
+                </button>
+                <button type="button" id="btn-add-book" class="btn btn-primary disabled" disabled >Add Selected Book</button>
+            </div>
+            <div class="box-body">
+                <table id="data-table" class="table table-bordered dataTable">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No.</th>
                         <th>Title</th>
                         <th>SubTitle</th>
+                        <th>Authors</th>
                         <th>Published</th>
-                        <th>Active</th>
-                        <th>Creation Date</th>
-                        <th>Edit Date</th>
                     </tr>
                     </thead>
                 </table>
             </div>
         </div>
-        <script>
-            $(function () {
-
-                $('#submit-form').click(function (e) {
-                    e.preventDefault();
-                    var form = $("[name='googlebundle_parameters']")[0];
-                    console.log(form);
-
-                    var formData = new FormData(form);
-
-                    $.ajax({
-                        url: '{{ path('api_googlebooks_get') }}',
-                        data: formData,
-                        type: 'POST',
-                        processData: false,
-                        contentType: false,
-                        dataType: "json",
-                        success: function (data) {
-                            console.log(JSON.parse(data));
-                        }
-                    })
-                })
-
-
-                $('#data-table').DataTable({
-                    serverSide: true,
-                    searching: false,
-                    ajax: '{{ path('api_books_datatable_data') }}'
-                });
-            })
-        </script>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal-information" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Full Information About Selected Book</h4>
+                </div>
+                <div class="modal-body">
+                    <pre class="modal-text">
+                    </pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extra_scripts %}
+    {{ parent() }}
+    <script>
+        var $table = $('#data-table');
+        var tableData;
+        var selectedId = null;
+        var pageLength = 5;
+
+        $(function () {
+            submitForm();
+            btnShowInfoEvent();
+        });
+
+        function btnShowInfoEvent() {
+            $("#btn-show-info").click(function () {
+                if(window.selectedId != null){
+                    $(".modal-text").text(getFormattedJSON(window.tableData[window.selectedId]));
+                }
+            })
+        }
+
+        function getFormattedJSON(object) {
+           return JSON.stringify(object, function (key, value) {
+                if(value === null){
+                    return undefined;
+                }
+                return value;
+            }, 2);
+        }
+
+
+        function clickTableRowEvent() {
+            $("tbody tr[role='row']").each(function () {
+                $(this).click(function () {
+                    $("tr[role='row'].selected").removeClass('selected');
+                    $(this).addClass('selected');
+                    window.selectedId = $(this).find('td:first').text() - 1;
+                    turnOnButtons()
+                })
+            })
+        }
+
+        function turnOnButtons() {
+            $("#btn-show-info, #btn-add-book")
+                .removeClass('disabled')
+                .attr('disabled', false);
+        }
+
+        function submitForm() {
+            $('#submit-form').click(function (e) {
+                e.preventDefault();
+                if(validateForm()){
+                    sendAjax();
+                }
+            });
+        }
+
+        function sendAjax() {
+            window.pageLength = $("#googlebundle_parameters_maxResults").val();
+            var form = $("[name='googlebundle_parameters']")[0];
+
+            var formData = new FormData(form);
+            $.ajax({
+                url: '{{ path('api_googlebooks_get') }}',
+                data: formData,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (data) {
+                    disableBottons();
+                    window.tableData = JSON.parse(data);
+                    destroyAndCreateDT(window.tableData);
+                    showTableBox();
+                    clickTableRowEvent();
+                }
+            })
+        }
+        
+        function validateForm() {
+            var $query = $("#googlebundle_parameters_q");
+            var $maxResults = $("#googlebundle_parameters_maxResults");
+
+            $("div.form-group").removeClass('has-error');
+
+            var isValid = true;
+
+            if($query.val().length == 0){
+                $query.parent().addClass('has-error');
+                isValid = false;
+            }
+
+            if ($maxResults.val() < 0 || $maxResults.val() > 40) {
+                $maxResults.parent().addClass('has-error');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        
+        function disableBottons() {
+            $("#btn-show-info, #btn-add-book")
+                .addClass('disabled')
+                .attr('disabled', true);
+            window.selectedId = null;
+        }
+
+        function showTableBox() {
+            $('#form-box').removeClass('col-md-offset-4');
+            $('#table-box').css("display", "block");
+        }
+
+        function destroyAndCreateDT(data){
+            this.$table.DataTable().destroy();
+            var rows = [];
+
+            // <th>No.</th>
+            // <th>Title</th>
+            // <th>SubTitle</th>
+            // <th>Authors</th>
+            // <th>Published</th>
+
+            data.forEach(function (row, index) {
+                rows.push([
+                    index+1,
+                    row.title,
+                    row.subtitle,
+                    getAuthors(row.authors),
+                    row.publishedDate,
+                ])
+            });
+
+            createDataTable(rows);
+        }
+
+        function createDataTable(rows) {
+            this.$table.DataTable({
+                searching: false,
+                paging: false,
+                responsive: true,
+                autoWidth: true,
+                pageLength: window.pageLength,
+                data: rows
+            });
+        }
+
+        function getAuthors(rowAuthors) {
+            var authors = '';
+            rowAuthors.forEach(function (author, index) {
+                if(index == 0){
+                    authors = author.fullName;
+                } else {
+                    authors += " / " + author.fullName ;
+                }
+            });
+
+            return authors;
+        }
+    </script>
 {% endblock %}

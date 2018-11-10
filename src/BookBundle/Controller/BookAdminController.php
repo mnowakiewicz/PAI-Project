@@ -2,8 +2,9 @@
 
 namespace BookBundle\Controller;
 
+use BookBundle\Entity\Book;
 use Doctrine\DBAL\Types\TextType;
-use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
+use GoogleBooksBundle\Options\GoogleBooksParameters;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,38 +24,52 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class BookAdminController extends Controller
 {
     /**
-     * @Route(path="/index")
+     * @Route(path="/index", name="books_cms_index")
      */
     public function indexAction():Response
     {
-        $parameters = new GoogleBooksAPIRequestParameters('ryby');
+        $parameters = new GoogleBooksParameters('ryby');
         $response = $this->get('google.books.service')->getMappedResponseModel($parameters);
-        dump($response);
 
         $books = $this->get('google.books.service')->createBookObjectsFromMappedModel($response);
 
-        dump($books);
+
         return $this->render('CMS/Book/index.html.twig', array(
             // ...
         ));
     }
 
-
-    public function createBookFromGoogleApiAction():Response
-    {
-
-    }
-
     /**
      * @return Response
-     * @Route(path="/index2")
+     * @Route(path="/google-api", name="books_cms_google_api")
      */
-    public function searchBookGoogleApi():Response
+    public function googleBooksAPIAction():Response
     {
         $form = $this->createForm('GoogleBooksBundle\Form\GoogleBooksParametersType');
 
         return $this->render('CMS/Book/search_book_google.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route(path="/create", name="books_cms_create")
+     */
+    public function createAction(Request $request):Response
+    {
+        $book = new Book();
+        $form = $this->createForm('BookBundle\Form\BookType', $book);
+
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $book = $form->getData();
+
+            return $this->redirectToRoute('books_cms_index');
+        }
+        return $this->render('CMS/Book/create.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 

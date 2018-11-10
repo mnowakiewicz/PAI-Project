@@ -9,7 +9,7 @@
 namespace OperatorBundle\Entity;
 
 use BookBundle\Entity\Book;
-use CommonBundle\Entity\CommonEntityMethodsInterface;
+use CommonBundle\Common\CommonEntityMethodsInterface;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -172,7 +172,7 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function getIsActive(): bool
     {
         return $this->isActive;
     }

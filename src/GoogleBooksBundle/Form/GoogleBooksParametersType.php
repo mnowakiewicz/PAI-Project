@@ -19,6 +19,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -33,7 +34,11 @@ class GoogleBooksParametersType extends AbstractType
                 'label' => 'Query',
             ])
             ->add('maxResults', IntegerType::class, [
-                'data' => 10
+                'data' => 5,
+                'attr' => [
+                    'min' => 1,
+                    'max' => 40
+                ]
             ])
             ->add('startIndex', IntegerType::class, [
                 'data' => 0
@@ -115,7 +120,7 @@ class GoogleBooksParametersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters'
+            'data_class' => 'GoogleBooksBundle\Options\GoogleBooksParameters'
         ]);
     }
 

@@ -108,7 +108,7 @@ class BooksDataTable implements DataTableHandlerInterface
                     $book->getTitle(),
                     $book->getSubtitle(),
                     $book->getPublishedDate(),
-                    $book->isActive(),
+                    $book->getIsActive(),
                     $book->getCreationDate()->format('l jS F Y h:i:s A'),
                     $book->getEditDate(),
                 ];

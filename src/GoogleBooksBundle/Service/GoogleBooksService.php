@@ -18,7 +18,7 @@ use GoogleBooksBundle\Options\Enum\LibraryRestrictEnum;
 use GoogleBooksBundle\Options\Enum\OrderByEnum;
 use GoogleBooksBundle\Options\Enum\PrintTypeEnum;
 use GoogleBooksBundle\Options\Enum\ProjectionEnum;
-use GoogleBooksBundle\Options\GoogleBooksAPIRequestParameters;
+use GoogleBooksBundle\Options\GoogleBooksParameters;
 use ImageBundle\Entity\Image;
 use Monolog\Logger;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -70,10 +70,10 @@ class GoogleBooksService
     /**
      * Returns mapped googleBookApi response (json) to PHP Object.
      *
-     * @param GoogleBooksAPIRequestParameters $parameters
+     * @param GoogleBooksParameters $parameters
      * @return GoogleApiResponse
      */
-    public function getMappedResponseModel(GoogleBooksAPIRequestParameters $parameters ):GoogleApiResponse
+    public function getMappedResponseModel(GoogleBooksParameters $parameters ):GoogleApiResponse
     {
         $url = $this->createUrl($this->parametersToString($parameters));
 
@@ -91,15 +91,15 @@ class GoogleBooksService
      * Creates URL,
      * example https://www.googleapis.com/books/v1/volumes?q={value}$key={googleApiKey}
      *
-     * @param string $parametersToString
+     * @param string $parameters
      * @return string
      */
-    private function createUrl(string $parametersToString) : string
+    private function createUrl(string $parameters) : string
     {
 
         $url = 'https://www.googleapis.com/books/v1/volumes?';
         $url .=
-            $parametersToString .
+            $parameters .
             "&key=" .
             $this->container->getParameter('googleApiKey');
 
@@ -109,19 +109,22 @@ class GoogleBooksService
     /**
      * Returns string in a format {parameter1}={value1}&{parameter2}={value2}&...{parameterN}={valueN}
      *
-     * @param GoogleBooksAPIRequestParameters $parameters
+     * @param GoogleBooksParameters $parameters
      * @return string
      */
-    private function parametersToString(GoogleBooksAPIRequestParameters $parameters): string
+    private function parametersToString(GoogleBooksParameters $parameters): string
     {
         $fields = $this->getPrivateClassFields($parameters);
 
         $string = '';
         if (count($fields)) {
             for ($i = 0; $i < count($fields); $i++) {
+
                 $functionName = 'get' . ucfirst($fields[$i]->getName());
-                if (call_user_func_array([$parameters, $functionName], []) != null) {
-                    $string .= $fields[$i]->getName() . '=' . call_user_func_array([$parameters, $functionName], []) . '&';
+                $functionValue = call_user_func_array([$parameters, $functionName], []);
+
+                if ($functionValue != null) {
+                    $string .= $fields[$i]->getName() . '=' . $functionValue . '&';
                 }
             }
             $string = substr($string, 0, -1);
@@ -133,11 +136,11 @@ class GoogleBooksService
     /**
      * Function returns empty array if error occurs.
      *
-     * @param GoogleBooksAPIRequestParameters $parameters
+     * @param GoogleBooksParameters $parameters
      * @return array|\ReflectionProperty[]
      *
      */
-    private function getPrivateClassFields(GoogleBooksAPIRequestParameters $parameters): array
+    private function getPrivateClassFields(GoogleBooksParameters $parameters): array
     {
         try {
             $reflect = new \ReflectionClass($parameters);
@@ -203,11 +206,11 @@ class GoogleBooksService
 
     /**
      * @param array $form
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function mapFormToGoogleBookParameters(array $form):GoogleBooksAPIRequestParameters
+    public function mapFormToGoogleBookParameters(array $form):GoogleBooksParameters
     {
-        $googleParams = new GoogleBooksAPIRequestParameters($form['q']);
+        $googleParams = new GoogleBooksParameters($form['q']);
 
         try {
             $reflection = new \ReflectionClass($googleParams);
@@ -231,19 +234,19 @@ class GoogleBooksService
 
                 switch ($propName){
                     case 'filter':
-                        call_user_func_array([$googleParams, $functionName], [new FilterEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new FilterEnum($data)]);
                         break;
                     case 'libraryRestrict':
-                        call_user_func_array([$googleParams, $functionName], [new LibraryRestrictEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new LibraryRestrictEnum($data)]);
                         break;
                     case 'orderBy':
-                        call_user_func_array([$googleParams, $functionName], [new OrderByEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new OrderByEnum($data)]);
                         break;
                     case 'printType':
-                        call_user_func_array([$googleParams, $functionName], [new PrintTypeEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new PrintTypeEnum($data)]);
                         break;
                     case 'projection':
-                        call_user_func_array([$googleParams, $functionName], [new ProjectionEnum($form[$propName])]);
+                        call_user_func_array([$googleParams, $functionName], [new ProjectionEnum($data)]);
                         break;
                     default:
                         call_user_func_array([$googleParams, $functionName], [$data]);

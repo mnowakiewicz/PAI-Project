@@ -19,7 +19,7 @@ use GoogleBooksBundle\Options\Enum\ProjectionEnum;
  * Class GoogleBooksAPIRequestParameters
  * @package GoogleBooksBundle\Options
  */
-class GoogleBooksAPIRequestParameters
+class GoogleBooksParameters
 {
     /**
      * @var string
@@ -89,9 +89,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param string $q
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setQ(string $q): GoogleBooksAPIRequestParameters
+    public function setQ(string $q): GoogleBooksParameters
     {
         $this->q = $q;
         return $this;
@@ -107,9 +107,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param FilterEnum $filterEnum
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setFilter(FilterEnum $filterEnum): GoogleBooksAPIRequestParameters
+    public function setFilter(FilterEnum $filterEnum): GoogleBooksParameters
     {
         $this->filter = $filterEnum->getValue();
         return $this;
@@ -125,9 +125,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param string $langRestrict
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setLangRestrict(string $langRestrict): GoogleBooksAPIRequestParameters
+    public function setLangRestrict(string $langRestrict): GoogleBooksParameters
     {
         $this->langRestrict = $langRestrict;
         return $this;
@@ -143,9 +143,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param LibraryRestrictEnum $enum
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setLibraryRestrict(LibraryRestrictEnum $enum): GoogleBooksAPIRequestParameters
+    public function setLibraryRestrict(LibraryRestrictEnum $enum): GoogleBooksParameters
     {
         $this->libraryRestrict = $enum->getValue();
         return $this;
@@ -161,9 +161,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param null $maxResults
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setMaxResults(int $maxResults): GoogleBooksAPIRequestParameters
+    public function setMaxResults(int $maxResults): GoogleBooksParameters
     {
         $this->maxResults = $maxResults;
         return $this;
@@ -179,9 +179,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param OrderByEnum $enum
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setOrderBy(OrderByEnum $enum): GoogleBooksAPIRequestParameters
+    public function setOrderBy(OrderByEnum $enum): GoogleBooksParameters
     {
         $this->orderBy = $enum->getValue();
         return $this;
@@ -197,9 +197,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param string $partner
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setPartner(string $partner): GoogleBooksAPIRequestParameters
+    public function setPartner(string $partner): GoogleBooksParameters
     {
         $this->partner = $partner;
         return $this;
@@ -215,9 +215,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param PrintTypeEnum $enum
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setPrintType(PrintTypeEnum $enum): GoogleBooksAPIRequestParameters
+    public function setPrintType(PrintTypeEnum $enum): GoogleBooksParameters
     {
         $this->printType = $enum->getValue();
         return $this;
@@ -233,9 +233,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param ProjectionEnum $projectionEnum
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setProjection(ProjectionEnum $projectionEnum): GoogleBooksAPIRequestParameters
+    public function setProjection(ProjectionEnum $projectionEnum): GoogleBooksParameters
     {
         $this->projection = $projectionEnum->getValue();
         return $this;
@@ -251,9 +251,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param bool $showPreorders
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setShowPreorders(bool $showPreorders): GoogleBooksAPIRequestParameters
+    public function setShowPreorders(bool $showPreorders): GoogleBooksParameters
     {
         $this->showPreorders = $showPreorders;
         return $this;
@@ -269,9 +269,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param string $source
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setSource(string $source): GoogleBooksAPIRequestParameters
+    public function setSource(string $source): GoogleBooksParameters
     {
         $this->source = $source;
         return $this;
@@ -287,9 +287,9 @@ class GoogleBooksAPIRequestParameters
 
     /**
      * @param int $startIndex
-     * @return GoogleBooksAPIRequestParameters
+     * @return GoogleBooksParameters
      */
-    public function setStartIndex(int $startIndex): GoogleBooksAPIRequestParameters
+    public function setStartIndex(int $startIndex): GoogleBooksParameters
     {
         $this->startIndex = $startIndex;
         return $this;
