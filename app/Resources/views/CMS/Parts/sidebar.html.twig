@@ -14,24 +14,22 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
-            {% include 'CMS/Parts/SideBar/tree_view_element.html.twig' with {'name':'dashboard'} %}
-            {% include 'CMS/Parts/SideBar/tree_view_element.html.twig' with {'name':'dashboard'} %}
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
-                    <span>Layout Options</span>
+                    <span>Books</span>
                     <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
+              <span class="label label-primary pull-right"></span>
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                    <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                    <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+                    <li><a href="{{ path('books_cms_index') }}"><i class="fa fa-circle-o"></i>Index</a></li>
+                    <li><a href="{{ path('books_cms_google_api') }}"><i class="fa fa-circle-o"></i>Google Books API</a></li>
+                    <li><a href="{{ path('books_cms_create') }}"><i class="fa fa-circle-o"></i>Create</a></li>
                     <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                 </ul>
             </li>
-            <li>
+           {# <li>
                 <a href="../widgets.html">
                     <i class="fa fa-th"></i> <span>Widgets</span>
                     <span class="pull-right-container">
@@ -167,11 +165,10 @@
                     <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                 </ul>
             </li>
-            <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
             <li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>#}
         </ul>
     </section>
     <!-- /.sidebar -->

@@ -21,16 +21,11 @@ class BookType extends AbstractType
             ->add('pageCount')
             ->add('language')
             ->add('webReaderLink')
-            ->add('isActive')
-            ->add('creationDate')
-            ->add('editDate')
             ->add('authors')
             ->add('printType')
             ->add('categories')
             ->add('publisher')
-            ->add('image')
-            ->add('creator')
-            ->add('lastEditor');
+            ->add('image');
     }/**
      * {@inheritdoc}
      */
