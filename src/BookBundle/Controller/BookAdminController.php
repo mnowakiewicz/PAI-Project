@@ -3,17 +3,11 @@
 namespace BookBundle\Controller;
 
 use BookBundle\Entity\Book;
-use Doctrine\DBAL\Types\TextType;
 use GoogleBooksBundle\Options\GoogleBooksParameters;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class BookAdminController
@@ -24,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class BookAdminController extends Controller
 {
     /**
-     * @Route(path="/index", name="books_cms_index")
+     * @Route(path="/index", name="books_cms_index", methods={"GET"})
      */
     public function indexAction():Response
     {
@@ -41,7 +35,7 @@ class BookAdminController extends Controller
 
     /**
      * @return Response
-     * @Route(path="/google-api", name="books_cms_google_api")
+     * @Route(path="/google-api", name="books_cms_google_api", methods={"GET"})
      */
     public function googleBooksAPIAction():Response
     {
@@ -53,7 +47,9 @@ class BookAdminController extends Controller
     }
 
     /**
-     * @Route(path="/create", name="books_cms_create")
+     * @Route(path="/create", name="books_cms_create", methods={"POST")
+     * @param Request $request
+     * @return Response
      */
     public function createAction(Request $request):Response
     {
