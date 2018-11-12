@@ -12,6 +12,8 @@ use AuthorBundle\Entity\Author;
 use BookBundle\Entity\Book;
 use BookBundle\Entity\PrintType;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use GoogleBooksBundle\Model\GoogleApiResponse;
 use GoogleBooksBundle\Options\Enum\FilterEnum;
 use GoogleBooksBundle\Options\Enum\LibraryRestrictEnum;
@@ -168,10 +170,20 @@ class GoogleBooksService
         $username = $this->tokenStorage->getToken()->getUsername();
         $repository = $this->entityManager->getRepository('OperatorBundle:Operator');
 
-        $operator = $repository->getOperatorByUsername($username);
+        try {
+            $operator = $repository->getOperatorByUsername($username);
+        } catch (NoResultException | NonUniqueResultException $e) {
+            $this->logger->error("Couldn't fetch Operator from Data Base", [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'message' => $e->getMessage()
+            ]);
+            $operator = null;
+        }
 
-        foreach ($apiResponse -> getItems() as $item){
-            $book = new Book($operator, $item->getId(), $item->getEtag());
+        foreach ($apiResponse->getItems() as $item){
+            $book = new Book();
+
             $volumeInfo = $item->getVolumeInfo();
             $accessInfo = $item->getAccessInfo();
 
@@ -187,6 +199,8 @@ class GoogleBooksService
                 ->setSmallThumbnail($volumeInfo->getImageLinks()->getSmallThumbnail());
 
             $book
+                ->setGoogleId($item->getId())
+                ->setEtag($item->getEtag())
                 ->setTitle($volumeInfo->getTitle())
                 ->setSubtitle($volumeInfo->getSubtitle())
                 ->setPublishedDate($volumeInfo->getPublishedDate())
@@ -196,7 +210,8 @@ class GoogleBooksService
                 ->setWebReaderLink($accessInfo->getWebReaderLink())
                 ->setAuthors($authors)
                 ->setPrintType(new PrintType($volumeInfo->getPrintType()))
-                ->setImage($image);
+                ->setImage($image)
+                ->setCreator($operator);
 
             $books[] = $book;
 
@@ -218,7 +233,7 @@ class GoogleBooksService
             $this->logger->error('Error occurred while reflecting class', [
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
+                'message' => $e->getMessage()
             ]);
             return $googleParams;
         }

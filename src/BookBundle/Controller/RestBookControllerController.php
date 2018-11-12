@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class RestBookControllerController extends Controller
 {
     /**
-     * @Route("/datatable/data", name="api_books_datatable_data")
+     * @Route("/datatable/data", name="api_books_datatable_data", methods={"GET"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -36,7 +36,7 @@ class RestBookControllerController extends Controller
     }
 
     /**
-     * @Route("/googlebooks/books", name="api_googlebooks_get")
+     * @Route("/googlebooks/books", name="api_googlebooks_get", methods={"GET", "POST"})
      * @Method(methods={"POST"})
      * @param Request $request
      * @return JsonResponse
