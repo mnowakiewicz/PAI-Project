@@ -27,7 +27,7 @@ class BookAdminController extends Controller
 
     /**
      * @return Response
-     * @Route(path="/google-api", name="books_cms_google_api", methods={"GET"})
+     * @Route(path="/google-api", name="books_cms_google_api", methods={"GET", "POST"})
      */
     public function googleBooksAPIAction():Response
     {

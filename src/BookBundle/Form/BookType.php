@@ -8,6 +8,7 @@ use BookBundle\Entity\Enum\StatusEnum;
 use BookBundle\Entity\PrintType;
 use CategoryBundle\Entity\Category;
 
+use Doctrine\ORM\EntityManager;
 use ImageBundle\Entity\Image;
 use PublisherBundle\Entity\Publisher;
 
@@ -23,8 +24,26 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class BookType
+ * @package BookBundle\Form
+ */
 class BookType extends AbstractType
 {
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * BookType constructor.
+     * @param $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -44,19 +63,33 @@ class BookType extends AbstractType
             ->add('webReaderLink', UrlType::class)
             ->add('authors', EntityType::class, [
                 'class' => Author::class,
+                'choice_label' => function (Author $author) {
+                    return $author->getFullName();
+                },
+                'multiple' => true
             ])
             ->add('printType', EntityType::class, [
                 'class' => PrintType::class,
-                'choice_label' => 'name',
+                'choice_label' => function (PrintType $printType){
+                    return $printType->getName();
+                },
             ])
             ->add('categories', EntityType::class, [
-                'class'  => Category::class
+                'class'  => Category::class,
+                'choice_label' => function (Category $category){
+                    return $category->getName();
+                },
+                'multiple' => true
             ])
             ->add('publisher', EntityType::class, [
                 'class' => Publisher::class
             ])
             ->add('image', EntityType::class, [
-                'class' => Image::class
+                'class' => Image::class,
+                'choice_label' => function (Image $image){
+
+                    return $image->getName();
+                },
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [

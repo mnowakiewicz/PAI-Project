@@ -111,7 +111,7 @@ class Book extends CommonSuperClass
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books")
+     * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books", cascade={"persist"})
      * @Assert\NotBlank(groups={"published"})
      */
     private $categories;
@@ -127,7 +127,7 @@ class Book extends CommonSuperClass
     /**
      * @var Image|null
      *
-     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image",mappedBy="book", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image", mappedBy="book", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $image;
 

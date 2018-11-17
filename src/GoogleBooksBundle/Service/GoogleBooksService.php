@@ -10,6 +10,7 @@ namespace GoogleBooksBundle\Service;
 
 use AuthorBundle\Entity\Author;
 use BookBundle\Entity\Book;
+use BookBundle\Entity\Enum\StatusEnum;
 use BookBundle\Entity\PrintType;
 use CategoryBundle\Entity\Category;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -222,6 +223,7 @@ class GoogleBooksService
                 ->setPrintType(new PrintType($volumeInfo->getPrintType()))
                 ->setImage($image)
                 ->setCreator($operator)
+                ->setStatus(StatusEnum::DRAFT())
                 ->setCategories($categories);
 
             $books[] = $book;

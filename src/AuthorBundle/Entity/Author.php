@@ -190,6 +190,13 @@ class Author extends CommonSuperClass
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        return (string) $this->getFullName();
+    }
 
 
 }
