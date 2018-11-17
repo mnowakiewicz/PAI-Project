@@ -42,7 +42,6 @@ class GoogleApiResponse
     public static function create(array $googleApiResponseData): GoogleApiResponse
     {
         $return = new GoogleApiResponse();
-
         $items = array_map(function ($data) {
             return Item::create($data);
         }, $googleApiResponseData["items"]);

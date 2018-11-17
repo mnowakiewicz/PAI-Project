@@ -2,6 +2,8 @@
 
 namespace BookBundle\Repository;
 
+use BookBundle\Entity\PrintType;
+
 /**
  * PrintTypeRepository
  *
@@ -10,4 +12,20 @@ namespace BookBundle\Repository;
  */
 class PrintTypeRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param $name
+     * @return PrintType
+     */
+    public function getPrintTypeByName($name):PrintType
+    {
+        $return =  $this
+            ->createQueryBuilder('pt')
+            ->where('pt.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getSingleResult();
+
+        return $return;
+    }
 }

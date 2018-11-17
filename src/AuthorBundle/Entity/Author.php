@@ -53,7 +53,7 @@ class Author extends CommonSuperClass
     private $about;
 
     /**
-     * @var Book[]
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="BookBundle\Entity\Book", mappedBy="authors")
      */
@@ -61,14 +61,25 @@ class Author extends CommonSuperClass
 
     /**
      * Author constructor.
-     * @param string $fullName
+     * @param string $name
      * @param bool $isActive
      */
-    public function __construct(string $fullName, bool $isActive = true)
+    public function __construct(string $name, bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->fullName = $fullName;
-        $this->books = [];
+        $this->fullName = $name;
+        $this->books = new ArrayCollection();
+    }
+
+
+    /**
+     * @param Book $book
+     * @return Author
+     */
+    public function addBook(Book $book):Author
+    {
+        $this->books->add($book);
+        return $this;
     }
 
     /**
@@ -89,7 +100,6 @@ class Author extends CommonSuperClass
         return $this;
     }
 
-
     /**
      * @return null|string
      */
@@ -99,10 +109,10 @@ class Author extends CommonSuperClass
     }
 
     /**
-     * @param string $pseudonym
+     * @param null|string $pseudonym
      * @return Author
      */
-    public function setPseudonym(string $pseudonym): Author
+    public function setPseudonym(?string $pseudonym): Author
     {
         $this->pseudonym = $pseudonym;
         return $this;
@@ -117,10 +127,10 @@ class Author extends CommonSuperClass
     }
 
     /**
-     * @param \DateTime $birthDate
+     * @param \DateTime|null $birthDate
      * @return Author
      */
-    public function setBirthDate(\DateTime $birthDate): Author
+    public function setBirthDate(?\DateTime $birthDate): Author
     {
         $this->birthDate = $birthDate;
         return $this;
@@ -135,10 +145,10 @@ class Author extends CommonSuperClass
     }
 
     /**
-     * @param \DateTime $deathDate
+     * @param \DateTime|null $deathDate
      * @return Author
      */
-    public function setDeathDate(\DateTime $deathDate): Author
+    public function setDeathDate(?\DateTime $deathDate): Author
     {
         $this->deathDate = $deathDate;
         return $this;
@@ -153,31 +163,39 @@ class Author extends CommonSuperClass
     }
 
     /**
-     * @param string $about
+     * @param null|string $about
      * @return Author
      */
-    public function setAbout(string $about): Author
+    public function setAbout(?string $about): Author
     {
         $this->about = $about;
         return $this;
     }
 
     /**
-     * @return Book[]
+     * @return ArrayCollection
      */
-    public function getBooks(): array
+    public function getBooks(): ArrayCollection
     {
         return $this->books;
     }
 
     /**
-     * @param Book[] $books
+     * @param ArrayCollection $books
      * @return Author
      */
-    public function setBooks(array $books): Author
+    public function setBooks(ArrayCollection $books): Author
     {
         $this->books = $books;
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        return (string) $this->getFullName();
     }
 
 

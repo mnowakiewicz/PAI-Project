@@ -34,4 +34,33 @@ class BookRepository extends \Doctrine\ORM\EntityRepository
 
         return $rows;
     }
+
+    /**
+     * Returns true if object exists, else false
+     *
+     * @param string $googleId
+     * @return bool
+     */
+    public function ifExistsByGivenGoogleId(string $googleId):bool
+    {
+        $qb = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('count(b.id)')
+            ->from('BookBundle:Book', 'b')
+            ->where('b.googleId = :googleId')
+            ->setParameter('googleId', $googleId);
+
+        try {
+            $rows = $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException | NonUniqueResultException $e) {
+            $rows = 0;
+        }
+
+        if($rows > 0){
+            return true;
+        }
+
+        return false;
+    }
 }

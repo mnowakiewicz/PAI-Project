@@ -57,14 +57,18 @@ class BooksDataTable implements DataTableHandlerInterface
 
         // Query to get requested entities.
         $qb = $repository
-            ->createQueryBuilder('b');
+            ->createQueryBuilder('b')
+            ->leftJoin('b.authors', 'a')
+            ->leftJoin('b.printType', 'p')
+            ->where('b.isActive = :active ')
+            ->setParameter('active', true);
 
         $expr = new Expr;
 
         // Search.
         if ($request->search->value){
             $qb
-                ->where(
+                ->andWhere(
                     $expr->orX(
                         $expr->like($expr->lower('b.title'), ":search"),
                         $expr->like($expr->lower('b.subtitle'), ":search"),
@@ -80,10 +84,12 @@ class BooksDataTable implements DataTableHandlerInterface
                 case 0: $qb->addOrderBy('b.id', $order->dir); break;
                 case 1: $qb->addOrderBy('b.title', $order->dir); break;
                 case 2: $qb->addOrderBy('b.subtitle', $order->dir); break;
-                case 3: $qb->addOrderBy('b.publishedDate', $order->dir); break;
-                case 4: $qb->addOrderBy('b.isActive', $order->dir); break;
-                case 5: $qb->addOrderBy('b.creationDate', $order->dir); break;
-                case 6: $qb->addOrderBy('b.editDate', $order->dir); break;
+                //authors
+                case 4: $qb->addOrderBy('b.publishedDate', $order->dir); break;
+                // printtype
+                case 5: $qb->addOrderBy('b.status', $order->dir); break;
+                case 6: $qb->addOrderBy('b.creationDate', $order->dir); break;
+                case 7: $qb->addOrderBy('b.editDate', $order->dir); break;
             }
         }
 
@@ -103,14 +109,17 @@ class BooksDataTable implements DataTableHandlerInterface
         //Response Data
         if(!empty($books)){
             foreach ($books as $book){
+
                 $results->data[] = [
                     $book->getId(),
                     $book->getTitle(),
                     $book->getSubtitle(),
+                    $book->getAuthorsAsString(),
                     $book->getPublishedDate(),
-                    $book->getIsActive(),
+                    $book->getPrintType() ? $book->getPrintType()->getName() : null,
+                    $book->getStatus(),
                     $book->getCreationDate()->format('l jS F Y h:i:s A'),
-                    $book->getEditDate(),
+                    $book->getEditDate() ? $book->getEditDate()->format('l jS F Y h:i:s A') : null
                 ];
             }
         }

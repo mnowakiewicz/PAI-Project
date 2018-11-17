@@ -120,7 +120,8 @@ class GoogleBooksParametersType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'GoogleBooksBundle\Options\GoogleBooksParameters'
+            'data_class' => 'GoogleBooksBundle\Options\GoogleBooksParameters',
+            'required' => false
         ]);
     }
 

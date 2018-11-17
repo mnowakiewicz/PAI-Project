@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{ include('CMS/Common/head.html.twig') }}
+    {{ include('CMS/head.html.twig') }}
     {% block head_css %}{% endblock %}
     {% block head_scripts %}{% endblock %}
 </head>
 <body class="{% block body_class %}hold-transition skin-blue sidebar-mini{% endblock %}">
     {% block body_content %}{% endblock %}
 </body>
-{{ include('CMS/Common/main_scripts.html.twig') }}
+{{ include('CMS/main_scripts.html.twig') }}
 {% block extra_scripts %}{% endblock %}
 </html>

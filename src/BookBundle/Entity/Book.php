@@ -6,10 +6,12 @@ use AuthorBundle\Entity\Author;
 use BookBundle\Entity\Enum\StatusEnum;
 use CategoryBundle\Entity\Category;
 use CommonBundle\Common\CommonSuperClass;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ImageBundle\Entity\Image;
 use OperatorBundle\Entity\Operator;
 use PublisherBundle\Entity\Publisher;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Book
@@ -38,13 +40,14 @@ class Book extends CommonSuperClass
      * @var string|null
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"published"})
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="subtitle", type="string", length=50, nullable=true)
+     * @ORM\Column(name="subtitle", type="string", length=50, nullable=true)     *
      */
     private $subtitle;
 
@@ -58,7 +61,7 @@ class Book extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -80,18 +83,20 @@ class Book extends CommonSuperClass
      * @var string|null
      *
      * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true, name="webReaderLink")
+     * @Assert\Url(groups={"published"})
      */
     private $webReaderLink;
 
     /**
      * @var string
+     * @Assert\NotBlank(groups={"published"})
      */
     private $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AuthorBundle\Entity\Author", inversedBy="books")
+     * @ORM\ManyToMany(targetEntity="AuthorBundle\Entity\Author", inversedBy="books", cascade={"persist"})
      *
-     * @var Author[]
+     * @var ArrayCollection
      */
     private $authors;
 
@@ -104,9 +109,10 @@ class Book extends CommonSuperClass
     private $printType;
 
     /**
-     * @var Category[]
+     * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books")
+     * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books", cascade={"persist"})
+     * @Assert\NotBlank(groups={"published"})
      */
     private $categories;
 
@@ -121,7 +127,7 @@ class Book extends CommonSuperClass
     /**
      * @var Image|null
      *
-     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image",mappedBy="book", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image", mappedBy="book", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $image;
 
@@ -150,9 +156,59 @@ class Book extends CommonSuperClass
     public function __construct(bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->authors = [];
-        $this->categories = [];
+        $this->authors = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->status = StatusEnum::DRAFT()->getValue();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function serializeThis(): array
+    {
+        try {
+            $reflection = new \ReflectionClass($this);
+        } catch (\ReflectionException $e) {
+            return [];
+        }
+        $props = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+        $parentProps = $reflection->getParentClass()->getProperties(\ReflectionProperty::IS_PROTECTED);
+
+        $return = [];
+        foreach ($props as $prop){
+            switch ($prop->getName()){
+                case 'authors': $return[$prop->getName()] = $this->authors->toArray(); break;
+                case 'categories': $return[$prop->getName()] = $this->categories->toArray(); break;
+                default: $return[$prop->getName()] = call_user_func_array([$this, 'get' . ucfirst($prop->getName())], []);
+            }
+        }
+
+        foreach ($parentProps as $parentProp){
+            $return[$parentProp->getName()] = call_user_func_array([$this, 'parent::get' . ucfirst($parentProp->getName())], []);
+        }
+
+        return $return;
+    }
+
+
+    /**
+     * @param Author $author
+     * @return Book
+     */
+    public function addAuthor(Author $author):Book
+    {
+        $this->authors->add($author);
+        return $this;
+    }
+
+    /**
+     * @param Category $category
+     * @return Book
+     */
+    public function addCategory(Category $category):Book
+    {
+        $this->categories->add($category);
+        return $this;
     }
 
     /**
@@ -318,23 +374,7 @@ class Book extends CommonSuperClass
         return $this;
     }
 
-    /**
-     * @return Author[]
-     */
-    public function getAuthors(): array
-    {
-        return $this->authors;
-    }
 
-    /**
-     * @param Author[] $authors
-     * @return Book
-     */
-    public function setAuthors(array $authors): Book
-    {
-        $this->authors = $authors;
-        return $this;
-    }
 
     /**
      * @return PrintType|null
@@ -355,22 +395,41 @@ class Book extends CommonSuperClass
     }
 
     /**
-     * @return Category[]
+     * @return ArrayCollection
      */
-    public function getCategories(): array
+    public function getAuthors(): ArrayCollection
+    {
+        return $this->authors;
+    }
+
+    /**
+     * @param ArrayCollection $authors
+     * @return Book
+     */
+    public function setAuthors(ArrayCollection $authors): Book
+    {
+        $this->authors = $authors;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCategories(): ArrayCollection
     {
         return $this->categories;
     }
 
     /**
-     * @param Category[] $categories
+     * @param ArrayCollection $categories
      * @return Book
      */
-    public function setCategories(array $categories): Book
+    public function setCategories(ArrayCollection $categories): Book
     {
         $this->categories = $categories;
         return $this;
     }
+
 
     /**
      * @return null|Publisher
@@ -447,7 +506,7 @@ class Book extends CommonSuperClass
     /**
      * @return string
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -462,6 +521,17 @@ class Book extends CommonSuperClass
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getAuthorsAsString():string
+    {
+        $string = '';
+        foreach ($this->authors as $author){
+            $string .= $author->getFullName() . ' / ';
+        }
+        return $string;
+    }
 
 }
 

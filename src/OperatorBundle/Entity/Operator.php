@@ -10,6 +10,7 @@ namespace OperatorBundle\Entity;
 
 use BookBundle\Entity\Book;
 use CommonBundle\Common\CommonEntityMethodsInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -66,7 +67,7 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     protected $avatar;
 
     /**
-     * @var Book[]
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="BookBundle\Entity\Book", mappedBy="creator")
      */
@@ -82,7 +83,13 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         parent::__construct();
         $this->creationDate = new \DateTime('now');
         $this->isActive = $isActive;
-        $this->booksCreated = [];
+        $this->booksCreated = new ArrayCollection();
+    }
+
+    public function addBook(Book $book):self
+    {
+        $this->booksCreated->add($book);
+        return $this;
     }
 
 
@@ -206,22 +213,24 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     }
 
     /**
-     * @return Book[]
+     * @return ArrayCollection
      */
-    public function getBooksCreated(): array
+    public function getBooksCreated(): ArrayCollection
     {
         return $this->booksCreated;
     }
 
     /**
-     * @param Book[] $booksCreated
+     * @param ArrayCollection $booksCreated
      * @return Operator
      */
-    public function setBooksCreated(array $booksCreated): Operator
+    public function setBooksCreated(ArrayCollection $booksCreated): Operator
     {
         $this->booksCreated = $booksCreated;
         return $this;
     }
+
+
 
 
 }

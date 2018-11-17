@@ -23,7 +23,7 @@ class Category extends CommonSuperClass
     private $name;
 
     /**
-     * @var Book[]
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="BookBundle\Entity\Book", mappedBy="categories")
      */
@@ -31,14 +31,24 @@ class Category extends CommonSuperClass
 
     /**
      * Category constructor.
-     * @param string $fullName
+     * @param string $name
      * @param bool $isActive
      */
-    public function __construct(string $fullName, bool $isActive = true)
+    public function __construct(string $name, bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->name = $fullName;
-        $this->books = [];
+        $this->name = $name;
+        $this->books = new ArrayCollection();
+    }
+
+    /**
+     * @param Book $book
+     * @return Category
+     */
+    public function addBook(Book $book):self
+    {
+        $this->books->add($book);
+        return $this;
     }
 
     /**
@@ -60,22 +70,24 @@ class Category extends CommonSuperClass
     }
 
     /**
-     * @return Book[]
+     * @return ArrayCollection
      */
-    public function getBooks(): array
+    public function getBooks(): ArrayCollection
     {
         return $this->books;
     }
 
     /**
-     * @param Book[] $books
+     * @param ArrayCollection $books
      * @return Category
      */
-    public function setBooks(array $books): Category
+    public function setBooks(ArrayCollection $books): Category
     {
         $this->books = $books;
         return $this;
     }
+
+
 
 }
 
