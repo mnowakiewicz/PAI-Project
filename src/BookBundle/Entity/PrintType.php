@@ -3,6 +3,7 @@
 namespace BookBundle\Entity;
 
 use CommonBundle\Common\CommonSuperClass;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,61 +15,73 @@ use Doctrine\ORM\Mapping as ORM;
 class PrintType extends CommonSuperClass
 {
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="name", type="string", length=50, unique=true)
      */
     private $name;
 
     /**
-     * @var Book[]
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="BookBundle\Entity\Book", mappedBy="printType")
      */
     private $books;
 
-    public function __construct(string $fullName, bool $isActive = true)
+    public function __construct(string $name, bool $isActive = true)
     {
         parent::__construct($isActive);
-        $this->name = $fullName;
-        $this->books = [];
+        $this->name = $name;
+        $this->books = new ArrayCollection();
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @return PrintType
      */
-    public function setName(string $name): PrintType
+    public function setName(?string $name): PrintType
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return Book[]
+     * @return ArrayCollection
      */
-    public function getBooks(): array
+    public function getBooks(): ArrayCollection
     {
         return $this->books;
     }
 
     /**
-     * @param Book[] $books
+     * @param ArrayCollection $books
      * @return PrintType
      */
-    public function setBooks(array $books): PrintType
+    public function setBooks(ArrayCollection $books): PrintType
     {
         $this->books = $books;
         return $this;
     }
+
+    /**
+     * @param Book $book
+     * @return PrintType
+     */
+    public function addBook(Book $book):self
+    {
+        $this->books->add($book);
+        return $this;
+    }
+
+
 
 }
 

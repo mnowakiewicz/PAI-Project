@@ -51,6 +51,20 @@ class RestBookControllerController extends Controller
         return $this->json(json_encode($return));
     }
 
+    /**
+     * @Route("/googlebooks/create", name="api_googlebooks_create", methods={"GET", "POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createBookAction(Request $request):JsonResponse
+    {
+        /** @var array $jsonData */
+        $jsonData = json_decode($request->getContent(), true);
+        $restService = $this->get('books_rest_service.service');
+        $status = $restService->persistBookObject($jsonData);
+        return $this->json($status);
+    }
+
 }
 
 

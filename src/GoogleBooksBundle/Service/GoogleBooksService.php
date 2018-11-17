@@ -11,6 +11,8 @@ namespace GoogleBooksBundle\Service;
 use AuthorBundle\Entity\Author;
 use BookBundle\Entity\Book;
 use BookBundle\Entity\PrintType;
+use CategoryBundle\Entity\Category;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -187,9 +189,17 @@ class GoogleBooksService
             $volumeInfo = $item->getVolumeInfo();
             $accessInfo = $item->getAccessInfo();
 
-            $authors = [];
+            $authors = new ArrayCollection();
+
             foreach ($volumeInfo->getAuthors() as $author){
-                $authors[] = new Author($author);
+                $authors->add(new Author($author));
+            }
+
+            $categories = new ArrayCollection();
+            if ($volumeInfo->getCategories() != null){
+                foreach ($volumeInfo->getCategories() as $category){
+                    $categories->add(new Category($category));
+                }
             }
 
             $image = new Image($volumeInfo->getTitle());
@@ -211,10 +221,10 @@ class GoogleBooksService
                 ->setAuthors($authors)
                 ->setPrintType(new PrintType($volumeInfo->getPrintType()))
                 ->setImage($image)
-                ->setCreator($operator);
+                ->setCreator($operator)
+                ->setCategories($categories);
 
             $books[] = $book;
-
         }
         return $books;
     }

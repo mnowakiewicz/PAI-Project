@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    {{ include('CMS/Common/head.html.twig') }}
+    {{ include('CMS/head.html.twig') }}
     <body class="hold-transition login-page">
         <div>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -27,5 +27,5 @@
             {% endblock fos_user_content %}
         </div>
     </body>
-    {{ include('CMS/Common/main_scripts.html.twig') }}
+    {{ include('CMS/main_scripts.html.twig') }}
 </html>
