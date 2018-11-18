@@ -3,8 +3,7 @@
 namespace BookBundle\Controller;
 
 use BookBundle\Entity\Book;
-use ImageBundle\Entity\Image;
-use OperatorBundle\Entity\Operator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +20,8 @@ class BookAdminController extends Controller
     /**
      * @Route(path="/index", name="books_cms_index", methods={"GET"})
      */
-    public function indexAction():Response
-    {   
+    public function indexAction(): Response
+    {
         return $this->render('CMS/Book/index.html.twig');
     }
 
@@ -30,7 +29,7 @@ class BookAdminController extends Controller
      * @return Response
      * @Route(path="/google-api", name="books_cms_google_api", methods={"GET", "POST"})
      */
-    public function googleBooksAPIAction():Response
+    public function googleBooksAPIAction(): Response
     {
         $form = $this->createForm('GoogleBooksBundle\Form\GoogleBooksParametersType');
         return $this->render('CMS/Book/search_book_google.html.twig', [
@@ -43,38 +42,53 @@ class BookAdminController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function createAction(Request $request):Response
+    public function createAction(Request $request): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $adminService = $this->get('book_admin.service');
         $form = $this->createForm('BookBundle\Form\BookType');
 
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var Book $book */
             $book = $form->getData();
-
-            /** @var Operator $creator */
-            $creator = $this->getUser();
-
-            if($book->getImage()){
-                $image = $book->getImage();
-                $image->setBook($book);
-                $em->persist($image);
-            }
-
-            $book->setCreator($creator);
-
-            $em->persist($book);
-            $em->flush();
-
+            $adminService->persistCreatedBook($book);
             return $this->redirectToRoute('books_cms_index');
         }
-        return $this->render('CMS/Common/create.html.twig', [
+        return $this->render('CMS/Common/create_edit.html.twig', [
             'form' => $form->createView(),
-            'title' => 'Create Book'
+            'title' => 'Create Book',
+            'submit_button_text' => 'Create'
         ]);
     }
 
+    /**
+     * @Route(path="/edit/{id}", name="books_cms_edit")
+     * @ParamConverter(name="book", class="BookBundle\Entity\Book", isOptional=false)
+     *
+     * @param Request $request
+     * @param Book $book
+     * @return Response
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function editAction(Request $request, Book $book): Response
+    {
+        $adminService = $this->get('book_admin.service');
+        $form = $this->createForm('BookBundle\Form\BookType', $book);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Book $book */
+            $book = $form->getData();
+            $adminService->persistEditedBook($book);
+            return $this->redirectToRoute('books_cms_index');
+        }
+
+        return $this->render('CMS/Common/create_edit.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Edit Book',
+            'submit_button_text' => 'Edit'
+        ]);
+    }
 
 
 }

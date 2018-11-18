@@ -2,6 +2,10 @@
 
 namespace ImageBundle\Repository;
 
+use BookBundle\Entity\Book;
+use Doctrine\ORM\QueryBuilder;
+use ImageBundle\Entity\Image;
+
 /**
  * ImageRepository
  *
@@ -10,10 +14,12 @@ namespace ImageBundle\Repository;
  */
 class ImageRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getAvailableImagesQB(){
+    public function getAvailableImagesQB(): QueryBuilder
+    {
         return $this
             ->createQueryBuilder('image')
             ->where('image.book is null')
             ->orderBy('image.creationDate', 'ASC');
     }
+
 }

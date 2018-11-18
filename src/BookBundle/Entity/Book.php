@@ -7,6 +7,7 @@ use BookBundle\Entity\Enum\StatusEnum;
 use CategoryBundle\Entity\Category;
 use CommonBundle\Common\CommonSuperClass;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ImageBundle\Entity\Image;
 use OperatorBundle\Entity\Operator;
@@ -105,7 +106,7 @@ class Book extends CommonSuperClass
     /**
      * @ORM\ManyToMany(targetEntity="AuthorBundle\Entity\Author", inversedBy="books", cascade={"persist"})
      *
-     * @var ArrayCollection
+     * @var Collection
      */
     private $authors;
 
@@ -118,7 +119,7 @@ class Book extends CommonSuperClass
     private $printType;
 
     /**
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books", cascade={"persist"})
      * @Assert\NotBlank(groups={ Book::GROUP_PUBLISHED })
@@ -404,36 +405,36 @@ class Book extends CommonSuperClass
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getAuthors(): ArrayCollection
+    public function getAuthors(): Collection
     {
         return $this->authors;
     }
 
     /**
-     * @param ArrayCollection $authors
+     * @param Collection $authors
      * @return Book
      */
-    public function setAuthors(ArrayCollection $authors): Book
+    public function setAuthors(Collection $authors): Book
     {
         $this->authors = $authors;
         return $this;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getCategories(): ArrayCollection
+    public function getCategories(): Collection
     {
         return $this->categories;
     }
 
     /**
-     * @param ArrayCollection $categories
+     * @param Collection $categories
      * @return Book
      */
-    public function setCategories(ArrayCollection $categories): Book
+    public function setCategories(Collection $categories): Book
     {
         $this->categories = $categories;
         return $this;
