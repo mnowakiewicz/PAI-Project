@@ -86,9 +86,9 @@ class BooksDataTable implements DataTableHandlerInterface
                 //authors
                 case 4: $qb->addOrderBy('b.publishedDate', $order->dir); break;
                 // printtype
-                case 5: $qb->addOrderBy('b.status', $order->dir); break;
-                case 6: $qb->addOrderBy('b.creationDate', $order->dir); break;
-                case 7: $qb->addOrderBy('b.editDate', $order->dir); break;
+                case 6: $qb->addOrderBy('b.status', $order->dir); break;
+                case 7: $qb->addOrderBy('b.creationDate', $order->dir); break;
+                case 8: $qb->addOrderBy('b.editDate', $order->dir); break;
             }
         }
 

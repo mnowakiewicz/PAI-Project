@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BookAdminController extends Controller
 {
     /**
-     * @Route(path="/index", name="books_cms_index", methods={"GET"})
+     * @Route(name="books_cms_index", methods={"GET"})
      */
     public function indexAction(): Response
     {
