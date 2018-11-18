@@ -10,4 +10,10 @@ namespace ImageBundle\Repository;
  */
 class ImageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAvailableImagesQB(){
+        return $this
+            ->createQueryBuilder('image')
+            ->where('image.book is null')
+            ->orderBy('image.creationDate', 'ASC');
+    }
 }
