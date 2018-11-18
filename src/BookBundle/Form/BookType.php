@@ -100,7 +100,7 @@ class BookType extends AbstractType
                 'choice_label' => function (Image $image) {
                     return $image->getName();
                 },
-                'placeholder' => ' '
+                'placeholder' => ''
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
