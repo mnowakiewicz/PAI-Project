@@ -140,7 +140,7 @@ class Book extends CommonSuperClass
     /**
      * @var Image|null
      *
-     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image", mappedBy="book", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="ImageBundle\Entity\Image", mappedBy="book")
      */
     private $image;
 
