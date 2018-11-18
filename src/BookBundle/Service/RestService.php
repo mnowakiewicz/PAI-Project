@@ -121,7 +121,7 @@ class RestService
      * @param array $data
      * @return Book
      */
-    private function addPublisher(Book $book, array $data): Book
+    private function addPublisher(Book $book, ?array $data): Book
     {
         $repository = $this->em->getRepository('PublisherBundle:Publisher');
         if ($data == null)

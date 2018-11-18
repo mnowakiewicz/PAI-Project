@@ -2,9 +2,8 @@
 
 namespace ImageBundle\Repository;
 
-use BookBundle\Entity\Book;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
-use ImageBundle\Entity\Image;
 
 /**
  * ImageRepository
@@ -14,12 +13,34 @@ use ImageBundle\Entity\Image;
  */
 class ImageRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getAvailableImagesQB(): QueryBuilder
+
+    /**
+     * @param int|null $bookId
+     * @return QueryBuilder
+     */
+    public function getAvailableImagesForBookQB(?int $bookId): QueryBuilder
     {
-        return $this
+        $expr = new Expr();
+
+        if ($bookId) {
+
+            $expr = $expr->orX(
+                $expr->isNull('image.book'),
+                $expr->eq('image.book', ':bookId')
+            );
+
+        } else {
+
+            $expr = $expr->isNull('image.book');
+        }
+
+        $qb = $this
             ->createQueryBuilder('image')
-            ->where('image.book is null')
+            ->where($expr)
+            ->setParameter('bookId', $bookId)
             ->orderBy('image.creationDate', 'ASC');
+
+        return $qb;
     }
 
 }

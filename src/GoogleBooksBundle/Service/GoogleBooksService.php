@@ -221,12 +221,15 @@ class GoogleBooksService
                 ->setLanguage($volumeInfo->getLanguage())
                 ->setWebReaderLink($accessInfo->getWebReaderLink())
                 ->setAuthors($authors)
-                ->setPublisher(new Publisher($volumeInfo->getPublisher()))
                 ->setPrintType(new PrintType($volumeInfo->getPrintType()))
                 ->setImage($image)
                 ->setCreator($operator)
                 ->setStatus(StatusEnum::DRAFT())
                 ->setCategories($categories);
+
+            if($volumeInfo->getPublisher()){
+                $book->setPublisher(new Publisher($volumeInfo->getPublisher()));
+            }
 
             $books[] = $book;
         }

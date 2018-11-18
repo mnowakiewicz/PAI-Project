@@ -37,6 +37,8 @@ class BookType extends AbstractType
      */
     private $imageRepository;
 
+
+
     /**
      * BookType constructor.
      * @param $em
@@ -96,7 +98,7 @@ class BookType extends AbstractType
             ])
             ->add('image', EntityType::class, [
                 'class' => Image::class,
-                'query_builder' => $this->imageRepository->getAvailableImagesQB(),
+                'query_builder' => $this->imageRepository->getAvailableImagesForBookQB($options['bookId']),
                 'choice_label' => function (Image $image) {
                     return $image->getName();
                 },
@@ -115,6 +117,7 @@ class BookType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(['bookId']);
         $resolver->setDefaults(array(
             'data_class' => 'BookBundle\Entity\Book',
             'required' => false,
