@@ -82,12 +82,14 @@ class Book extends CommonSuperClass
     /**
      * @var string|null
      *
-     * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true, name="webReaderLink")
+     * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true)
      * @Assert\Url(groups={"published"})
      */
     private $webReaderLink;
 
     /**
+     * @ORM\Column(name="status", type="string", length=10, nullable=false, unique=false)
+     *
      * @var string
      * @Assert\NotBlank(groups={"published"})
      */

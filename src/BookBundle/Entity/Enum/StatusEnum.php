@@ -24,9 +24,9 @@ class StatusEnum extends Enum
     /**
      *
      */
-    private const PUBLISHED = 'published';
+    private const PUBLISHED = 'PUBLISHED';
     /**
      *
      */
-    private const DRAFT = 'draft';
+    private const DRAFT = 'DRAFT';
 }
