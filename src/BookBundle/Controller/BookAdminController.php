@@ -3,6 +3,7 @@
 namespace BookBundle\Controller;
 
 use BookBundle\Entity\Book;
+use ImageBundle\Entity\Image;
 use OperatorBundle\Entity\Operator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,6 +55,12 @@ class BookAdminController extends Controller
 
             /** @var Operator $creator */
             $creator = $this->getUser();
+
+            if($book->getImage()){
+                $image = $book->getImage();
+                $image->setBook($book);
+                $em->persist($image);
+            }
 
             $book->setCreator($creator);
 

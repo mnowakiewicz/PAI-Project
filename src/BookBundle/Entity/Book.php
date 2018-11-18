@@ -539,7 +539,8 @@ class Book extends CommonSuperClass
         foreach ($this->authors as $author){
             $string .= $author->getFullName() . ' / ';
         }
-        return $string;
+
+        return substr($string, 0, -3);
     }
 
 }
