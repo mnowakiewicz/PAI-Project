@@ -22,6 +22,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Book extends CommonSuperClass
 {
 
+    public const GROUP_PUBLISHED = 'published';
+    public const GROUP_DRAFT = 'draft';
+
     /**
      * @var string|null
      *
@@ -40,7 +43,11 @@ class Book extends CommonSuperClass
      * @var string|null
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(groups={"published"})
+     * @Assert\NotBlank(
+     *     groups={
+     *     Book::GROUP_PUBLISHED,
+     *     Book::GROUP_DRAFT
+     *      })
      */
     private $title;
 
@@ -83,7 +90,7 @@ class Book extends CommonSuperClass
      * @var string|null
      *
      * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true)
-     * @Assert\Url(groups={"published"})
+     * @Assert\Url(groups={ Book::GROUP_PUBLISHED })
      */
     private $webReaderLink;
 
@@ -91,7 +98,7 @@ class Book extends CommonSuperClass
      * @ORM\Column(name="status", type="string", length=10, nullable=false, unique=false)
      *
      * @var string
-     * @Assert\NotBlank(groups={"published"})
+     * @Assert\NotBlank(groups={ Book::GROUP_PUBLISHED })
      */
     private $status;
 
@@ -114,7 +121,7 @@ class Book extends CommonSuperClass
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books", cascade={"persist"})
-     * @Assert\NotBlank(groups={"published"})
+     * @Assert\NotBlank(groups={ Book::GROUP_PUBLISHED })
      */
     private $categories;
 

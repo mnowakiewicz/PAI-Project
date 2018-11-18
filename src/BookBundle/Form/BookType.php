@@ -110,8 +110,11 @@ class BookType extends AbstractType
                 /** @var Book $data */
                 $data = $form->getData();
 
-                if($data->getStatus() === StatusEnum::PUBLISHED()->getValue())
-                    return ['published'];
+                if($data->getStatus() === StatusEnum::PUBLISHED()->getValue()){
+                    return [ Book::GROUP_PUBLISHED ];
+                } else {
+                    return [ Book::GROUP_DRAFT ];
+                }
             }
         ));
     }
