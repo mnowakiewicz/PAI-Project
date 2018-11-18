@@ -26,6 +26,7 @@ use GoogleBooksBundle\Options\Enum\ProjectionEnum;
 use GoogleBooksBundle\Options\GoogleBooksParameters;
 use ImageBundle\Entity\Image;
 use Monolog\Logger;
+use PublisherBundle\Entity\Publisher;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -220,6 +221,7 @@ class GoogleBooksService
                 ->setLanguage($volumeInfo->getLanguage())
                 ->setWebReaderLink($accessInfo->getWebReaderLink())
                 ->setAuthors($authors)
+                ->setPublisher(new Publisher($volumeInfo->getPublisher()))
                 ->setPrintType(new PrintType($volumeInfo->getPrintType()))
                 ->setImage($image)
                 ->setCreator($operator)
