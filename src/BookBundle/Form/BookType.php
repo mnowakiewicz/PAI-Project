@@ -36,12 +36,18 @@ class BookType extends AbstractType
     private $em;
 
     /**
+     * @var \Doctrine\ORM\EntityRepository|\ImageBundle\Repository\ImageRepository
+     */
+    private $imageRepository;
+
+    /**
      * BookType constructor.
      * @param $em
      */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->imageRepository = $this->em->getRepository('ImageBundle:Image');
     }
 
     /**
@@ -86,8 +92,8 @@ class BookType extends AbstractType
             ])
             ->add('image', EntityType::class, [
                 'class' => Image::class,
+                'query_builder' => $this->imageRepository->getAvailableImagesQB(),
                 'choice_label' => function (Image $image){
-
                     return $image->getName();
                 },
             ])
@@ -110,8 +116,11 @@ class BookType extends AbstractType
                 /** @var Book $data */
                 $data = $form->getData();
 
-                if($data->getStatus() === StatusEnum::PUBLISHED()->getValue())
-                    return ['published'];
+                if($data->getStatus() === StatusEnum::PUBLISHED()){
+                    return [ Book::GROUP_PUBLISHED ];
+                } else {
+                    return [ Book::GROUP_DRAFT ];
+                }
             }
         ));
     }

@@ -13,3 +13,7 @@ services:
       class: BookBundle\Form\BookType
       arguments: ["@doctrine.orm.entity_manager"]
       tags: [form.type]
+
+    book_admin.service:
+      class: BookBundle\Service\AdminService
+      arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]

@@ -64,6 +64,13 @@ class RestService
             return false;
 
         $this->em->persist($book);
+
+        if ($book->getImage()){
+            $image = $book->getImage();
+            $image->setBook($book);
+            $this->em->persist($image);
+        }
+
         try {
             $this->em->flush();
         } catch (OptimisticLockException $e) {

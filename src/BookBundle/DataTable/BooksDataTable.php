@@ -71,8 +71,7 @@ class BooksDataTable implements DataTableHandlerInterface
                 ->andWhere(
                     $expr->orX(
                         $expr->like($expr->lower('b.title'), ":search"),
-                        $expr->like($expr->lower('b.subtitle'), ":search"),
-                        $expr->like($expr->lower('b.description'), ":search")
+                        $expr->like($expr->lower('b.subtitle'), ":search")
                     )
                 )
                 ->setParameter('search', strtolower('%'.$request->search->value.'%'));
@@ -87,9 +86,9 @@ class BooksDataTable implements DataTableHandlerInterface
                 //authors
                 case 4: $qb->addOrderBy('b.publishedDate', $order->dir); break;
                 // printtype
-                case 5: $qb->addOrderBy('b.status', $order->dir); break;
-                case 6: $qb->addOrderBy('b.creationDate', $order->dir); break;
-                case 7: $qb->addOrderBy('b.editDate', $order->dir); break;
+                case 6: $qb->addOrderBy('b.status', $order->dir); break;
+                case 7: $qb->addOrderBy('b.creationDate', $order->dir); break;
+                case 8: $qb->addOrderBy('b.editDate', $order->dir); break;
             }
         }
 
@@ -118,8 +117,8 @@ class BooksDataTable implements DataTableHandlerInterface
                     $book->getPublishedDate(),
                     $book->getPrintType() ? $book->getPrintType()->getName() : null,
                     $book->getStatus(),
-                    $book->getCreationDate()->format('l jS F Y h:i:s A'),
-                    $book->getEditDate() ? $book->getEditDate()->format('l jS F Y h:i:s A') : null
+                    $book->getCreationDate()->format('Y-m-d H:i'),
+                    $book->getEditDate() ? $book->getEditDate()->format('Y-m-d H:i') : null
                 ];
             }
         }
