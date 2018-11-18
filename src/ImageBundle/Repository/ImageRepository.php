@@ -20,24 +20,23 @@ class ImageRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getAvailableImagesForBookQB(?int $bookId): QueryBuilder
     {
+        $qb = $this
+            ->createQueryBuilder('image');
+
         $expr = new Expr();
 
         if ($bookId) {
-
             $expr = $expr->orX(
                 $expr->isNull('image.book'),
                 $expr->eq('image.book', ':bookId')
             );
-
+            $qb = $qb->setParameter('bookId', $bookId);
         } else {
-
             $expr = $expr->isNull('image.book');
         }
 
-        $qb = $this
-            ->createQueryBuilder('image')
+        $qb = $qb
             ->where($expr)
-            ->setParameter('bookId', $bookId)
             ->orderBy('image.creationDate', 'ASC');
 
         return $qb;
