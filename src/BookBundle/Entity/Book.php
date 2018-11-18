@@ -70,6 +70,8 @@ class Book extends CommonSuperClass
      * @var string|null
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     *
+     * @Assert\NotBlank(groups={ Book::GROUP_PUBLISHED })
      */
     private $description;
 
@@ -91,7 +93,6 @@ class Book extends CommonSuperClass
      * @var string|null
      *
      * @ORM\Column(name="webReaderLink", type="string", length=255, nullable=true)
-     * @Assert\Url(groups={ Book::GROUP_PUBLISHED })
      */
     private $webReaderLink;
 
@@ -115,6 +116,8 @@ class Book extends CommonSuperClass
      *
      * @ORM\ManyToOne(targetEntity="BookBundle\Entity\PrintType", inversedBy="books", cascade={"persist"})
      * @ORM\JoinColumn(name="printTypeId", nullable=true, unique=false)
+     *
+     * @Assert\NotBlank(groups={ Book::GROUP_PUBLISHED })
      */
     private $printType;
 
@@ -122,14 +125,14 @@ class Book extends CommonSuperClass
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="CategoryBundle\Entity\Category", inversedBy="books", cascade={"persist"})
-     * @Assert\NotBlank(groups={ Book::GROUP_PUBLISHED })
+     * @Assert\Count(groups={ Book::GROUP_PUBLISHED }, min=1)
      */
     private $categories;
 
     /**
      * @var Publisher|null
      *
-     * @ORM\ManyToOne(targetEntity="PublisherBundle\Entity\Publisher", inversedBy="books")
+     * @ORM\ManyToOne(targetEntity="PublisherBundle\Entity\Publisher", inversedBy="books", cascade={"persist"})
      * @ORM\JoinColumn(name="publisherId", nullable=true, unique=false)
      */
     private $publisher;

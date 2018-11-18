@@ -45,7 +45,7 @@ class BookAdminController extends Controller
     public function createAction(Request $request): Response
     {
         $adminService = $this->get('book_admin.service');
-        $form = $this->createForm('BookBundle\Form\BookType');
+        $form = $this->createForm('BookBundle\Form\BookType', null, ['bookId' => null]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -73,7 +73,7 @@ class BookAdminController extends Controller
     public function editAction(Request $request, Book $book): Response
     {
         $adminService = $this->get('book_admin.service');
-        $form = $this->createForm('BookBundle\Form\BookType', $book);
+        $form = $this->createForm('BookBundle\Form\BookType', $book, ['bookId' => $book->getId()]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

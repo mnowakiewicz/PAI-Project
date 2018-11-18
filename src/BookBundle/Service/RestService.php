@@ -10,12 +10,14 @@ namespace BookBundle\Service;
 
 
 use AuthorBundle\Entity\Author;
+use Beta\B;
 use BookBundle\Entity\Book;
 use BookBundle\Entity\Enum\StatusEnum;
 use CategoryBundle\Entity\Category;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use ImageBundle\Entity\Image;
+use PublisherBundle\Entity\Publisher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
@@ -103,13 +105,42 @@ class RestService
             ->setWebReaderLink($jsonData['webReaderLink'])
             ->setStatus(StatusEnum::DRAFT())
             ->setPrintType($printTypeRepo->getPrintTypeByName($jsonData['printType']['name']))
-            ->setPublisher($jsonData['publisher'])
             ->setCreator($this->securityTokenStorage->getToken()->getUser())
             ->setCreationDate(new \DateTime('now'));
 
+        $book = $this->addPublisher($book, $jsonData['publisher']);
         $book = $this->addAuthors($book, $jsonData['authors']);
         $book = $this->addImage($book, $jsonData['image']);
         $book = $this->addCategories($book, $jsonData['categories']);
+
+        return $book;
+    }
+
+    /**
+     * @param Book $book
+     * @param array $data
+     * @return Book
+     */
+    private function addPublisher(Book $book, ?array $data): Book
+    {
+        $repository = $this->em->getRepository('PublisherBundle:Publisher');
+        if ($data == null)
+            return $book;
+
+        $criteria = ['name' => $data['name']];
+        $isInDataBase = count($repository->findBy($criteria)) > 0 ? true : false;
+
+        if ($isInDataBase){
+            /** @var Publisher $publisher */
+            $publisher = $repository->findOneBy($criteria);
+        } else {
+            $publisher = new Publisher($data['name']);
+            $publisher
+                ->setCreationDate(new \DateTime('now'));
+        }
+
+        $book->setPublisher($publisher);
+
 
         return $book;
     }

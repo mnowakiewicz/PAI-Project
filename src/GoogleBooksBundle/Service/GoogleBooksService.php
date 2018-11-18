@@ -26,6 +26,7 @@ use GoogleBooksBundle\Options\Enum\ProjectionEnum;
 use GoogleBooksBundle\Options\GoogleBooksParameters;
 use ImageBundle\Entity\Image;
 use Monolog\Logger;
+use PublisherBundle\Entity\Publisher;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
@@ -225,6 +226,10 @@ class GoogleBooksService
                 ->setCreator($operator)
                 ->setStatus(StatusEnum::DRAFT())
                 ->setCategories($categories);
+
+            if($volumeInfo->getPublisher()){
+                $book->setPublisher(new Publisher($volumeInfo->getPublisher()));
+            }
 
             $books[] = $book;
         }

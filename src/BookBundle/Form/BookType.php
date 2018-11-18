@@ -7,15 +7,12 @@ use BookBundle\Entity\Book;
 use BookBundle\Entity\Enum\StatusEnum;
 use BookBundle\Entity\PrintType;
 use CategoryBundle\Entity\Category;
-
 use Doctrine\ORM\EntityManager;
 use ImageBundle\Entity\Image;
 use PublisherBundle\Entity\Publisher;
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,6 +36,8 @@ class BookType extends AbstractType
      * @var \Doctrine\ORM\EntityRepository|\ImageBundle\Repository\ImageRepository
      */
     private $imageRepository;
+
+
 
     /**
      * BookType constructor.
@@ -72,42 +71,53 @@ class BookType extends AbstractType
                 'choice_label' => function (Author $author) {
                     return $author->getFullName();
                 },
-                'multiple' => true
+                'multiple' => true,
+                'placeholder' => '',
             ])
             ->add('printType', EntityType::class, [
                 'class' => PrintType::class,
-                'choice_label' => function (PrintType $printType){
+                'choice_label' => function (PrintType $printType) {
                     return $printType->getName();
                 },
+                'placeholder' => '',
             ])
             ->add('categories', EntityType::class, [
-                'class'  => Category::class,
-                'choice_label' => function (Category $category){
+                'class' => Category::class,
+                'choice_label' => function (Category $category) {
                     return $category->getName();
                 },
-                'multiple' => true
+                'multiple' => true,
+                'placeholder' => '',
             ])
             ->add('publisher', EntityType::class, [
-                'class' => Publisher::class
+                'class' => Publisher::class,
+                'choice_label' => function (Publisher $publisher) {
+                    return $publisher->getName();
+                },
+                'placeholder' => '',
             ])
             ->add('image', EntityType::class, [
                 'class' => Image::class,
-                'query_builder' => $this->imageRepository->getAvailableImagesQB(),
-                'choice_label' => function (Image $image){
+                'query_builder' => $this->imageRepository->getAvailableImagesForBookQB($options['bookId']),
+                'choice_label' => function (Image $image) {
                     return $image->getName();
                 },
+                'placeholder' => ''
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     StatusEnum::DRAFT()->getValue() => StatusEnum::DRAFT(),
                     StatusEnum::PUBLISHED()->getValue() => StatusEnum::PUBLISHED()
-                ]
+                ],
             ]);
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(['bookId']);
         $resolver->setDefaults(array(
             'data_class' => 'BookBundle\Entity\Book',
             'required' => false,
@@ -116,10 +126,10 @@ class BookType extends AbstractType
                 /** @var Book $data */
                 $data = $form->getData();
 
-                if($data->getStatus() === StatusEnum::PUBLISHED()){
-                    return [ Book::GROUP_PUBLISHED ];
+                if ($data->getStatus() === StatusEnum::PUBLISHED()->getValue()) {
+                    return [Book::GROUP_PUBLISHED];
                 } else {
-                    return [ Book::GROUP_DRAFT ];
+                    return [Book::GROUP_DRAFT];
                 }
             }
         ));
