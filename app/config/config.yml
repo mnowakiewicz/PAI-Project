@@ -94,3 +94,8 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+
+gos_web_socket:
+    server:
+        port: 8100       #The port the socket server will listen on
+        host: 127.0.0.1   #The host ip to bind to
