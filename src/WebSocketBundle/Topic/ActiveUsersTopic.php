@@ -58,7 +58,7 @@ class ActiveUsersTopic implements TopicInterface
     public function onSubscribe(ConnectionInterface $connection, Topic $topic, WampRequest $request)
     {
         //this will broadcast the message to ALL subscribers of this topic.
-        $topic->broadcast(['msg' => $this->clientManipulator->getClient($connection)]);
+        $topic->broadcast(['msg' => $this->clientManipulator->getClient($connection)->getUsername()]);
     }
 
     /**
