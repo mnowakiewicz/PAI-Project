@@ -1,0 +1,6 @@
+services:
+  ws.topic.notifications:
+    class: WebSocketBundle\Topic\ActiveUsersTopic
+    tags:
+      - { name: gos_web_socket.topic }
+    autowire: true

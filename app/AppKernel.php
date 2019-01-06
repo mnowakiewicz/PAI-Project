@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new DataTables\DataTablesBundle(),
             new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
             new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
+            new WebSocketBundle\WebSocketBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

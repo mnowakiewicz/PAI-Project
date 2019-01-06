@@ -46,8 +46,9 @@ abstract class CommonSuperClass implements CommonEntityMethodsInterface, \JsonSe
     /**
      * Operator constructor.
      * @param bool $isActive
+     * @throws \Exception
      */
-    public function __construct(bool $isActive = true)
+    public function __construct($isActive = true)
     {
         $this->creationDate = new \DateTime('now');
         $this->isActive = $isActive;

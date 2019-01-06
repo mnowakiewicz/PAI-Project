@@ -15,13 +15,13 @@ class Version20181112115424 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql(
-                "INSERT INTO printType (printType.name, printType.isActive, printType.creationDate, printType.editDate)
-                      VALUES 
-                        ('MAGAZINE', true, NOW(), NULL ),
-                        ('BOOK', true, NOW(), NULL );
-                    
-                    ");
+//        $this->addSql(
+//                "INSERT INTO printType (printType.name, printType.isActive, printType.creationDate, printType.editDate)
+//                      VALUES
+//                        ('MAGAZINE', true, NOW(), NULL ),
+//                        ('BOOK', true, NOW(), NULL );
+//
+//                    ");
 
     }
 

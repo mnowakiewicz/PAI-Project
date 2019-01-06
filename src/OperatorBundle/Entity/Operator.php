@@ -11,6 +11,7 @@ namespace OperatorBundle\Entity;
 use BookBundle\Entity\Book;
 use CommonBundle\Common\CommonEntityMethodsInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -73,12 +74,19 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
      */
     protected $booksCreated;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="WebSocketBundle\Entity\Message", mappedBy="operators")
+     */
+    protected $messages;
 
     /**
      * Operator constructor.
      * @param bool $isActive
+     * @throws \Exception
      */
-    public function __construct(bool $isActive = true)
+    public function __construct($isActive = true)
     {
         parent::__construct();
         $this->creationDate = new \DateTime('now');
@@ -86,6 +94,10 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         $this->booksCreated = new ArrayCollection();
     }
 
+    /**
+     * @param Book $book
+     * @return Operator
+     */
     public function addBook(Book $book):self
     {
         $this->booksCreated->add($book);

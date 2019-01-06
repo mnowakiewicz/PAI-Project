@@ -12,7 +12,8 @@
             "AuthorBundle\\": "src/AuthorBundle",
             "PublisherBundle\\": "src/PublisherBundle",
             "ImageBundle\\": "src/ImageBundle",
-            "CategoryBundle\\": "src/CategoryBundle"
+            "CategoryBundle\\": "src/CategoryBundle",
+            "WebSocketBundle\\": "src/WebSocketBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },

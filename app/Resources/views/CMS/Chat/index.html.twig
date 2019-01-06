@@ -1,0 +1,171 @@
+{% extends 'CMS/base.html.twig' %}
+{% block head_css %}
+    {{ parent() }}
+    <style>
+        .box-body > .direct-chat-messages {
+            min-height: 75vh;
+        }
+
+        .box-body > .direct-chat-contacts {
+            min-height: 45vh;
+        }
+
+        .box-body.chat {
+            height: 100%!important;
+        }
+
+    </style>
+{% endblock %}
+
+{% block head_scripts %} {% endblock %}
+{% block content_wrapper %}
+    <div class="row">
+        <div class="col-md-offset-1 col-md-4">
+            <div class="box box-success">
+                <div class="box-header ui-sortable-handle" style="cursor: move;">
+                    <i class="fa fa-comments-o"></i>
+
+                    <h3 class="box-title">Firma</h3>
+
+                </div>
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 80.6vh;">
+                    <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
+                        <div class="item">
+                            <img src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4" alt="user image"
+                                 class="offline">
+
+                            <p class="message">
+                                <a href="#" class="name">
+                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                                    Susan Doe
+                                </a>
+                                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                            </p>
+                        </div>
+
+                        <!-- /.item -->
+                    </div>
+                    <div class="slimScrollBar"
+                         style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 184.911px;"></div>
+                    <div class="slimScrollRail"
+                         style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="box box-primary direct-chat direct-chat-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Direct Chat</h3>
+
+                    <div class="box-tools pull-right">
+                        <span data-toggle="tooltip" title="" class="badge bg-light-blue"
+                              data-original-title="3 New Messages">3</span>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title=""
+                                data-widget="chat-pane-toggle" data-original-title="Contacts">
+                            <i class="fa fa-comments"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages">
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-left">Alexander Pierce</span>
+                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                            </div>
+                            <!-- /.direct-chat-info -->
+                            <img class="direct-chat-img"
+                                 src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4"
+                                 alt="Message User Image"><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                                Is this template really for free? That's unbelievable!
+                            </div>
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                            </div>
+                            <div class="direct-chat-text">
+                                Is this template really for free? That's unbelievable!
+                            </div>
+                            <div class="direct-chat-text">
+                                Is this template really for free? That's unbelievable!
+                            </div>
+                            <div class="direct-chat-text">
+                                Is this template really for free? That's unbelievable!
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg right">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                                <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                            </div>
+                            <!-- /.direct-chat-info -->
+                            <img class="direct-chat-img"
+                                 src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4"
+                                 alt="Message User Image"><!-- /.direct-chat-img -->
+                            <div class="direct-chat-text">
+                                You better believe it!
+                            </div>
+                            <!-- /.direct-chat-text -->
+                        </div>
+                        <!-- /.direct-chat-msg -->
+                    </div>
+                    <!--/.direct-chat-messages-->
+
+                    <!-- Contacts are loaded here -->
+                    <div class="direct-chat-contacts">
+                        <ul class="contacts-list">
+                            <li>
+                                <a href="#">
+                                    <img class="contacts-list-img"
+                                         src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4"
+                                         alt="User Image">
+
+                                    <div class="contacts-list-info">
+                            <span class="contacts-list-name">
+                              Count Dracula <i class="fa fa-circle text-success"></i> Online
+                              <small class="contacts-list-date pull-right">2/28/2015</small>
+
+                            </span>
+                                        <span class="contacts-list-msg">How have you been? I was...</span>
+                                    </div>
+                                    <!-- /.contacts-list-info -->
+                                </a>
+                            </li>
+                            <!-- End Contact Item -->
+                        </ul>
+                        <!-- /.contatcts-list -->
+                    </div>
+                    <!-- /.direct-chat-pane -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                            <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-flat">Send</button>
+                      </span>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.box-footer-->
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extra_scripts %}
+    {{ parent() }}
+
+{% endblock %}

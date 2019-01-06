@@ -1,0 +1,4 @@
+acme_topic:
+  channel: active_users/channel
+  handler:
+    callback: 'active_users.topic' #related to the getName() of your topic
