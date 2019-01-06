@@ -11,6 +11,7 @@ namespace WebSocketBundle\Topic;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Gos\Bundle\WebSocketBundle\Client\ClientManipulatorInterface;
 use Gos\Bundle\WebSocketBundle\Router\WampRequest;
 use Gos\Bundle\WebSocketBundle\Topic\TopicInterface;
 use Ratchet\ConnectionInterface;
@@ -33,14 +34,20 @@ class ActiveUsersTopic implements TopicInterface
     private $em;
 
     /**
-     * ActiveUsersTopic constructor.
-     * @param ArrayCollection $activeUsers
-     * @param $em
+     * @var ClientManipulatorInterface
      */
-    public function __construct(EntityManagerInterface $em)
+    protected $clientManipulator;
+
+    /**
+     * ActiveUsersTopic constructor.
+     * @param EntityManagerInterface $em
+     * @param ClientManipulatorInterface $clientManipulator
+     */
+    public function __construct(EntityManagerInterface $em, ClientManipulatorInterface $clientManipulator)
     {
         $this->activeUsers = new ArrayCollection();
         $this->em = $em;
+        $this->clientManipulator = $clientManipulator;
     }
 
     /**
@@ -51,7 +58,7 @@ class ActiveUsersTopic implements TopicInterface
     public function onSubscribe(ConnectionInterface $connection, Topic $topic, WampRequest $request)
     {
         //this will broadcast the message to ALL subscribers of this topic.
-        $topic->broadcast(['msg' => $connection]);
+        $topic->broadcast(['msg' => $this->clientManipulator->getClient($connection)]);
     }
 
     /**

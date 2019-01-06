@@ -27,9 +27,9 @@
 
         $('.navbar-static-top').click(function () {
             session.publish("active_users/channel", {
-                userId: '{{ app.user.id }}',
-                userName: '{{ app.user.name }}',
-                userLastName: '{{ app.user.lastName }}'
+                {#userId: '{{ app.user.id }}',#}
+                {#userName: '{{ app.user.name }}',#}
+                {#userLastName: '{{ app.user.lastName }}'#}
             });
         });
 

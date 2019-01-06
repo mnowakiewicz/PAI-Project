@@ -3,4 +3,5 @@ services:
     class: WebSocketBundle\Topic\ActiveUsersTopic
     tags:
       - { name: gos_web_socket.topic }
-    autowire: true
+    arguments:
+      ['@doctrine.orm.entity_manager', '@gos_web_socket.websocket.client_manipulator']
