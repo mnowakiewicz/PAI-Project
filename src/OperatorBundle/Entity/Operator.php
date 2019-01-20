@@ -75,13 +75,6 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     protected $booksCreated;
 
     /**
-     * @var Collection
-     *
-     * @ORM\ManyToMany(targetEntity="WebSocketBundle\Entity\Message", mappedBy="operators")
-     */
-    protected $messages;
-
-    /**
      * Date/Time of the last activity
      *
      * @var \Datetime|null
@@ -256,24 +249,6 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     public function setBooksCreated(ArrayCollection $booksCreated): Operator
     {
         $this->booksCreated = $booksCreated;
-        return $this;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    /**
-     * @param Collection $messages
-     * @return Operator
-     */
-    public function setMessages(Collection $messages): Operator
-    {
-        $this->messages = $messages;
         return $this;
     }
 
