@@ -75,9 +75,6 @@ class ActiveUsersTopic implements TopicInterface
                 'isActive' => true,
                 'isActiveNow' => false
             ]);
-
-
-
     }
 
     protected function userDTO(Operator $user): array
@@ -134,7 +131,6 @@ class ActiveUsersTopic implements TopicInterface
         }
 
         return $inactiveUsersDTO;
-
     }
 
     /**
@@ -154,6 +150,7 @@ class ActiveUsersTopic implements TopicInterface
                'username' => $username
            ]);
 
+           $activeUser->setLastActivityAt(new \DateTime('now'));
            $activeUser->setIsActiveNow(true);
            $this->em->persist($activeUser);
            $this->em->flush();

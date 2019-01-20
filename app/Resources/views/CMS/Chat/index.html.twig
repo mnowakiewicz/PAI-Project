@@ -30,14 +30,14 @@
                 </div>
                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 80.6vh;">
                     <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
-                        {% for user in users %}
+                        {% for user in users if user.username != app.user.username %}
                         <div class="item">
                             <img src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png" alt="user image"
                                  class="{% if user.isActiveNow() %}online{% else %}offline{% endif %}">
 
                             <p class="message">
                                 <a href="#" class="name">
-                                    <small class="text-muted pull-right">{% if user.isActiveNow() == false  %}<i class="fa fa-clock-o"></i> {{ user.getLastActivityAt()|date('h:m') }}{% endif %}</small>
+                                    <small class="text-muted pull-right">{% if user.isActiveNow() == false %}<i class="fa fa-clock-o"></i> {{ user.getLastActivityAt()|date('h:i') }}{% endif %}</small>
                                     {{ user.username ~ ' [ ' ~ user.name ~ ' ' ~ user.lastName ~ ' ]'}}
                                 </a>
                                 {% if user.isActiveNow() %}
