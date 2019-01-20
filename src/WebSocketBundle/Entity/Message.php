@@ -25,42 +25,33 @@ class Message
     private $id;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="text", type="string", length=255)
      */
     private $text;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      * @ORM\Column(name="creationDate", nullable=false, unique=false, type="datetime")
      */
     private $creationDate;
 
     /**
-     * @var Operator
+     * @var Operator|null
      *
      * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="messages")
      */
     private $from;
 
     /**
-     * @var Operator
+     * @var Operator|null
      *
-     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator")
+     * @ORM\ManyToOne(targetEntity="OperatorBundle\Entity\Operator", inversedBy="messages")
      */
     private $to;
 
     /**
-     * Message constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Get id
-     *
      * @return int
      */
     public function getId(): int
@@ -69,78 +60,82 @@ class Message
     }
 
     /**
-     * Set text
-     *
-     * @param string $text
-     *
+     * @param int $id
      * @return Message
      */
-    public function setText($text): Message
+    public function setId(int $id): Message
     {
-        $this->text = $text;
-
+        $this->id = $id;
         return $this;
     }
 
     /**
-     * Get text
-     *
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
 
     /**
-     * @return \DateTime
+     * @param string|null $text
+     * @return Message
      */
-    public function getCreationDate(): \DateTime
+    public function setText(?string $text): Message
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getCreationDate(): ?\DateTime
     {
         return $this->creationDate;
     }
 
     /**
-     * @param \DateTime $creationDate
+     * @param \DateTime|null $creationDate
      * @return Message
      */
-    public function setCreationDate(\DateTime $creationDate): Message
+    public function setCreationDate(?\DateTime $creationDate): Message
     {
         $this->creationDate = $creationDate;
         return $this;
     }
 
     /**
-     * @return Operator
+     * @return Operator|null
      */
-    public function getFrom(): Operator
+    public function getFrom(): ?Operator
     {
         return $this->from;
     }
 
     /**
-     * @param Operator $from
+     * @param Operator|null $from
      * @return Message
      */
-    public function setFrom(Operator $from): Message
+    public function setFrom(?Operator $from): Message
     {
         $this->from = $from;
         return $this;
     }
 
     /**
-     * @return Operator
+     * @return Operator|null
      */
-    public function getTo(): Operator
+    public function getTo(): ?Operator
     {
         return $this->to;
     }
 
     /**
-     * @param Operator $to
+     * @param Operator|null $to
      * @return Message
      */
-    public function setTo(Operator $to): Message
+    public function setTo(?Operator $to): Message
     {
         $this->to = $to;
         return $this;

@@ -17,32 +17,5 @@
 </script>
 <script>
     var webSocket = WS.connect(_WS_URI);
-
-    webSocket.on("socket/connect", function (session) {
-
-        session.subscribe("active_users/channel", function(uri, payload){
-            console.log(uri);
-            console.log(payload);
-        });
-
-        $('.navbar-static-top').click(function () {
-            session.publish("active_users/channel", {
-                {#userId: '{{ app.user.id }}',#}
-                {#userName: '{{ app.user.name }}',#}
-                {#userLastName: '{{ app.user.lastName }}'#}
-            });
-        });
-
-        //session.unsubscribe("notification/channel");
-
-    });
-
-    webSocket.on("socket/disconnect", function (error) {
-        //error provides us with some insight into the disconnection: error.reason and error.code
-
-        console.log("Disconnected for " + error.reason + " with code " + error.code);
-    })
-
-
 </script>
 

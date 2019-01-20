@@ -9,5 +9,31 @@
     {% block body_content %}{% endblock %}
 </body>
 {{ include('CMS/main_scripts.html.twig') }}
+{% block ws_script %}
+    <script>
+        webSocket.on("socket/connect", function (session) {
+
+            session.subscribe("active_users/channel", function(uri, payload){
+                console.log(payload);
+            });
+
+            $('.navbar-static-top').click(function () {
+                session.publish("active_users/channel", {
+                    {#userId: '{{ app.user.id }}',#}
+                    {#userName: '{{ app.user.name }}',#}
+                    {#userLastName: '{{ app.user.lastName }}'#}
+                });
+            });
+
+
+        });
+
+        webSocket.on("socket/disconnect", function (error) {
+            //error provides us with some insight into the disconnection: error.reason and error.code
+
+            console.log("Disconnected for " + error.reason + " with code " + error.code);
+        })
+    </script>
+{% endblock %}
 {% block extra_scripts %}{% endblock %}
 </html>

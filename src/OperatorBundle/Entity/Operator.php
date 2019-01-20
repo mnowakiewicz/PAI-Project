@@ -82,6 +82,21 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     protected $messages;
 
     /**
+     * Date/Time of the last activity
+     *
+     * @var \Datetime|null
+     * @ORM\Column(type="datetime", nullable=true, unique=false)
+     */
+    protected $lastActivityAt;
+
+    /**
+     * @var boolean|null
+     *
+     * @ORM\Column(type="boolean", nullable=true, unique=false)
+     */
+    protected $isActiveNow;
+
+    /**
      * Operator constructor.
      * @param bool $isActive
      * @throws \Exception
@@ -90,6 +105,8 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
     {
         parent::__construct();
         $this->creationDate = new \DateTime('now');
+        $this->lastActivityAt = new \DateTime('now');
+        $this->isActiveNow = false;
         $this->isActive = $isActive;
         $this->booksCreated = new ArrayCollection();
     }
@@ -242,7 +259,57 @@ class Operator extends BaseUser implements CommonEntityMethodsInterface
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
 
+    /**
+     * @param Collection $messages
+     * @return Operator
+     */
+    public function setMessages(Collection $messages): Operator
+    {
+        $this->messages = $messages;
+        return $this;
+    }
 
+    /**
+     * @return \Datetime|null
+     */
+    public function getLastActivityAt(): ?\Datetime
+    {
+        return $this->lastActivityAt;
+    }
 
+    /**
+     * @param \Datetime|null $lastActivityAt
+     * @return Operator
+     */
+    public function setLastActivityAt(?\Datetime $lastActivityAt): Operator
+    {
+        $this->lastActivityAt = $lastActivityAt;
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActiveNow(): ?bool
+    {
+        return $this->isActiveNow;
+    }
+
+    /**
+     * @param bool|null $isActiveNow
+     * @return Operator
+     */
+    public function setIsActiveNow(?bool $isActiveNow): Operator
+    {
+        $this->isActiveNow = $isActiveNow;
+        return $this;
+    }
 }

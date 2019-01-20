@@ -32,15 +32,19 @@
                     <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
                         {% for user in users %}
                         <div class="item">
-                            <img src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4" alt="user image"
-                                 class="offline">
+                            <img src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png" alt="user image"
+                                 class="{% if user.isActiveNow() %}online{% else %}offline{% endif %}">
 
                             <p class="message">
                                 <a href="#" class="name">
-                                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                                    <small class="text-muted pull-right">{% if user.isActiveNow() == false  %}<i class="fa fa-clock-o"></i> {{ user.getLastActivityAt()|date('h:m') }}{% endif %}</small>
                                     {{ user.username ~ ' [ ' ~ user.name ~ ' ' ~ user.lastName ~ ' ]'}}
                                 </a>
+                                {% if user.isActiveNow() %}
                                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                {% else %}
+                                <a href="#"><i class="fa fa-circle text-red"></i> Offline</a>
+                                {% endif %}
                             </p>
                         </div>
                         {% endfor %}
@@ -57,19 +61,6 @@
             <div class="box box-primary direct-chat direct-chat-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Direct Chat</h3>
-
-                    <div class="box-tools pull-right">
-                        <span data-toggle="tooltip" title="" class="badge bg-light-blue"
-                              data-original-title="3 New Messages">3</span>
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title=""
-                                data-widget="chat-pane-toggle" data-original-title="Contacts">
-                            <i class="fa fa-comments"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -83,7 +74,7 @@
                             </div>
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img"
-                                 src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4"
+                                 src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
                                  alt="Message User Image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text">
                                 Is this template really for free? That's unbelievable!
@@ -112,7 +103,7 @@
                             </div>
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img"
-                                 src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4"
+                                 src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
                                  alt="Message User Image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text">
                                 You better believe it!
@@ -168,5 +159,30 @@
 {% endblock %}
 {% block extra_scripts %}
     {{ parent() }}
+{% endblock %}
+{% block ws_script %}
+    <script>
+        webSocket.on("socket/connect", function (session) {
 
+            session.subscribe("active_users/channel", function(uri, payload){
+                console.log(payload);
+            });
+
+            {#$('.navbar-static-top').click(function () {#}
+                {#session.publish("active_users/channel", {#}
+                    {#userId: '{{ app.user.id }}',#}
+                    {#userName: '{{ app.user.name }}',#}
+                    {#userLastName: '{{ app.user.lastName }}'#}
+                {#});#}
+            {#});#}
+
+
+        });
+
+        webSocket.on("socket/disconnect", function (error) {
+            //error provides us with some insight into the disconnection: error.reason and error.code
+
+            console.log("Disconnected for " + error.reason + " with code " + error.code);
+        })
+    </script>
 {% endblock %}
