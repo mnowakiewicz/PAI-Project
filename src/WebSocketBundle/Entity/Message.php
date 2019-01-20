@@ -52,8 +52,25 @@ class Message
     private $to;
 
     /**
+     * Message constructor.
+     * @param string|null $text
+     * @param \DateTime|null $creationDate
+     * @param Operator|null $from
+     * @param Operator|null $to
+     */
+    public function __construct(?string $text, ?\DateTime $creationDate, ?Operator $from, ?Operator $to)
+    {
+        $this->text = $text;
+        $this->creationDate = $creationDate;
+        $this->from = $from;
+        $this->to = $to;
+    }
+
+    /**
      * @return int
      */
+
+
     public function getId(): int
     {
         return $this->id;

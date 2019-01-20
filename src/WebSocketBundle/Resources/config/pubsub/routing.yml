@@ -1,4 +1,9 @@
-acme_topic:
+ws.topic.notifications:
   channel: active_users/channel
   handler:
-    callback: 'active_users.topic' #related to the getName() of your topic
+    callback: 'active_users.topic'
+
+ws.chat:
+  channel: chat/{room} # user_id&user2_id, gdzie user_id < user2_id
+  handler:
+    callback: 'chat.topic'

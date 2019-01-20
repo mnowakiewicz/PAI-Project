@@ -84,6 +84,7 @@ class ActiveUsersTopic implements TopicInterface
             'id' => $user->getId(),
             'name' => $user->getName(),
             'lastName' => $user->getLastName(),
+            'lastActivity' => $user->getLastActivityAt()->format('H:i')
         ];
     }
 

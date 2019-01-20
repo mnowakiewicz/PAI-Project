@@ -11,7 +11,7 @@
         }
 
         .box-body.chat {
-            height: 100%!important;
+            height: 100% !important;
         }
 
     </style>
@@ -31,22 +31,25 @@
                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 80.6vh;">
                     <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto; height: 250px;">
                         {% for user in users if user.username != app.user.username %}
-                        <div class="item">
-                            <img src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png" alt="user image"
-                                 class="{% if user.isActiveNow() %}online{% else %}offline{% endif %}">
+                            <div class="item" user-id="{{ user.id }}" user-username="{{ user.username }}">
+                                <img src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
+                                     alt="user image"
+                                     class="{% if user.isActiveNow() %}online{% else %}offline{% endif %}">
 
-                            <p class="message">
-                                <a href="#" class="name">
-                                    <small class="text-muted pull-right">{% if user.isActiveNow() == false %}<i class="fa fa-clock-o"></i> {{ user.getLastActivityAt()|date('h:i') }}{% endif %}</small>
-                                    {{ user.username ~ ' [ ' ~ user.name ~ ' ' ~ user.lastName ~ ' ]'}}
-                                </a>
-                                {% if user.isActiveNow() %}
-                                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                                {% else %}
-                                <a href="#"><i class="fa fa-circle text-red"></i> Offline</a>
-                                {% endif %}
-                            </p>
-                        </div>
+                                <p class="message">
+                                    <a href="#" class="name">
+                                        <small class="text-muted pull-right">{% if user.isActiveNow() == false %}<i
+                                                    class="fa fa-clock-o"></i> {{ user.getLastActivityAt()|date('h:i') }}{% endif %}
+                                        </small>
+                                        {{ user.username ~ ' [ ' ~ user.name ~ ' ' ~ user.lastName ~ ' ]' }}
+                                    </a>
+                                    {% if user.isActiveNow() %}
+                                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                    {% else %}
+                                        <a href="#"><i class="fa fa-circle text-red"></i> Offline</a>
+                                    {% endif %}
+                                </p>
+                            </div>
                         {% endfor %}
                         <!-- /.item -->
                     </div>
@@ -162,20 +165,91 @@
 {% endblock %}
 {% block ws_script %}
     <script>
+
+        function getRoomName(from, to) {
+            if (parseInt(from) < parseInt(to)) {
+                return from + '&' + to;
+            }
+            return to + '&' + from;
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function changeTimerByStatus($item, status, lastActivity) {
+            if (status == "online") {
+                $item
+                    .find("small.text-muted.pull-right")
+                    .remove();
+            } else {
+                $item
+                    .find("a.name")
+                    .append("<small class='text-muted pull-right'><i class='fa fa-clock-o'></i> " + lastActivity + "</small>")
+            }
+        }
+
+        function changeColorAndTextOfUserStatus($item, status) {
+            var classToAdd;
+            var classToRemove;
+
+            if (status == "online") {
+                classToAdd = 'text-success';
+                classToRemove = 'text-red';
+            } else {
+                classToAdd = 'text-red';
+                classToRemove = 'text-success';
+            }
+
+            $item
+                .find("i." + classToRemove)
+                .parent()
+                .html("<i class='fa fa-circle " + classToAdd + "'></i> " + capitalizeFirstLetter(status));
+        }
+
+        function setUserStatusByPayloadFromWS(person, status) {
+            var id = person.id;
+            var $item = $(".item[user-id=" + id + "]");
+
+            $item
+                .find("img[alt='user image']")
+                .attr('class', status);
+
+            changeTimerByStatus($item, status, person.lastActivity);
+            changeColorAndTextOfUserStatus($item, status);
+        }
+
         webSocket.on("socket/connect", function (session) {
 
-            session.subscribe("active_users/channel", function(uri, payload){
+            session.subscribe("active_users/channel", function (uri, payload) {
+                console.log(payload);
+
+                if (payload.joined) {
+                    setUserStatusByPayloadFromWS(payload.joined, "online");
+                }
+
+                if (payload.left) {
+                    setUserStatusByPayloadFromWS(payload.left, "offline");
+                }
+            });
+
+            session.subscribe("chat/" + getRoomName("{{ app.user.id }}", "2"), function (uri, payload) {
                 console.log(payload);
             });
 
-            {#$('.navbar-static-top').click(function () {#}
-                {#session.publish("active_users/channel", {#}
-                    {#userId: '{{ app.user.id }}',#}
-                    {#userName: '{{ app.user.name }}',#}
-                    {#userLastName: '{{ app.user.lastName }}'#}
-                {#});#}
-            {#});#}
+            $("button[type='submit']").click(function (event) {
+                event.preventDefault();
+                var $input = $("input[name='message']");
+                if ($input.val() != '') {
+                    session.publish("chat/" + getRoomName("{{ app.user.id }}", "2"), {
+                        'message': $input.val(),
+                        'from': {{ app.user.id }},
+                        'to': 2
+                    });
+                    $input.val('');
+                }
 
+            });
 
         });
 

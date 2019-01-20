@@ -5,3 +5,11 @@ services:
       - { name: gos_web_socket.topic }
     arguments:
       ['@doctrine.orm.entity_manager', '@gos_web_socket.websocket.client_manipulator']
+
+  ws.chat:
+    class: WebSocketBundle\Topic\ChatTopic
+    tags:
+      - { name: gos_web_socket.topic }
+    arguments:
+      ['@doctrine.orm.entity_manager', '@gos_web_socket.websocket.client_manipulator']
+
