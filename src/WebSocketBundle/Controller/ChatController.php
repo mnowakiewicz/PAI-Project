@@ -48,7 +48,7 @@ class ChatController extends Controller
 
         $messages = $this->getDoctrine()
             ->getRepository(Message::class)
-            ->findAllLastMessagesByUsers($from, $to);
+            ->findAllLastMessagesByUsers($from, $to, 20);
 
         return new JsonResponse(json_encode($this->toMessagesDTO($messages)));
     }
@@ -77,19 +77,21 @@ class ChatController extends Controller
         $now = new \DateTime('now');
         foreach ($messages as $i => $msg) {
 
+            if ($msg->getFrom() === $this->getUser()){
+                $side = 'right';
+            } else {
+                $side = 'left';
+            }
+
             if ($i > 0 &&
-                $msg->getCreationDate()->diff($messages[$i - 1]->getCreationDate())->i < 3) {
+                $messagesDTO[$i-1]['side'] === $side &&
+                $msg->getCreationDate()->diff($messages[$i - 1]->getCreationDate())->i < 1
+                ) {
                 $time = null;
             } else if ($now->diff($msg->getCreationDate())->h > 12) {
                 $time = $msg->getCreationDate()->format('d/M');
             } else {
                 $time = $msg->getCreationDate()->format('H:i');
-            }
-
-            if ($msg->getFrom() === $this->getUser()){
-                $side = 'right';
-            } else {
-                $side = 'left';
             }
 
             $messagesDTO[] = [

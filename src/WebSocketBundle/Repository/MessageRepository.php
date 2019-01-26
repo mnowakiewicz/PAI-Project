@@ -44,7 +44,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
                 'fromId' => $from->getId(),
                 'toId' => $to->getId()
             ])
-            ->setMaxResults(10)
+            ->setMaxResults($numberOfMessages)
             ->orderBy('message.creationDate', 'DESC')
             ->getQuery()
             ->execute();

@@ -75,9 +75,7 @@ class ChatTopic implements TopicInterface
     {
         $msg = $topic->broadcast(['msg' => $connection->resourceId . " has left " . $topic->getId()]);
         /** @var WampConnection $client **/
-        foreach ($topic->getIterator() as $client){
-            $client->event($topic->getId(), $msg);
-        }
+        $topic->broadcast($msg);
     }
 
     /**
@@ -106,10 +104,18 @@ class ChatTopic implements TopicInterface
 
         /** @var WampConnection $client **/
         foreach ($topic->getIterator() as $client){
+
+            if($this->clientManipulator->getClient($client)->getUsername() === $from->getUsername()) {
+                $side = 'right';
+            } else {
+                $side = 'left';
+            }
+
             $client->event($topic->getId(), [
                 'message' => $message->getText(),
-                'from' => $from->getId(),
-                'to' => $to->getId()
+                'from' => $from->getUsername(),
+                'to' => $to->getUsername(),
+                'side' => $side
             ]);
         }
     }
