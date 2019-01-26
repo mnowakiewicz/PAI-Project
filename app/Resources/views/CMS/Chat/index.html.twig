@@ -67,81 +67,44 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <!-- Conversations are loaded here -->
                     <div class="direct-chat-messages">
-                        <!-- Message. Default to the left -->
-                        <div class="direct-chat-msg">
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-name pull-left">Alexander Pierce</span>
-                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                            </div>
-                            <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img"
-                                 src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
-                                 alt="Message User Image"><!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                            </div>
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <!-- /.direct-chat-text -->
-                        </div>
-                        <!-- /.direct-chat-msg -->
-
-                        <!-- Message to the right -->
-                        <div class="direct-chat-msg right">
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-name pull-right">Sarah Bullock</span>
-                                <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-                            </div>
-                            <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img"
-                                 src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
-                                 alt="Message User Image"><!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                You better believe it!
-                            </div>
-                            <!-- /.direct-chat-text -->
-                        </div>
-                        <!-- /.direct-chat-msg -->
+                        {#<div class="direct-chat-msg">#}
+                            {#<div class="direct-chat-info clearfix">#}
+                                {#<span class="direct-chat-name pull-left">admin</span>#}
+                                {#<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>#}
+                            {#</div>#}
+                            {#<img class="direct-chat-img"#}
+                                 {#src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"#}
+                                 {#alt="Message User Image">#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                            {#<div class="direct-chat-info clearfix">#}
+                                {#<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>#}
+                            {#</div>#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="direct-chat-msg right">#}
+                            {#<div class="direct-chat-info clearfix">#}
+                                {#<span class="direct-chat-name pull-right">admin2</span>#}
+                                {#<span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>#}
+                            {#</div>#}
+                            {#<img class="direct-chat-img"#}
+                                 {#src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"#}
+                                 {#alt="Message User Image"><!-- /.direct-chat-img -->#}
+                            {#<div class="direct-chat-text">#}
+                                {#You better believe it!#}
+                            {#</div>#}
+                        {#</div>#}
                     </div>
-                    <!--/.direct-chat-messages-->
-
-                    <!-- Contacts are loaded here -->
-                    <div class="direct-chat-contacts">
-                        <ul class="contacts-list">
-                            <li>
-                                <a href="#">
-                                    <img class="contacts-list-img"
-                                         src="https://avatars1.githubusercontent.com/u/30959826?s=460&v=4"
-                                         alt="User Image">
-
-                                    <div class="contacts-list-info">
-                            <span class="contacts-list-name">
-                              Count Dracula <i class="fa fa-circle text-success"></i> Online
-                              <small class="contacts-list-date pull-right">2/28/2015</small>
-
-                            </span>
-                                        <span class="contacts-list-msg">How have you been? I was...</span>
-                                    </div>
-                                    <!-- /.contacts-list-info -->
-                                </a>
-                            </li>
-                            <!-- End Contact Item -->
-                        </ul>
-                        <!-- /.contatcts-list -->
-                    </div>
-                    <!-- /.direct-chat-pane -->
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
@@ -228,7 +191,17 @@
         function publishToChannel(session, receiverId) {
             $("button[type='submit']").click(function (event) {
                 event.preventDefault();
+
                 var $input = $("input[name='message']");
+                var date = new Date();
+                var element = {
+                    side: 'right',
+                    time: date.getHours() + ":" + date.getMinutes(),
+                    message: $input.val(),
+                    to: "{{ app.user.username }}"
+                };
+                appendRightMessage(element);
+
                 if ($input.val() != '') {
                     session.publish("chat/" + getRoomName("{{ app.user.id }}", receiverId), {
                         'message': $input.val(),
@@ -244,8 +217,104 @@
            $(".box.box-primary.direct-chat.direct-chat-primary").show();
         }
 
-        function loadMessages(from, to) {
+        function appendRightMessage(element) {
+            var $chatMessages = $('.direct-chat-messages');
 
+            var $lastChild = $chatMessages
+                .children()
+                .last();
+
+            if(element.side === 'right' && $lastChild.hasClass('right')) {
+                if(element.time != null) {
+                    $lastChild.append("<div class=\"direct-chat-info clearfix\">\n" +
+                        "<span class=\"direct-chat-timestamp pull-left\">" + element.time + "</span>\n" +
+                        "</div>")
+                }
+                $lastChild.append("<div class=\"direct-chat-text\">\n" + element.message + "</div>")
+
+            } else if (element.side === 'right') {
+                $chatMessages.append("<div class='direct-chat-msg right'></div>")
+                $lastChild = $chatMessages
+                    .children()
+                    .last();
+
+                $lastChild.append("<div class=\"direct-chat-info clearfix\">\n" +
+                    "<span class=\"direct-chat-name pull-right\"></span>\n" +
+                    "<span class=\"direct-chat-timestamp pull-left\"></span>\n" +
+                    "</div>")
+                $lastChild.find(".direct-chat-name.pull-left").text(element.to);
+                if(element.time != null){
+                    $lastChild.find(".direct-chat-timestamp.pull-right").text(element.time)
+                }
+                $lastChild.append("<img class=\"direct-chat-img\" src=\"https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png\" alt=\"Message User Image\">");
+                $lastChild.append("<div class=\"direct-chat-text\">\n" + element.message + "</div>")
+            }
+
+        }
+
+        function appendLeftMessage(element) {
+            var $chatMessages = $('.direct-chat-messages');
+
+            var $lastChild = $chatMessages
+                .children()
+                .last();
+
+            if(element.side === 'left' && !$lastChild.hasClass('right')) {
+                if(element.time != null) {
+                    $lastChild.append("<div class=\"direct-chat-info clearfix\">\n" +
+                        "<span class=\"direct-chat-timestamp pull-right\">" + element.time + "</span>\n" +
+                        "</div>")
+                }
+                $lastChild.append("<div class=\"direct-chat-text\">\n" + element.message + "</div>")
+
+            } else if (element.side === 'left') {
+                $chatMessages.append("<div class='direct-chat-msg'></div>")
+                $lastChild = $chatMessages
+                    .children()
+                    .last();
+
+                $lastChild.append("<div class=\"direct-chat-info clearfix\">\n" +
+                    "<span class=\"direct-chat-name pull-left\"></span>\n" +
+                    "<span class=\"direct-chat-timestamp pull-right\"></span>\n" +
+                    "</div>")
+                $lastChild.find(".direct-chat-name.pull-left").text(element.to);
+                if(element.time != null){
+                    $lastChild.find(".direct-chat-timestamp.pull-right").text(element.time)
+                }
+                $lastChild.append("<img class=\"direct-chat-img\" src=\"https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png\" alt=\"Message User Image\">");
+                $lastChild.append("<div class=\"direct-chat-text\">\n" + element.message + "</div>")
+            }
+        }
+
+        function cleanMessages() {
+            $('.direct-chat-messages').children().remove();
+        }
+
+        function setMessages(messages) {
+            cleanMessages();
+            messages.forEach(function (element) {
+
+                if(element.side === 'right'){
+                    appendRightMessage(element)
+                } else if (element.side === 'left') {
+                    appendLeftMessage(element)
+                }
+            })
+        }
+
+        function loadMessages(from, to) {
+            var url = '{{ path("api_chat_messages", {'id': 'user_id'}) }}';
+            url = url.replace("user_id", to);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (data) {
+                    setMessages(JSON.parse(data));
+                }
+            })
         }
 
         function onUserClick(session) {
@@ -257,6 +326,30 @@
             })
         }
 
+        function getUserStatusAndChange(payload) {
+            var url = '{{ path("api_chat_is_offline", {'id': 'user_id'}) }}';
+            url = url.replace("user_id", payload.left.id);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data == true) {
+                        setUserStatusByPayloadFromWS(payload.left, "offline");
+                    }
+                }
+            })
+        }
+
+        function delayUserStatusOfflineChange(payload) {
+            setTimeout(function () {
+                getUserStatusAndChange(payload);
+            }, 300)
+        }
+
         webSocket.on("socket/connect", function (session) {
             session.subscribe("active_users/channel", function (uri, payload) {
                 console.log(payload);
@@ -266,7 +359,7 @@
                 }
 
                 if (payload.left) {
-                    setUserStatusByPayloadFromWS(payload.left, "offline");
+                    delayUserStatusOfflineChange(payload);
                 }
             });
             onUserClick(session);

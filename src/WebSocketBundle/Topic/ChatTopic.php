@@ -24,7 +24,6 @@ use WebSocketBundle\Repository\MessageRepository;
 
 class ChatTopic implements TopicInterface
 {
-
     /**
      * @var EntityManagerInterface
      */
@@ -82,7 +81,7 @@ class ChatTopic implements TopicInterface
     }
 
     /**
-     * @param  ConnectionInterface $connection
+     * @param  WampConnection $connection
      * @param  Topic $topic
      * @param WampRequest $request
      * @param $event
