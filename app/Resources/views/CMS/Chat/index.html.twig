@@ -73,42 +73,42 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="direct-chat-messages">
-                        <div class="direct-chat-msg">
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-name pull-left">admin</span>
-                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                            </div>
-                            <img class="direct-chat-img"
-                                 src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
-                                 alt="Message User Image">
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                            </div>
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                        </div>
-                        <div class="direct-chat-msg right">
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-name pull-right">admin2</span>
-                                <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-                            </div>
-                            <img class="direct-chat-img"
-                                 src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"
-                                 alt="Message User Image"><!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                                You better believe it!
-                            </div>
-                        </div>
+                        {#<div class="direct-chat-msg">#}
+                            {#<div class="direct-chat-info clearfix">#}
+                                {#<span class="direct-chat-name pull-left">admin</span>#}
+                                {#<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>#}
+                            {#</div>#}
+                            {#<img class="direct-chat-img"#}
+                                 {#src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"#}
+                                 {#alt="Message User Image">#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                            {#<div class="direct-chat-info clearfix">#}
+                                {#<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>#}
+                            {#</div>#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                            {#<div class="direct-chat-text">#}
+                                {#Is this template really for free? That's unbelievable!#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="direct-chat-msg right">#}
+                            {#<div class="direct-chat-info clearfix">#}
+                                {#<span class="direct-chat-name pull-right">admin2</span>#}
+                                {#<span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>#}
+                            {#</div>#}
+                            {#<img class="direct-chat-img"#}
+                                 {#src="https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png"#}
+                                 {#alt="Message User Image"><!-- /.direct-chat-img -->#}
+                            {#<div class="direct-chat-text">#}
+                                {#You better believe it!#}
+                            {#</div>#}
+                        {#</div>#}
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -324,8 +324,6 @@
                 }
                 scrollToBottomOfMessagesDiv()
             });
-
-
         }
 
         function loadMessages(from, to) {
@@ -343,7 +341,7 @@
             })
         }
 
-        function onUserClick(session) {
+        function activeUsersAreaEvents(session) {
             $("div.item").click(function () {
                 subscribeToChatChannel(session, $(this).attr("user-id"));
                 publishToChatChannel(session, $(this).attr("user-id"));
@@ -385,7 +383,7 @@
                     delayUserStatusOfflineChange(payload);
                 }
             });
-            onUserClick(session);
+            activeUsersAreaEvents(session);
         });
 
         webSocket.on("socket/disconnect", function (error) {

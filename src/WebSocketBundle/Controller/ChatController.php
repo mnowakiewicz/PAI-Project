@@ -40,8 +40,9 @@ class ChatController extends Controller
     {
         /** @var Operator $from */
         $from = $this->getUser();
+        /** @var Operator $to */
         $to = $this->getDoctrine()
-            ->getRepository('OperatorBundle:Operator')
+            ->getRepository(Operator::class)
             ->findOneBy([
                 'id' => $operator->getId()
             ]);
